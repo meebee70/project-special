@@ -51,13 +51,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			try{
 				Thread.sleep(wait);
 			}catch(Exception e){
-				
+				e.printStackTrace();
 			}
 		}
 	}
 	
 	public void tick() {
-		//System.out.println("running");
+		System.out.println("hello");
 	}
 	
 	public void paintcomponent(Graphics g) {
