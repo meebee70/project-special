@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 public class Game {
 	public static void main(String[] args){
+		boolean Badass = true; //Adds badassery
 		JFrame frame = new JFrame("Helios");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
