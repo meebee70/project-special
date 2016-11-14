@@ -1,4 +1,2 @@
 # Project-C
-a generic project repository
-//ALEXANDER WUS HERE
-//SO WUZ CHRIS
+Work has started on the game, we have yet to see where it goes...
