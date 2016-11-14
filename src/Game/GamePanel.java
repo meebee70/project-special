@@ -16,6 +16,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private Thread thread;
 	private boolean isRunning = false;
 	
+	
+	private int FPS = 60;
+	private long targetTime = 1000 / FPS;
+	
 	public GamePanel(){
 		setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		
@@ -24,12 +28,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	private void start(){
 		isRunning = true;
-		thread = new thread(this);
+		thread = new Thread(this);
 		thread.start();
 	}
 	
 	public void run(){
-		
+		while (isRunning){
+			
+		}
 	}
 	
 	
