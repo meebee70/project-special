@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
 public class Game {
+	//creates the frame
 	public static void main(String[] args){
 		JFrame frame = new JFrame("Helios");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
