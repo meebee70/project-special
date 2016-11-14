@@ -1,6 +1,7 @@
 package Game;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -20,22 +21,33 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private int FPS = 60;
 	private long targetTime = 1000 / FPS;
 	
-	public GamePanel(){
+	public GamePanel() {
 		setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		
 		start();
 	}
 	
-	private void start(){
+	private void start() {
 		isRunning = true;
 		thread = new Thread(this);
 		thread.start();
 	}
 	
-	public void run(){
+	public void run() {
+		long start,elapsed,wait;
 		while (isRunning){
+			tick();
+			repaint();
 			
 		}
+	}
+	
+	public void tick() {
+		
+	}
+	
+	public void paintcomponent(Graphics g) {
+		super.paintComponent(g);
 	}
 	
 	
