@@ -1,6 +1,7 @@
 package Game;
 
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
@@ -28,6 +29,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 	
 	public void run(){
+		
+	}
+	
+	
+	public void keyPressed(KeyEvent e) {
+
+		
+	}
+	public void keyReleased(KeyEvent e) {
+
+		
+	}
+	public void keyTyped(KeyEvent e) {
+
 		
 	}
 
