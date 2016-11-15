@@ -1,8 +1,11 @@
 package Game;
 
 import java.awt.Graphics;
+import java.util.Stack;
 
 public class GameStateManager {
+	
+	private Stack<GameState> states;
 	
 	public GameStateManager(){
 		
