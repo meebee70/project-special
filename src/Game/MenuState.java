@@ -1,5 +1,6 @@
 package Game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class MenuState extends GameState {
@@ -7,6 +8,8 @@ public class MenuState extends GameState {
 	//all items that will appear on the menu
 	private String[] options = {"Begin","help","quit"};
 	
+	//the item the mouse is currently over
+	private int currentSelection = 0;
 	
 	
 	public MenuState(GameStateManager gsm){
@@ -21,6 +24,12 @@ public class MenuState extends GameState {
 	}
 
 	public void draw(Graphics g) {
+		for (int i = 0;i < options.length;i++){
+		
+			if (i == currentSelection){
+				g.setColor(Color.BLACK);
+			}
+		}
 		
 	}
 
