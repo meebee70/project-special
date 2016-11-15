@@ -28,7 +28,11 @@ public class MenuState extends GameState {
 		
 			if (i == currentSelection){
 				g.setColor(Color.BLACK);
+			}else {
+				g.setColor(Color.GREEN);
 			}
+			
+			g.drawString(options[i], GamePanel.WIDTH / 2 + 65, 65 + i * 30);
 		}
 		
 	}
