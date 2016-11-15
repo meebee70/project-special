@@ -1,11 +1,12 @@
 package Game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class MenuState extends GameState {
 	
-	//all items that will appear on the menu
+	//all items that will appear on the menu, left at the bottom - right at the top
 	private String[] options = {"QUIT","Help","Begin"};
 	
 	//the item the mouse is currently over
@@ -32,7 +33,9 @@ public class MenuState extends GameState {
 				g.setColor(Color.BLACK);
 			}
 			
-			g.drawString(options[i], (GamePanel.WIDTH / 2) - 65, (GamePanel.HEIGHT / 2) - ( i * 30));
+			g.setFont(new Font("Ariel",Font.PLAIN, 30));
+			
+			g.drawString(options[i], (GamePanel.WIDTH / 2) - 65, (GamePanel.HEIGHT / 2) - ( i * 40));
 		}
 		
 	}
