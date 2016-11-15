@@ -3,6 +3,7 @@ package Game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 public class MenuState extends GameState {
 	
@@ -45,6 +46,18 @@ public class MenuState extends GameState {
 	}
 
 	public void keyPressed(int k) {
+		if (k == KeyEvent.VK_DOWN){
+			currentSelection++;
+			if(currentSelection >= options.length){
+				currentSelection = 0;
+			}
+			
+		}else if (k == KeyEvent.VK_UP){
+			currentSelection--;
+			if (currentSelection < 0){
+				currentSelection = options.length -1;
+			}
+		}
 		
 	}
 
