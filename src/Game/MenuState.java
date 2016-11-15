@@ -59,6 +59,23 @@ public class MenuState extends GameState {
 			}
 		}
 		
+		if (k == KeyEvent.VK_ENTER){
+			
+			if (currentSelection == 0){
+				//start game
+				
+				
+			}else if (currentSelection == 1){
+				//show help
+				
+				
+			}else if (currentSelection == 2){
+				//quit
+				System.exit(0);
+				
+			}
+		}
+		
 	}
 
 	public void keyReleased(int k) {
