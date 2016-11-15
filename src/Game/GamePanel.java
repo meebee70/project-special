@@ -21,6 +21,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private int FPS = 60;
 	private long targetTime = 1000 / FPS;
 	
+	private GameStateManager gsm; // makes new game state manager named "gsm" (or game state manage)
+	
 	public GamePanel() {
 		setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		start();
@@ -34,6 +36,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	public void run() {
 		long start,elapsed,wait;
+		
+		gsm = new GameStateManager();
+		
 		while (isRunning){
 			start = System.nanoTime();
 			
@@ -56,21 +61,26 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 	
 	public void tick() {
-		System.out.println("running");
+		gsm.tick();
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
+		g.clearRect(0, 0, WIDTH, HEIGHT);
+		
+		gsm.draw(g);
 	}
 	
 	
 	public void keyPressed(KeyEvent e) {
 
+		gsm.keyPressed(e.getKeyCode());	
 		
 	}
 	public void keyReleased(KeyEvent e) {
 
+		gsm.keyReleased(e.getKeyCode());
 		
 	}
 	public void keyTyped(KeyEvent e) {
