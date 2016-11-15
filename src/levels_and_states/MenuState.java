@@ -16,6 +16,8 @@ public class MenuState extends GameState {
 	private int currentSelection = 0;
 	
 	
+	
+	
 	public MenuState(GameStateManager gsm){
 		super(gsm);
 	}
@@ -65,7 +67,7 @@ public class MenuState extends GameState {
 			
 			if (currentSelection == 0){
 				//start game
-				
+				 gsm.states.push(new TestLevel(gsm));
 				
 			}else if (currentSelection == 1){
 				//show help
