@@ -1,9 +1,11 @@
-package Game;
+package levels_and_states;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+
+import Game.GamePanel;
 
 public class MenuState extends GameState {
 	

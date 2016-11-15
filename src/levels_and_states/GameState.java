@@ -1,4 +1,4 @@
-package Game;
+package levels_and_states;
 
 import java.awt.Graphics;
 
