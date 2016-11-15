@@ -19,8 +19,7 @@ public class Game {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		//armen was here
-		//woooOOooo!
+		
 	}
 
 }
