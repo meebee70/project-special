@@ -36,6 +36,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	public void run() {
 		long start,elapsed,wait;
+		
+		gsm = new GameStateManager();
+		
 		while (isRunning){
 			start = System.nanoTime();
 			
@@ -58,21 +61,24 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 	
 	public void tick() {
-		System.out.println("running");
+		gsm.tick();
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
+		gsm.draw(g);
 	}
 	
 	
 	public void keyPressed(KeyEvent e) {
 
+		gsm.keyPressed(k);	
 		
 	}
 	public void keyReleased(KeyEvent e) {
 
+		gsm.keyReleased(k);
 		
 	}
 	public void keyTyped(KeyEvent e) {
