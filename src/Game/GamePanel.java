@@ -21,6 +21,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private int FPS = 60;
 	private long targetTime = 1000 / FPS;
 	
+	private GameStateManager gsm; // makes new game state manager named "gsm" (or game state manage)
+	
 	public GamePanel() {
 		setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		start();
