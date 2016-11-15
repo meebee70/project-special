@@ -57,11 +57,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 	
 	public void tick() {
-		System.out.println("hello");
+		System.out.println("running");
 	}
 	
-	public void paintcomponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
 	}
 	
 	
