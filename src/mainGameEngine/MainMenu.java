@@ -23,7 +23,9 @@ public class MainMenu extends JFrame
 	private int currentlySelected;
 	private String[] menuItems = {"Start","Help","QUIT"};
 	
-	private Font menuFont= new Font("ARIEL",Font.PLAIN,40);
+	private Font normalFont= new Font("ARIEL",Font.PLAIN,40);
+	private Font selectedFont= new Font("ARIEL",Font.BOLD,40);
+	
 	
 
 	public static void main(String[] args) 
@@ -89,9 +91,16 @@ public class MainMenu extends JFrame
 	 void update() 
 	 { 
 		
-		 if (input.isKeyDown(KeyEvent.VK_UP)){
+		if (input.isKeyDown(KeyEvent.VK_UP)){
+			 currentlySelected--;
+		}else if (input.isKeyDown(KeyEvent.VK_DOWN)){
 			 currentlySelected++;
-		 }else
+		}
+		if (currentlySelected < 0){
+			 currentlySelected = menuItems.length -1;
+		}else if (currentlySelected > menuItems.length -1){
+			 currentlySelected = 0;
+		}
 		 
 	 } 
 
@@ -107,12 +116,14 @@ public class MainMenu extends JFrame
 		 bbg.setColor(Color.BLACK); 
 		 bbg.fillRect(0, 0, windowWidth, windowHeight); 
 		 
-		 bbg.setFont(menuFont);
+		 
 		 for (int i = 0;i < menuItems.length;i++){
 			 if (currentlySelected == i){
+				 bbg.setFont(selectedFont);
 				 bbg.setColor(Color.GREEN);
 				 
 			 }else{
+				 bbg.setFont(normalFont);
 				 bbg.setColor(Color.BLUE);
 			 }
 			 bbg.drawString(menuItems[i], (windowWidth / 2) - 50, 50 + (i * 100));
