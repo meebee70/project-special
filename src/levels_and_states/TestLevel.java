@@ -8,12 +8,12 @@ import com.sun.glass.events.KeyEvent;
 import simpleGraphicsExample.InputHandler;
 
 public class TestLevel extends GameState{
-	
+
 	InputHandler input;
-	
+
 	private int x1 = 200;
 	private int y1 = 400;
-	
+
 	private int x2 = 100;
 	private int y2 = 200;
 
