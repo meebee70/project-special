@@ -109,7 +109,7 @@ public class MainMenu extends JFrame
 			}else if (currentlySelected == 1){
 				
 			}else if (currentlySelected == 2){
-				System.exit(0);
+				isRunning = false;
 			}
 		}
 		 
