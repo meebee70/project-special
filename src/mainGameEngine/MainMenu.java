@@ -8,24 +8,27 @@ import javax.swing.JFrame;
 
 import mainGameEngine.InputHandler;
 
-public class MainGame extends JFrame 
+public class MainMenu extends JFrame 
 {        
 	private static final long serialVersionUID = 1L;
 	boolean isRunning = true; 
 	int fps = 30;
-	int windowWidth = 500;
-	int windowHeight = 500;
+	final int windowWidth = 500;
+	final int windowHeight = 500;
 
 	BufferedImage backBuffer; 
 	Insets insets; 
 	InputHandler input; 
 
-	int x = 0; 
-	int y = 0;
+	private int currentlySelected;
+	private String[] menuItems = {"Start","Help","QUIT"};
+	
+	private Font menuFont= new Font("ARIEL",Font.PLAIN,40);
+	
 
 	public static void main(String[] args) 
 	{ 
-		MainGame game = new MainGame(); 
+		MainMenu game = new MainMenu(); 
 		game.run(); 
 		System.exit(0); 
 	} 
@@ -43,10 +46,10 @@ public class MainGame extends JFrame
 
 			update(); 
 			draw(); 
-
+			
 			//  delay for each frame  -   time it took for one frame 
 			time = (1000 / fps) - (System.currentTimeMillis() - time); 
-
+			
 			if (time > 0) 
 			{ 
 				try 
@@ -85,22 +88,9 @@ public class MainGame extends JFrame
 	  */ 
 	 void update() 
 	 { 
-		 if (input.isKeyDown(KeyEvent.VK_RIGHT)) 
-		 { 
-			 x += 5; 
-		 } 
-		 if (input.isKeyDown(KeyEvent.VK_LEFT)) 
-		 { 
-			 x -= 5; 
-		 }
-		 if (input.isKeyDown(KeyEvent.VK_DOWN)) 
-		 { 
-			 y += 5; 
-		 } 
-		 if (input.isKeyDown(KeyEvent.VK_UP)) 
-		 { 
-			 y -= 5; 
-		 } 
+		
+		 
+		 
 	 } 
 
 	 /** 
@@ -114,9 +104,19 @@ public class MainGame extends JFrame
 
 		 bbg.setColor(Color.cyan); 
 		 bbg.fillRect(0, 0, windowWidth, windowHeight); 
+		 
+		 bbg.setFont(menuFont);
+		 for (int i = 0;i < menuItems.length;i++){
+			 if (currentlySelected == i){
+				 bbg.setColor(Color.MAGENTA);
+				 
+			 }else{
+				 bbg.setColor(Color.BLACK);
+			 }
+			 bbg.drawString(menuItems[i], (windowWidth / 2) - 50, 50 + (i * 100));
 
-		 bbg.setColor(Color.BLACK); 
-		 bbg.drawRoundRect(x, y, 32, 32, 12, 12); 
+		 }
+		 
 		 
 		 g.drawImage(backBuffer, insets.left, insets.top, this); 
 	 } 
