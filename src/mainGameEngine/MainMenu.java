@@ -90,16 +90,27 @@ public class MainMenu extends JFrame
 	  */ 
 	 void update() 
 	 { 
-		
+		//moves the selector up and down
 		if (input.isKeyDown(KeyEvent.VK_UP)){
 			 currentlySelected--;
 		}else if (input.isKeyDown(KeyEvent.VK_DOWN)){
 			 currentlySelected++;
 		}
+		//loops the selector around the list
 		if (currentlySelected < 0){
 			 currentlySelected = menuItems.length -1;
 		}else if (currentlySelected > menuItems.length -1){
 			 currentlySelected = 0;
+		}
+		
+		if (input.isKeyDown(KeyEvent.VK_ENTER)){
+			if (currentlySelected == 0){
+				
+			}else if (currentlySelected == 1){
+				
+			}else if (currentlySelected == 2){
+				System.exit(0);
+			}
 		}
 		 
 	 } 
