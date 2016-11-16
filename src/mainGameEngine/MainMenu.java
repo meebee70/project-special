@@ -89,7 +89,9 @@ public class MainMenu extends JFrame
 	 void update() 
 	 { 
 		
-		 
+		 if (input.isKeyDown(KeyEvent.VK_UP)){
+			 currentlySelected++;
+		 }else
 		 
 	 } 
 
@@ -102,16 +104,16 @@ public class MainMenu extends JFrame
 
 		 Graphics bbg = backBuffer.getGraphics(); 
 
-		 bbg.setColor(Color.cyan); 
+		 bbg.setColor(Color.BLACK); 
 		 bbg.fillRect(0, 0, windowWidth, windowHeight); 
 		 
 		 bbg.setFont(menuFont);
 		 for (int i = 0;i < menuItems.length;i++){
 			 if (currentlySelected == i){
-				 bbg.setColor(Color.MAGENTA);
+				 bbg.setColor(Color.GREEN);
 				 
 			 }else{
-				 bbg.setColor(Color.BLACK);
+				 bbg.setColor(Color.BLUE);
 			 }
 			 bbg.drawString(menuItems[i], (windowWidth / 2) - 50, 50 + (i * 100));
 
