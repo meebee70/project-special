@@ -1,6 +1,6 @@
 //Most of this is from http://compsci.ca/v3/viewtopic.php?t=25991
 
-package simpleGraphicsExample;
+package mainGameEngine;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener; 

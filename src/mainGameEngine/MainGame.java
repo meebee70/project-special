@@ -1,12 +1,12 @@
 //Most of this is from http://compsci.ca/v3/viewtopic.php?t=25991
 
-package simpleGraphicsExample;
+package mainGameEngine;
 import java.awt.*; 
 import java.awt.event.KeyEvent; 
 import java.awt.image.BufferedImage; 
 import javax.swing.JFrame;
 
-import simpleGraphicsExample.InputHandler;
+import mainGameEngine.InputHandler;
 
 public class MainGame extends JFrame 
 {        
