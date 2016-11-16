@@ -27,13 +27,7 @@ public class MainMenu extends JFrame
 	private Font selectedFont= new Font("ARIEL",Font.BOLD,60);
 	
 	
-
-	public static void main(String[] args) 
-	{ 
-		MainMenu game = new MainMenu(); 
-		game.run(); 
-		System.exit(0); 
-	}
+	
 
 	/** 
 	 * This method starts the game and runs it in a loop 
