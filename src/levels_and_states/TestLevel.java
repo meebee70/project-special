@@ -47,13 +47,6 @@ public class TestLevel extends GameState{
 	public void draw(Graphics g) {
 
 
-
-
-		g.setColor(Color.RED);
-		g.fillRect(this.x2, this.y2, 20, 4);
-		g.setColor(Color.BLUE);
-		g.fillRect(this.x1, this.y1, 80, 30);
-
 		//Direction Calculations
 		System.out.println("tick");
 		p1HSpeed = (-p1left + p1right) * P1SPEED;
@@ -65,6 +58,11 @@ public class TestLevel extends GameState{
 		y1 += p1VSpeed;
 		x2 += p2HSpeed;
 		y2 += p2VSpeed;
+
+		g.setColor(Color.RED);
+		g.fillRect(this.x2, this.y2, 20, 4);
+		g.setColor(Color.BLUE);
+		g.fillRect(this.x1, this.y1, 80, 30);
 	}
 
 

@@ -12,9 +12,9 @@ public class MainGame extends JFrame
 {        
 	private static final long serialVersionUID = 1L;
 	boolean isRunning = true; 
-	int fps = 30; 
-	int windowWidth = 500; 
-	int windowHeight = 500; 
+	int fps = 30;
+	int windowWidth = 500;
+	int windowHeight = 500;
 
 	BufferedImage backBuffer; 
 	Insets insets; 
