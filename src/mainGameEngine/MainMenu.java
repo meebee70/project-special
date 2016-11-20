@@ -12,16 +12,18 @@ public class MainMenu extends JFrame
 {        
 	private static final long serialVersionUID = 1L;
 	boolean isRunning = true;
+	boolean keyDownWasDown = false;
+	boolean keyUpWasDown = false;
 	int framesWaited = 0;
 
-	final int FPS = 60;
+	final int FPS = 30;
 	final int MENU_WAIT_FRAMES = FPS / 10;
 	final int WINDOW_WIDTH = 500;
 	final int WINDOW_HEIGHT = 500;
 
 	BufferedImage backBuffer; 
-	Insets insets; 
-	InputHandler input; 
+	Insets insets;
+	InputHandler input;
 
 	private int currentlySelected;
 	private String[] menuItems = {"Start","Help","QUIT"};
@@ -87,28 +89,34 @@ public class MainMenu extends JFrame
 	 */ 
 	void update() 
 	{
-		
-		
+
+
 		//moves the selector up and down
-		if (input.isKeyDown(KeyEvent.VK_UP) && framesWaited >= MENU_WAIT_FRAMES){
+		if (input.isKeyDown(KeyEvent.VK_UP) && !keyUpWasDown){
+			keyUpWasDown = true;
 			currentlySelected--;
-		}else if (input.isKeyDown(KeyEvent.VK_DOWN) && framesWaited >= MENU_WAIT_FRAMES){
+		}else if (input.isKeyDown(KeyEvent.VK_DOWN) && !keyDownWasDown){ // && framesWaited >= MENU_WAIT_FRAMES
+			keyDownWasDown = true;
 			currentlySelected++;
+		} else {
+			keyUpWasDown = input.isKeyDown(KeyEvent.VK_UP);
+			keyDownWasDown = input.isKeyDown(KeyEvent.VK_DOWN);
 		}
-		
+
 		//Test how many frames have passed
 		if (framesWaited >= MENU_WAIT_FRAMES){
 			framesWaited = 0;
 		} else {
 			framesWaited++;
 		}
-		
+
 		//loops the selector around the list
 		if (currentlySelected < 0){
 			currentlySelected = menuItems.length -1;
 		}else if (currentlySelected > menuItems.length -1){
 			currentlySelected = 0;
 		}
+
 
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
 			if (currentlySelected == 0){
