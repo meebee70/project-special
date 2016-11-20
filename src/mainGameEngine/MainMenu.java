@@ -26,8 +26,8 @@ public class MainMenu extends JFrame
 	private int currentlySelected;
 	private String[] menuItems = {"Start","Help","QUIT"};
 
-	private Font normalFont= new Font("ARIEL",Font.PLAIN,40);
-	private Font selectedFont= new Font("ARIEL",Font.BOLD,60);
+	private Font normalFont= new Font("Power Red and Green",Font.PLAIN,40);
+	private Font selectedFont= new Font("Power Red and Green",Font.BOLD,50);
 
 
 
@@ -143,7 +143,7 @@ public class MainMenu extends JFrame
 				bbg.setFont(normalFont);
 				bbg.setColor(Color.BLUE);
 			}
-			bbg.drawString(menuItems[i], (WINDOW_WIDTH / 2) - 50, 50 + (i * 100));
+			bbg.drawString(menuItems[i], (WINDOW_WIDTH / 2) - 50, 50 + (i * 90 + WINDOW_HEIGHT/5));
 
 		}
 
