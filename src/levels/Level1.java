@@ -1,7 +1,9 @@
 package levels;
 
 public class Level1 extends Level {
-
+/**
+ * Name of the level
+ */
 	public Level1(String name) {
 		super(name);
 	}
