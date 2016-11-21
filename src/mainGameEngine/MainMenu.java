@@ -7,7 +7,9 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 import mainGameEngine.InputHandler;
-
+/**
+ * Builds Game window
+ */
 public class MainMenu extends JFrame 
 {        
 	private static final long serialVersionUID = 1L;
