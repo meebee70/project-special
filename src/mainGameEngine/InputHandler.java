@@ -61,7 +61,7 @@ public class InputHandler implements KeyListener
 	} 
 
 	/** 
-	 * Not used 
+	 * Not used yet
 	 */ 
 	public void keyTyped(KeyEvent e){} 
 } 
