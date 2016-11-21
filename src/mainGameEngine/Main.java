@@ -4,7 +4,7 @@ public class Main {
 	
 	static MainMenu menu = new MainMenu();
 	/**
-	 * Exits Game
+	 * Exits Game and closes window
 	 */
 	
 	public static void main(String[] args){
