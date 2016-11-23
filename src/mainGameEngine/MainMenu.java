@@ -3,7 +3,12 @@
 package mainGameEngine;
 import java.awt.*; 
 import java.awt.event.KeyEvent; 
-import java.awt.image.BufferedImage; 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.swing.JFrame;
 
 import mainGameEngine.InputHandler;
@@ -26,8 +31,8 @@ public class MainMenu extends JFrame
 	private int currentlySelected;
 	private String[] menuItems = {"Start","Help","QUIT"};
 
-	private Font normalFont= new Font("Power Red and Green",Font.PLAIN,40);
-	private Font selectedFont= new Font("Power Red and Green",Font.BOLD,50);
+	private Font retroComputer, retroComputerBold;
+
 
 
 
@@ -73,12 +78,31 @@ public class MainMenu extends JFrame
 		setDefaultCloseOperation(EXIT_ON_CLOSE); 
 		setVisible(true); 
 
+		/*try {
+			GraphicsEnvironment ge = 
+					GraphicsEnvironment.getLocalGraphicsEnvironment();
+			InputStream tmp = this.getClass().getResourceAsStream("retroComputer.ttf");
+			retroComputer = Font.createFont(Font.TRUETYPE_FONT, tmp);
+			//ge.registerFont(retroComputer);
+			System.out.println(retroComputer.getName());
+			System.out.println("----");
+		} catch (IOException|FontFormatException e) {
+		}*/
+		
+		try {
+			retroComputer = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 50);
+			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("retroComputerFont.ttf"))).deriveFont(Font.BOLD, 50);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 		insets = getInsets(); 
 		setSize(insets.left + WINDOW_WIDTH + insets.right, 
 				insets.top + WINDOW_HEIGHT + insets.bottom); 
 
 		backBuffer = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB); 
-		input = new InputHandler(this); 
+		input = new InputHandler(this);
+
 	} 
 
 	/** 
@@ -136,11 +160,11 @@ public class MainMenu extends JFrame
 
 		for (int i = 0;i < menuItems.length;i++){
 			if (currentlySelected == i){
-				bbg.setFont(selectedFont);
+				bbg.setFont(retroComputer);
 				bbg.setColor(Color.GREEN);
 
 			}else{
-				bbg.setFont(normalFont);
+				bbg.setFont(retroComputerBold);
 				bbg.setColor(Color.BLUE);
 			}
 			bbg.drawString(menuItems[i], (WINDOW_WIDTH / 2) - 50, 50 + (i * 90 + WINDOW_HEIGHT/5));
