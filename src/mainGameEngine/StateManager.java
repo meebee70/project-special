@@ -16,7 +16,7 @@ public class StateManager extends JFrame {
 	public BufferedImage backBuffer;
 	public InputHandler input;
 	
-	public Stack<Level> levels;
+	public Stack<Level> levels = new Stack<Level>();
 	
 	public StateManager(){
 		setTitle("Game Tutorial"); 

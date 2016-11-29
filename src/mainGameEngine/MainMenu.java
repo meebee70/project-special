@@ -123,7 +123,8 @@ public class MainMenu extends JFrame
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
 			if (currentlySelected == 0){
 				isRunning = false;
-				sm.levels.push(new Level1(sm));
+				Level1 firstLevel = new Level1(sm);
+				sm.levels.push(firstLevel);
 
 			}else if (currentlySelected == 1){
 
