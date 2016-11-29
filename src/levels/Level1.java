@@ -1,27 +1,31 @@
 package levels;
 
+import mainGameEngine.StateManager;
+
 public class Level1 extends Level {
-/**
- * Name of the level
- */
-	public Level1(String name) {
-		super(name);
+	
+
+	public Level1(StateManager sm) {
+		super(sm);
+		// TODO Auto-generated constructor stub
 	}
 
+	@Override
 	public void initialize() {
-		
-				
+		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
 	public void update() {
-			
-	}
-
-	public void draw() {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	
+
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

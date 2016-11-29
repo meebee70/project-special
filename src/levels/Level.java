@@ -1,14 +1,16 @@
 package levels;
 
+import mainGameEngine.StateManager;
+
 public abstract class Level {
 	
 	
 	private boolean isRunning = true;
 	private final int fps = 60;
-	private String name;
+	private StateManager sm;
 	
-	public Level(String name){
-		this.name = name;
+	public Level( StateManager sm){
+		this.sm = sm;
 	}
 	
 	public void run(){
@@ -35,11 +37,6 @@ public abstract class Level {
 		}
 		
 		
-	}
-	
-	
-	public String getName(){
-		return this.name;
 	}
 	
 	//used for the initial setup of the level

@@ -11,6 +11,7 @@ import java.io.InputStream;
 
 import javax.swing.JFrame;
 
+import levels.Level1;
 import mainGameEngine.InputHandler;
 /**
  * Builds Game window
@@ -21,14 +22,15 @@ public class MainMenu extends JFrame
 	boolean isRunning = true;
 	boolean keyDownWasDown = false;
 	boolean keyUpWasDown = false;
-
+	private StateManager sm;
+	
+	InputHandler input;
+	
 	final int FPS = 30;
-	final int WINDOW_WIDTH = 500;
-	final int WINDOW_HEIGHT = 500;
 
 	BufferedImage backBuffer; 
 	Insets insets;
-	InputHandler input;
+
 
 	private int currentlySelected;
 	private String[] menuItems = {"Start","Help","QUIT"};
@@ -36,6 +38,9 @@ public class MainMenu extends JFrame
 	private Font retroComputer, retroComputerBold;
 
 
+	public MainMenu(StateManager sm){
+		this.sm = sm;
+	}
 
 
 
@@ -55,6 +60,7 @@ public class MainMenu extends JFrame
 
 			//  delay for each frame  -   time it took for one frame 
 			time = (1000 / FPS) - (System.currentTimeMillis() - time); 
+			System.out.println("test");
 
 			if (time > 0) 
 			{ 
@@ -65,7 +71,6 @@ public class MainMenu extends JFrame
 				catch(Exception e){} 
 			} 
 		} 
-
 		setVisible(false); 
 	} 
 
@@ -74,22 +79,8 @@ public class MainMenu extends JFrame
 	 */ 
 	void initialize() 
 	{ 
-		setTitle("Game Tutorial"); 
-		setSize(WINDOW_WIDTH, WINDOW_HEIGHT); 
-		setResizable(false); 
-		setDefaultCloseOperation(EXIT_ON_CLOSE); 
-		setVisible(true); 
+		
 
-		/*try {
-			GraphicsEnvironment ge = 
-					GraphicsEnvironment.getLocalGraphicsEnvironment();
-			InputStream tmp = this.getClass().getResourceAsStream("retroComputer.ttf");
-			retroComputer = Font.createFont(Font.TRUETYPE_FONT, tmp);
-			//ge.registerFont(retroComputer);
-			System.out.println(retroComputer.getName());
-			System.out.println("----");
-		} catch (IOException|FontFormatException e) {
-		}*/
 		
 		try {
 			retroComputer = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 50);
@@ -97,13 +88,7 @@ public class MainMenu extends JFrame
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
-		insets = getInsets(); 
-		setSize(insets.left + WINDOW_WIDTH + insets.right, 
-				insets.top + WINDOW_HEIGHT + insets.bottom); 
-
-		backBuffer = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB); 
-		input = new InputHandler(this);
+		input = sm.input;
 
 	} 
 
@@ -137,6 +122,8 @@ public class MainMenu extends JFrame
 
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
 			if (currentlySelected == 0){
+				isRunning = false;
+				sm.levels.push(new Level1(sm));
 
 			}else if (currentlySelected == 1){
 
@@ -152,12 +139,12 @@ public class MainMenu extends JFrame
 	 */ 
 	void draw() 
 	{               
-		Graphics g = getGraphics(); 
+		Graphics g = sm.getGraphics(); 
 
-		Graphics bbg = backBuffer.getGraphics(); 
+		Graphics bbg = sm.backBuffer.getGraphics(); 
 
 		bbg.setColor(Color.BLACK); 
-		bbg.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT); 
+		bbg.fillRect(0, 0, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT); 
 
 
 		for (int i = 0;i < menuItems.length;i++){
@@ -169,11 +156,11 @@ public class MainMenu extends JFrame
 				bbg.setFont(retroComputerBold);
 				bbg.setColor(Color.BLUE);
 			}
-			bbg.drawString(menuItems[i], (WINDOW_WIDTH / 2) - 50, 50 + (i * 90 + WINDOW_HEIGHT/5));
+			bbg.drawString(menuItems[i], (sm.WINDOW_WIDTH / 2) - 50, 50 + (i * 90 + sm.WINDOW_HEIGHT/5));
 
 		}
 
 
-		g.drawImage(backBuffer, insets.left, insets.top, this); 
+		g.drawImage(sm.backBuffer, sm.insets.left, sm.insets.top, this); 
 	} 
 } 
