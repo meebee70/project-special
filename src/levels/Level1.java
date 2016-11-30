@@ -1,5 +1,6 @@
 package levels;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -27,8 +28,8 @@ public class Level1 extends Level {
 	private int x2 = left + 100;
 	private int y2 = top - 30;
 	
-	private int xUniverse = ((x1 + x2)/2) + sm.WINDOW_WIDTH;
-	private int yUniverse = ((y1 +y2)/2) + sm.WINDOW_HEIGHT;
+	private int xUniverse = ((x1 + x2)/2);
+	private int yUniverse = ((y1 +y2)/2);
 	
 
 	public Level1(StateManager sm) {
@@ -81,8 +82,8 @@ public class Level1 extends Level {
 			sm.levels.pop();
 		}
 		
-		xUniverse = -((x1 + x2)/2);
-		yUniverse = -((y1 +y2)/2);
+		xUniverse =-((x1 + x2)/2) + (sm.WINDOW_WIDTH/2);
+		yUniverse =-((y1 +y2)/2) + (sm.WINDOW_HEIGHT /2);
 		
 		System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 	}
@@ -93,6 +94,10 @@ public class Level1 extends Level {
 		universe.fillRect(left,top,universeWidth,universeHeight);
 		universe.drawImage(background,x1,y1,sm);
 		universe.drawImage(background, x2,y2, sm);
+		
+		universe.setColor(Color.BLUE);
+		universe.fillRect(300, 200, 500, 10);
+		
 		g.drawImage(sm.backBuffer,xUniverse,yUniverse,sm);
 	}
 
