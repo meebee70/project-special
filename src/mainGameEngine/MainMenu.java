@@ -16,9 +16,8 @@ import mainGameEngine.InputHandler;
 /**
  * Builds Game window
  */
-public class MainMenu extends JFrame 
+public class MainMenu 
 {        
-	private static final long serialVersionUID = 1L;
 	boolean isRunning = true;
 	boolean keyDownWasDown = false;
 	boolean keyUpWasDown = false;
@@ -70,8 +69,7 @@ public class MainMenu extends JFrame
 				} 
 				catch(Exception e){} 
 			} 
-		} 
-		setVisible(false); 
+		}  
 	} 
 
 	/** 
@@ -162,6 +160,6 @@ public class MainMenu extends JFrame
 		}
 
 
-		g.drawImage(sm.backBuffer, sm.insets.left, sm.insets.top, this); 
+		g.drawImage(sm.backBuffer, sm.insets.left, sm.insets.top, sm); 
 	} 
 } 

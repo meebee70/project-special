@@ -12,7 +12,7 @@ public class Main {
 		menu.run();
 		try{
 		sm.levels.peek().run();
-		}catch (NullPointerException e){
+		}catch (java.util.EmptyStackException e){
 		}
 		System.exit(0);
 	}

@@ -7,7 +7,7 @@ public abstract class Level {
 	
 	private boolean isRunning = true;
 	private final int fps = 60;
-	private StateManager sm;
+	public StateManager sm;
 	
 	public Level( StateManager sm){
 		this.sm = sm;
