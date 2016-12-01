@@ -49,11 +49,21 @@ public abstract class Level {
 	public abstract void update();
 	
 	//draws the level
-	public abstract void draw();
+	public void draw(){
+		Graphics universe = sm.backBuffer.getGraphics();
+		drawUniverse(universe);
+		
+		drawScreen(g);
+	}
 	
+	/*draws the level as is
+	 * 
+	 */
+	public abstract void drawUniverse(Graphics universe);
 	
+	/*draws the level on the screen
+	 * 
+	 */
+	public abstract void drawScreen(Graphics screen);
 	
-	
-	
-
 }

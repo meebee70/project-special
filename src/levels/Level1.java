@@ -85,22 +85,25 @@ public class Level1 extends Level {
 		System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 	}
 
-	@Override
+	@Override/**
 	public void draw() {
 		Graphics universe = sm.backBuffer.getGraphics();
 		drawUniverse(universe);
 		
-		
-		g.setColor(Color.BLACK);
-		g.fillRect(left, top, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT);
-		g.drawImage(sm.backBuffer,xUniverse,yUniverse,sm);
+		drawScreen(g);
 	}
+	*/
 	
-	
-	private void drawUniverse(Graphics universe){
+	public void drawUniverse(Graphics universe){
 		universe.fillRect(0,0,universeWidth,universeHeight);
 		universe.drawImage(background,x1,y1,sm);
 		universe.drawImage(background, x2,y2, sm);
+	}
+	
+	public void drawScreen(Graphics screen){
+		screen.setColor(Color.BLACK);
+		screen.fillRect(left, top, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT);
+		screen.drawImage(sm.backBuffer, xUniverse, yUniverse, sm);
 	}
 
 }
