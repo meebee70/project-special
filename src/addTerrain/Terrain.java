@@ -1,11 +1,11 @@
 package addTerrain;
 
-public class Terrain {
+public abstract class Terrain {
 	
-	private int x;
-	private int y;
-	private final int WIDTH;
-	private final int HEIGHT;
+	public int x;
+	public int y;
+	public final int WIDTH;
+	public final int HEIGHT;
 	
 	private final String sprite;
 	
@@ -14,6 +14,12 @@ public class Terrain {
 	public Terrain(int x, int y, int width, int height,String sprite){
 		this.x = x;
 		this.y = y;
+		this.WIDTH = width;
+		this.HEIGHT = height;
+		this.sprite = sprite;
+	}
+	
+	public Terrain(int width, int height, String sprite){
 		this.WIDTH = width;
 		this.HEIGHT = height;
 		this.sprite = sprite;
@@ -35,11 +41,7 @@ public class Terrain {
 		return HEIGHT;
 	}
 	
-	public void translate(int xAmount, int yAmount){
-		this.x += xAmount;
-		this.y += yAmount;
+	public String getSprite(){
+		return this.sprite;
 	}
-	
-	
-
 }
