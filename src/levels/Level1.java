@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import com.sun.glass.events.KeyEvent;
 
 import characters.PlayerOne;
+import characters.PlayerTwo;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 
@@ -34,6 +35,7 @@ public class Level1 extends Level {
 	private int yUniverse = ((INITIAL_Y_P1 +y2)/2);
 	
 	private PlayerOne playerOne;
+	private PlayerTwo playerTwo;
 	
 
 	public Level1(StateManager sm, Graphics g) {
@@ -53,30 +55,21 @@ public class Level1 extends Level {
 		g.drawImage(background,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
 
 		playerOne = new PlayerOne(64,64,sm);
+		playerTwo = new PlayerTwo(128,64,sm);
 		
 	}
 
 	@Override
 	public void update() {
 		playerOne.updatePlayer();
-		
-		//player 2
-		if (input.isKeyDown(KeyEvent.VK_UP)){
-			y2--;
-		}else if (input.isKeyDown(KeyEvent.VK_DOWN)){
-			y2++;
-		}if (input.isKeyDown(KeyEvent.VK_LEFT)){
-			x2--;
-		}else if (input.isKeyDown(KeyEvent.VK_RIGHT)){
-			x2++;
-		}
+		playerTwo.updatePlayer();
 		
 		if(input.isKeyDown(KeyEvent.VK_ESCAPE)){
 			sm.levels.pop();
 		}
 		
-		xUniverse =-((playerOne.getCurrentX() + x2)/2) + (sm.WINDOW_WIDTH/2);
-		yUniverse =-((playerOne.getCurrentY() +y2)/2) + (sm.WINDOW_HEIGHT /2);
+		xUniverse =-((playerOne.getCurrentX() + playerTwo.getCurrentX())/2) + (sm.WINDOW_WIDTH/2);
+		yUniverse =-((playerOne.getCurrentY() +playerTwo.getCurrentY())/2) + (sm.WINDOW_HEIGHT /2);
 		
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 	}
@@ -93,7 +86,7 @@ public class Level1 extends Level {
 	public void drawUniverse(Graphics universe){
 		universe.fillRect(0,0,universeWidth,universeHeight);
 		universe.drawImage(background,playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
-		universe.drawImage(background, x2,y2, sm);
+		universe.drawImage(background,playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
 	}
 	
 	public void drawScreen(Graphics screen){
