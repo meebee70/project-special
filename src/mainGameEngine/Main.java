@@ -1,8 +1,8 @@
 package mainGameEngine;
 
 public class Main {
-	
-	static MainMenu menu = new MainMenu();
+	private static StateManager sm = new StateManager();
+	private static MainMenu menu = new MainMenu(sm);
 	/**
 	 * Exits Game and closes window
 	 */
@@ -10,7 +10,10 @@ public class Main {
 	public static void main(String[] args){
 		
 		menu.run();
-		
+		try{
+		sm.levels.peek().run();
+		}catch (java.util.EmptyStackException e){
+		}
 		System.exit(0);
 	}
 }
