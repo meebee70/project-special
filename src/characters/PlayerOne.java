@@ -13,7 +13,7 @@ public class PlayerOne {
 	private final int BASE_X_SPEED = 1; // pixels/frame
 	private final int BASE_Y_SPEED = 1;
 	
-	private int x, y, xSpeed, ySpeed, xVelocity, yVelocity;
+	private int x, y, xSpeed, ySpeed, xVelocity, yVelocity, keyLeft, keyRight, keyUp, keyDown;
 	
 	private String sprite;
 	
@@ -31,6 +31,10 @@ public class PlayerOne {
 		this.ySpeed = BASE_Y_SPEED;
 		this.xVelocity = 0;
 		this.yVelocity = 0;
+		this.keyLeft = 0;
+		this.keyRight = 0;
+		this.keyUp = 0;
+		this.keyDown = 0;
 		
 		this.HEIGHT = 32;	//Of sprite or Hitbox
 		this.WIDTH = 32;	//Update later
@@ -49,7 +53,7 @@ public class PlayerOne {
 	}
 
 	public int getCurrentY() {
-		return x;
+		return y;
 	}
 	
 	public int getVelocityX() {
@@ -69,17 +73,17 @@ public class PlayerOne {
 	}
 	
 	//Mutators
-	public void setCurrentX(int x) {
-		this.x += x;
+	public void setCurrentX(int xVelocity) {
+		this.x += xVelocity;
 	}
 
-	public void setCurrentY(int y) {
-		this.y += y;
+	public void setCurrentY(int yVelocity) {
+		this.y += yVelocity;
 	}
 	
-	public void setXandY(int x, int y){
-		this.x = x;
-		this.y = y;
+	public void setXandY(int xVelocity, int yVelocity){
+		this.x += xVelocity;
+		this.y += yVelocity;
 	}
 
 	public void setVelocity(int xSpeed, int ySpeed){
@@ -100,31 +104,35 @@ public class PlayerOne {
 		
 		//Set ySpeed
 		if (input.isKeyDown(KeyEvent.VK_W)){
-			this.y -= BASE_Y_SPEED;
-			System.out.println("W");
-		}else if (input.isKeyDown(KeyEvent.VK_S)){
-			yVelocity += BASE_Y_SPEED;
-			System.out.println("S");
-		} else {
-			yVelocity = 0;
+			this.keyUp = -1;
+			//System.out.println("W");
+		}
+		if (input.isKeyDown(KeyEvent.VK_S)){
+			this.keyDown = 1;
+			//System.out.println("S");
 		}
 		
 		//Set xSpeed
 		if (input.isKeyDown(KeyEvent.VK_A)){
-			this.xVelocity -= BASE_X_SPEED;
-			System.out.println("A");
-		}else if (input.isKeyDown(KeyEvent.VK_D)){
-			this.xVelocity += BASE_X_SPEED;
-			System.out.println("D");
-		} else {
-			xVelocity = 0;
+			this.keyLeft = -1;
+			//System.out.println("A");
+		}
+		if (input.isKeyDown(KeyEvent.VK_D)){
+			this.keyRight = 1;
+			//System.out.println("D");
 		}
 		
-		this.setCurrentX(xVelocity);
-		this.setCurrentY(yVelocity);
+		xVelocity = (this.keyLeft + this.keyRight) * this.BASE_X_SPEED;
+		yVelocity = (this.keyUp + this.keyDown) * this.BASE_Y_SPEED;
+		
+		this.setXandY(xVelocity, yVelocity);
 		
 		xVelocity = 0;
 		yVelocity = 0;
+		keyLeft = 0;
+		keyRight = 0;
+		keyUp = 0;
+		keyDown = 0;
 	}
 
 }
