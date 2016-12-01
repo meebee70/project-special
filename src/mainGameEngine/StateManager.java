@@ -10,6 +10,10 @@ import levels.Level;
 
 public class StateManager extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final int WINDOW_WIDTH = 1024;
 	public final int WINDOW_HEIGHT = 512;
 	public final int UNIVERSE_WIDTH = 2000;
