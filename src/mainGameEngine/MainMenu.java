@@ -121,7 +121,7 @@ public class MainMenu
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
 			if (currentlySelected == 0){
 				isRunning = false;
-				Level1 firstLevel = new Level1(sm);
+				Level1 firstLevel = new Level1(sm,sm.getGraphics());
 				sm.levels.push(firstLevel);
 
 			}else if (currentlySelected == 1){

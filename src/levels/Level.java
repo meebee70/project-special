@@ -1,16 +1,19 @@
 package levels;
 
+import java.awt.Graphics;
+
 import mainGameEngine.StateManager;
 
 public abstract class Level {
 	
-	
+	public Graphics g;
 	private boolean isRunning = true;
 	private final int fps = 60;
 	public StateManager sm;
 	
-	public Level( StateManager sm){
+	public Level( StateManager sm, Graphics g){
 		this.sm = sm;
+		this.g = sm.getGraphics();
 	}
 	
 	public void run(){

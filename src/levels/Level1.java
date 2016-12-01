@@ -14,7 +14,6 @@ import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 
 public class Level1 extends Level {
-	private Graphics g;
 	private int left = sm.insets.left;
 	private int top = sm.insets.top;
 	private Image background;
@@ -32,10 +31,8 @@ public class Level1 extends Level {
 	private int yUniverse = ((y1 +y2)/2);
 	
 
-	public Level1(StateManager sm) {
-		super(sm);
-		g = sm.getGraphics();
-		
+	public Level1(StateManager sm, Graphics g) {
+		super(sm,g);
 	}
 
 	@Override
