@@ -91,19 +91,19 @@ public class Level1 extends Level {
 	@Override
 	public void draw() {
 		Graphics universe = sm.backBuffer.getGraphics();
-		universe.fillRect(0,0,universeWidth,universeHeight);
-		universe.drawImage(background,x1,y1,sm);
-		universe.drawImage(background, x2,y2, sm);
-		
-		universe.setColor(Color.BLUE);
-		universe.fillRect(0, 0, universeWidth, 5);
-		universe.fillRect(0, 0, 5, universeHeight);
-		universe.fillRect(universeWidth - 5, 0, 5, universeHeight);
+		drawUniverse(universe);
 		
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(left, top, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT);
 		g.drawImage(sm.backBuffer,xUniverse,yUniverse,sm);
+	}
+	
+	
+	private void drawUniverse(Graphics universe){
+		universe.fillRect(0,0,universeWidth,universeHeight);
+		universe.drawImage(background,x1,y1,sm);
+		universe.drawImage(background, x2,y2, sm);
 	}
 
 }
