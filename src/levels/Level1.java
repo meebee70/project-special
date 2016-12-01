@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 
 import com.sun.glass.events.KeyEvent;
 
+import addTerrain.StaticTerrain;
+import addTerrain.Terrain;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 
@@ -30,6 +32,8 @@ public class Level1 extends Level {
 	private int xUniverse = ((x1 + x2)/2);
 	private int yUniverse = ((y1 +y2)/2);
 	
+	private Terrain[] platforms = new Terrain[10];
+	
 
 	public Level1(StateManager sm, Graphics g) {
 		super(sm,g);
@@ -46,6 +50,10 @@ public class Level1 extends Level {
 			e.printStackTrace();
 		}
 		g.drawImage(background,(int)x1 , (int)y1, sm);
+		
+		for (int i = 0; i < platforms.length; i++){
+			platforms[i] = new StaticTerrain(i * 40, i * 200, i * 50, i * 50 - 5, null);
+		}
 
 		
 		
@@ -95,9 +103,17 @@ public class Level1 extends Level {
 	*/
 	
 	public void drawUniverse(Graphics universe){
+		universe.setColor(Color.PINK);
 		universe.fillRect(0,0,universeWidth,universeHeight);
+		universe.setColor(Color.GREEN);
+		for (Terrain thing: platforms){
+			universe.fillRect(thing.getX(), thing.getY(), thing.WIDTH, thing.HEIGHT);
+		}
 		universe.drawImage(background,x1,y1,sm);
 		universe.drawImage(background, x2,y2, sm);
+		
+		
+		
 	}
 	
 	public void drawScreen(Graphics screen){
