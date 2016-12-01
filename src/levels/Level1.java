@@ -19,8 +19,8 @@ public class Level1 extends Level {
 	private int top = sm.insets.top;
 	private Image background;
 	private InputHandler input = sm.input;
-	private static int universeWidth = 3000;
-	private static int universeHeight = 1200;
+	private static int universeWidth = 20000;
+	private static int universeHeight = 8000;
 	
 	private int x1 = left;
 	private int y1 = top;
@@ -91,16 +91,18 @@ public class Level1 extends Level {
 	@Override
 	public void draw() {
 		Graphics universe = sm.backBuffer.getGraphics();
-		universe.fillRect(left,top,universeWidth,universeHeight);
+		universe.fillRect(0,0,universeWidth,universeHeight);
 		universe.drawImage(background,x1,y1,sm);
 		universe.drawImage(background, x2,y2, sm);
 		
 		universe.setColor(Color.BLUE);
 		universe.fillRect(0, 0, universeWidth, 5);
 		universe.fillRect(0, 0, 5, universeHeight);
-		universe.fillRect(universeWidth, 0, 5,universeHeight);
-		universe.fillRect(0, universeHeight, universeWidth, 5);
+		universe.fillRect(universeWidth - 5, 0, 5, universeHeight);
 		
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(left, top, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT);
 		g.drawImage(sm.backBuffer,xUniverse,yUniverse,sm);
 	}
 

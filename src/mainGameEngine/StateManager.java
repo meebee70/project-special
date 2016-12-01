@@ -12,6 +12,8 @@ public class StateManager extends JFrame {
 	
 	public final int WINDOW_WIDTH = 1024;
 	public final int WINDOW_HEIGHT = 512;
+	public final int UNIVERSE_WIDTH = 2000;
+	public final int UNIVERSE_HEIGHT = 1500;
 	public Insets insets;
 	public BufferedImage backBuffer;
 	public InputHandler input;
@@ -30,7 +32,7 @@ public class StateManager extends JFrame {
 		setSize(insets.left + WINDOW_WIDTH + insets.right, 
 				insets.top + WINDOW_HEIGHT + insets.bottom); 
 
-		backBuffer = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB); 
+		backBuffer = new BufferedImage(UNIVERSE_WIDTH, UNIVERSE_HEIGHT, BufferedImage.TYPE_INT_RGB); 
 		input = new InputHandler(this);
 	}
 }
