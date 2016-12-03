@@ -10,10 +10,11 @@ import mainGameEngine.StateManager;
 
 public class PlayerTwo {
 	
-	private final int BASE_X_SPEED = 1; // pixels/frame
-	private final int BASE_Y_SPEED = 1;
+	private final double BASE_X_SPEED = 1.5; // pixels/frame
+	private final double BASE_Y_SPEED = 1;
 	
-	private int x, y, xSpeed, ySpeed, xVelocity, yVelocity, keyLeft, keyRight, keyUp, keyDown;
+	private int keyLeft, keyRight, keyUp, keyDown;
+	private double x, y, xSpeed, ySpeed, xVelocity, yVelocity;
 	
 	private String sprite;
 	
@@ -49,19 +50,11 @@ public class PlayerTwo {
 	
 	//Accessors
 	public int getCurrentX() {
-		return x;
+		return (int) x;
 	}
 
 	public int getCurrentY() {
-		return y;
-	}
-	
-	public int getVelocityX() {
-		return xSpeed;
-	}
-	
-	public int getVelocityY() {
-		return ySpeed;
+		return (int) y;
 	}
 	
 	public long getHeight() {
@@ -73,28 +66,41 @@ public class PlayerTwo {
 	}
 	
 	//Mutators
-	public void setCurrentX(int xVelocity) {
+	public void setCurrentX(double xVelocity) {
+		this.x = xVelocity;
+	}
+
+	public void setCurrentY(double yVelocity) {
+		this.y = yVelocity;
+	}
+	
+	public void setXandY(double xVelocity, double yVelocity){
+		this.x = xVelocity;
+		this.y = yVelocity;
+	}
+	
+	public void moveX(double xVelocity) {
 		this.x += xVelocity;
 	}
 
-	public void setCurrentY(int yVelocity) {
+	public void moveY(double yVelocity) {
 		this.y += yVelocity;
 	}
 	
-	public void setXandY(int xVelocity, int yVelocity){
+	public void moveXandY(double xVelocity, double yVelocity){
 		this.x += xVelocity;
 		this.y += yVelocity;
 	}
 
-	public void setVelocity(int xSpeed, int ySpeed){
+	public void setVelocity(double xSpeed, double ySpeed){
 		this.xSpeed = xSpeed;
 		this.ySpeed = ySpeed;
 	}
-	public void setVelocityX(int xSpeed) {
+	public void setVelocityX(double xSpeed) {
 		this.xSpeed = xSpeed;
 	}
 
-	public void setVelocityY(int ySpeed) {
+	public void setVelocityY(double ySpeed) {
 		this.ySpeed = ySpeed;
 	}
 	
@@ -125,7 +131,27 @@ public class PlayerTwo {
 		xVelocity = (this.keyLeft + this.keyRight) * this.BASE_X_SPEED;
 		yVelocity = (this.keyUp + this.keyDown) * this.BASE_Y_SPEED;
 		
-		this.setXandY(xVelocity, yVelocity);
+		//Collision
+		if (this.x + xVelocity < 0){
+			this.setCurrentX(0);
+			this.xVelocity = 0;
+		}
+		if (this.getCurrentY() < 0){
+			this.setCurrentY(0);
+			this.yVelocity = 0;
+		}
+		if (this.x + xVelocity >= sm.UNIVERSE_WIDTH - WIDTH){
+			this.setCurrentX(sm.UNIVERSE_WIDTH - WIDTH -1);
+			this.xVelocity = 0;
+			System.out.println("End of line");
+		}
+		if (this.getCurrentY() >= sm.UNIVERSE_HEIGHT - HEIGHT){
+			this.setCurrentY(sm.UNIVERSE_HEIGHT - HEIGHT -1);
+			this.yVelocity = 0;
+			System.out.println("End of line");
+		}
+		
+		this.moveXandY(xVelocity, yVelocity);
 		
 		xVelocity = 0;
 		yVelocity = 0;
