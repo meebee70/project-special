@@ -9,9 +9,10 @@ import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 
 public class PlayerTwo {
+	final int FPS = 60;
 	
-	private final double BASE_X_SPEED = 1.5; // pixels/frame
-	private final double BASE_Y_SPEED = 1;
+	private final double BASE_X_SPEED = 90 / FPS; // pixels/frame
+	private final double BASE_Y_SPEED = 90 / FPS;
 	
 	private int keyLeft, keyRight, keyUp, keyDown;
 	private double x, y, xSpeed, ySpeed, xVelocity, yVelocity;
@@ -48,7 +49,7 @@ public class PlayerTwo {
 		System.out.println(Objects.class);
 	}
 	
-	//Accessors
+	//ACCESSORS
 	public int getCurrentX() {
 		return (int) x;
 	}
@@ -65,47 +66,47 @@ public class PlayerTwo {
 		return WIDTH;
 	}
 	
-	//Mutators
-	public void setCurrentX(double xVelocity) {
-		this.x = xVelocity;
+	//MUTATORS
+	//@Param = new x and/or y coord
+	public void setCurrentX(double newX) {
+		this.x = newX;
 	}
-
-	public void setCurrentY(double yVelocity) {
-		this.y = yVelocity;
+	public void setCurrentY(double newY) {
+		this.y = newY;
+	}
+	public void setXandY(double newX, double newY){
+		this.x = newX;
+		this.y = newY;
 	}
 	
-	public void setXandY(double xVelocity, double yVelocity){
-		this.x = xVelocity;
-		this.y = yVelocity;
-	}
-	
+	//Adds @Param to x and/or y coord
 	public void moveX(double xVelocity) {
 		this.x += xVelocity;
 	}
-
 	public void moveY(double yVelocity) {
 		this.y += yVelocity;
 	}
-	
 	public void moveXandY(double xVelocity, double yVelocity){
 		this.x += xVelocity;
 		this.y += yVelocity;
 	}
-
+	
+	//Consider removing later?
+	public void setVelocityX(double xSpeed) {
+		this.xSpeed = xSpeed;
+	}
+	public void setVelocityY(double ySpeed) {
+		this.ySpeed = ySpeed;
+	}
 	public void setVelocity(double xSpeed, double ySpeed){
 		this.xSpeed = xSpeed;
 		this.ySpeed = ySpeed;
 	}
-	public void setVelocityX(double xSpeed) {
-		this.xSpeed = xSpeed;
-	}
-
-	public void setVelocityY(double ySpeed) {
-		this.ySpeed = ySpeed;
-	}
 	
 	//GET INPUT AND USE IT
-	
+	/**
+	 * Updates Player Object while getting input and calculating new x & y
+	 */
 	public void updatePlayer(){
 		
 		//Set ySpeed
@@ -131,7 +132,7 @@ public class PlayerTwo {
 		xVelocity = (this.keyLeft + this.keyRight) * this.BASE_X_SPEED;
 		yVelocity = (this.keyUp + this.keyDown) * this.BASE_Y_SPEED;
 		
-		//Collision
+		//Collision (Should we have this in a separate method?)
 		if (this.x + xVelocity < 0){
 			this.setCurrentX(0);
 			this.xVelocity = 0;

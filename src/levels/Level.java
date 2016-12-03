@@ -8,7 +8,7 @@ public abstract class Level {
 	
 	public Graphics g;
 	private boolean isRunning = true;
-	private final int fps = 60;
+	private final int FPS = 60;
 	public StateManager sm;
 	
 	public Level( StateManager sm, Graphics g){
@@ -27,7 +27,7 @@ public abstract class Level {
 			
 			
 		//  delay for each frame  -   time it took for one frame 
-					time = (1000 / fps) - (System.currentTimeMillis() - time); 
+					time = (1000 / FPS) - (System.currentTimeMillis() - time); 
 					
 					if (time > 0) 
 					{ 
