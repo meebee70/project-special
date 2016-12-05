@@ -14,6 +14,7 @@ import characters.PlayerOne;
 import characters.PlayerTwo;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
+import terrain.Terrain;
 
 public class Level1 extends Level {
 	private int left = sm.insets.left;
@@ -37,6 +38,8 @@ public class Level1 extends Level {
 	private PlayerOne playerOne;
 	private PlayerTwo playerTwo;
 	
+	private Terrain[] platforms = new Terrain[10];
+	
 
 	public Level1(StateManager sm, Graphics g) {
 		super(sm,g);
@@ -53,6 +56,10 @@ public class Level1 extends Level {
 			e.printStackTrace();
 		}
 		g.drawImage(background,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
+		
+		for (int i = 0; i < platforms.length; i++){
+			platforms[i] = new Terrain(i * 40, i * 200, i * 50, i * 50 - 5, null);
+		}
 
 		playerOne = new PlayerOne(64,64,sm);
 		playerTwo = new PlayerTwo(128,64,sm);
@@ -84,9 +91,17 @@ public class Level1 extends Level {
 	*/
 	
 	public void drawUniverse(Graphics universe){
+		universe.setColor(Color.PINK);
 		universe.fillRect(0,0,universeWidth,universeHeight);
+		universe.setColor(Color.GREEN);
+		for (Terrain thing: platforms){
+			universe.fillRect(thing.getX(), thing.getY(), thing.WIDTH, thing.HEIGHT);
+		}
 		universe.drawImage(background,playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
 		universe.drawImage(background,playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
+		
+		
+		
 	}
 	
 	public void drawScreen(Graphics screen){

@@ -4,9 +4,9 @@ import java.util.Objects;
 
 import com.sun.glass.events.KeyEvent;
 
-import addTerrain.Terrain;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
+import terrain.Terrain;
 
 public class PlayerTwo {
 	final int FPS = 60;
