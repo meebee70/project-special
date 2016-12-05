@@ -11,11 +11,11 @@ import mainGameEngine.StateManager;
 public class PlayerOne {
 	final int FPS = 60;
 	
-	private final double BASE_X_SPEED = 90 / FPS; // pixels/frame
-	private final double BASE_Y_SPEED = 90 / FPS;
+	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
+	private final double BASE_Y_SPEED = 60 / FPS;
 	
 	private int keyLeft, keyRight, keyUp, keyDown;
-	private double x, y, xSpeed, ySpeed, xVelocity, yVelocity;
+	private double x, y, xVelocity, yVelocity;
 	
 	private String sprite;
 	
@@ -29,8 +29,6 @@ public class PlayerOne {
 	public PlayerOne(int x, int y, StateManager sm){
 		this.x = x;
 		this.y = y;
-		this.xSpeed = BASE_X_SPEED;
-		this.ySpeed = BASE_Y_SPEED;
 		this.xVelocity = 0;
 		this.yVelocity = 0;
 		this.keyLeft = 0;
@@ -89,18 +87,6 @@ public class PlayerOne {
 	public void moveXandY(double xVelocity, double yVelocity){
 		this.x += xVelocity;
 		this.y += yVelocity;
-	}
-	
-	//Consider removing later?
-	public void setVelocityX(double xSpeed) {
-		this.xSpeed = xSpeed;
-	}
-	public void setVelocityY(double ySpeed) {
-		this.ySpeed = ySpeed;
-	}
-	public void setVelocity(double xSpeed, double ySpeed){
-		this.xSpeed = xSpeed;
-		this.ySpeed = ySpeed;
 	}
 	
 	//GET INPUT AND USE IT
