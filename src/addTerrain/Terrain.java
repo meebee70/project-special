@@ -1,6 +1,6 @@
 package addTerrain;
 
-public abstract class Terrain {
+public class Terrain {
 	
 	public int x;
 	public int y;
@@ -10,21 +10,9 @@ public abstract class Terrain {
 	private final String sprite;
 	
 	
-	/*generic constructor
-	 * 
-	 */
 	public Terrain(int x, int y, int width, int height,String sprite){
 		this.x = x;
 		this.y = y;
-		this.WIDTH = width;
-		this.HEIGHT = height;
-		this.sprite = sprite;
-	}
-	
-	/*Constructor used for non-moving (static) terrain
-	 * 
-	 */
-	public Terrain(int width, int height, String sprite){
 		this.WIDTH = width;
 		this.HEIGHT = height;
 		this.sprite = sprite;

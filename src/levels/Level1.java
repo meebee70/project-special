@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 
 import com.sun.glass.events.KeyEvent;
 
-import addTerrain.StaticTerrain;
 import addTerrain.Terrain;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
@@ -52,7 +51,7 @@ public class Level1 extends Level {
 		g.drawImage(background,(int)x1 , (int)y1, sm);
 		
 		for (int i = 0; i < platforms.length; i++){
-			platforms[i] = new StaticTerrain(i * 40, i * 200, i * 50, i * 50 - 5, null);
+			platforms[i] = new Terrain(i * 40, i * 200, i * 50, i * 50 - 5, null);
 		}
 
 		
