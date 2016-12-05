@@ -7,6 +7,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+
 import levels.Level1;
 import mainGameEngine.InputHandler;
 /**
@@ -72,9 +78,27 @@ public class MainMenu
 	 * This method will set up everything need for the game to run 
 	 */ 
 	void initialize() 
-	{ 
-		
+	{
 
+		
+		try {
+		    File mainMenuMusic = new File("Quiet Meadow.wav");
+		    AudioInputStream stream;
+		    AudioFormat format;
+		    DataLine.Info info;
+		    Clip clip;
+
+		    stream = AudioSystem.getAudioInputStream(mainMenuMusic);
+		    format = stream.getFormat();
+		    info = new DataLine.Info(Clip.class, format);
+		    clip = (Clip) AudioSystem.getLine(info);
+		    clip.open(stream);
+		    clip.loop(128);
+		}
+		catch (Exception e) {
+			System.out.println("Exception e");
+		}
+		
 		
 		try {
 			retroComputer = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 50);
