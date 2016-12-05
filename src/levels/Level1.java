@@ -74,7 +74,7 @@ public class Level1 extends Level {
 		}
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 		
-		if (cam.doesMove(playerOne.getCurrentX(), playerTwo.getCurrentX(), 0, 0)){}
+		cam.move(playerOne.getCurrentX(),playerTwo.getCurrentX(),playerOne.getCurrentY(),playerTwo.getCurrentY());
 	}
 	
 	public void drawUniverse(Graphics universe){

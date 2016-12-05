@@ -12,12 +12,14 @@ public class Camera {
 	private int y;
 	private final int xZoom;
 	private final int yZoom;
+	private final int speed;
 	
 	
 	public Camera(Graphics window,int xZoom,int yZoom){
 		this.frame = window;
 		this.xZoom = xZoom;
 		this.yZoom = yZoom;
+		this.speed = 3;
 	}
 
 	public Camera(Graphics window , StateManager sm ,int x,int y, int xZoom, int yZoom){
@@ -27,29 +29,49 @@ public class Camera {
 		this.y = y;
 		this.xZoom = xZoom;
 		this.yZoom = yZoom;
+		this.speed = 3;
 	}
 	
 	public void drawImage(Image image){
 		frame.drawImage(image,sm.insets.left,sm.insets.top,sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT, this.x, this.y, this.x + xZoom, this.y + yZoom, sm);
 	}
 	
-	public boolean doesMove(int player1X,int player2X, int player1Y, int player2Y){
-		double leftBound = (sm.WINDOW_WIDTH * 0.3) - this.x;
-		double rightBound = (sm.WINDOW_WIDTH - (sm.WINDOW_WIDTH * 0.3)) - this.x;
-		boolean player1 = false;
-		boolean player2 = false;
-		System.out.print(leftBound + " " + player1X + "   " + rightBound + " " + player2X + "     ");
+	
+	
+	public void move(int x1,int x2, int y1, int y2){
+		double leftBound = (sm.WINDOW_WIDTH * 0.1) + (this.x);
+		double rightBound = (sm.WINDOW_WIDTH - (sm.WINDOW_WIDTH * 0.5)) + (this.x);
 		
-		if (leftBound < player1X || player1X < rightBound){
-			player1 = true;
+		if (doesMove(x1, x2, y1, y2,leftBound,rightBound)){
+			if (getXDirection(x1,x2,y1,y2,leftBound,rightBound) > 0){
+				this.x += speed;
+			}else{
+				this.x -= speed;
+			}
 		}
-		if (leftBound < player2X || player2X < rightBound){
-			player2 = true;
+		
+	}
+	
+	private int getXDirection(int x1, int x2, int y1, int y2, double leftBound, double rightBound){
+		if ((x1 > rightBound) ^ (x2 > rightBound)){
+			return 1;
+		}else
+			return -1;
+	}
+	
+	private boolean doesMove(int player1X,int player2X, int player1Y, int player2Y, double leftBound, double rightBound){
+		boolean leftMove = false;
+		boolean rightMove = false;
+		
+		if (player1X < leftBound || player2X < leftBound){
+			leftMove = true;
+		}
+		if (player1X > rightBound || player2X > rightBound){
+			rightMove = true;
 		}
 		
-		System.out.print(player1 + "   " + player2 + "    ");
 		
-		if (player1 ^ player2){
+		if (leftMove ^ rightMove){
 			System.out.println("true");
 			return true;
 		}else{
