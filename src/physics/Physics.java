@@ -1,5 +1,8 @@
 package physics;
 
+import characters.PlayerOne;
+import terrain.Terrain;
+
 public class Physics {
 	private final double defaultGravity = 0.1;
 	private final double defaultFriction = 0.08;
@@ -40,4 +43,29 @@ public class Physics {
 	public void setFriction(double amount){
 		this.friction = amount;
 	}
+	
+	
+	//usefull stuff anything might use
+	
+	public boolean collides(PlayerOne player, Terrain platform){
+		
+		double platX = platform.getX();
+		double platY = platform.getY();
+		
+		if (isInside(platX,platX + platform.WIDTH, player.getCurrentX())){
+			if (isInside(platY,platY + platform.HEIGHT,player.getCurrentY())){
+				System.out.println("true");
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean isInside(double leftBound, double rightBound, double value){
+		if (leftBound < value && value < rightBound){
+			return true;
+		}else
+			return false;
+	}
+	
 }

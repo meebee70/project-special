@@ -41,10 +41,7 @@ public class PlayerOne {
 		this.sm = sm;
 		input = sm.input;
 		
-	}
-
-	public void collide(Terrain[] objects){
-		System.out.println(Objects.class);
+		
 	}
 	
 	//ACCESSORS
@@ -93,7 +90,7 @@ public class PlayerOne {
 	/**
 	 * Updates Player Object while getting input and calculating new x & y
 	 */
-	public void updatePlayer(){
+	public void updatePlayer(Terrain[] platforms){
 		
 		//Set ySpeed
 		if (input.isKeyDown(KeyEvent.VK_W)){
@@ -140,12 +137,18 @@ public class PlayerOne {
 		
 		this.moveXandY(xVelocity, yVelocity);
 		
+		for (Terrain form: platforms){
+			sm.physics.collides(this, form);
+		}
+		
 		xVelocity = 0;
 		yVelocity = 0;
 		keyLeft = 0;
 		keyRight = 0;
 		keyUp = 0;
 		keyDown = 0;
+		
+		
 	}
 
 }

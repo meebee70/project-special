@@ -36,7 +36,7 @@ public class Level1 extends Level {
 	
 	private Terrain[] platforms = new Terrain[10];
 	
-	private Camera cam = new Camera(sm.getGraphics(),sm , -50 , -50 , 900 , 600);
+	private Camera cam = new Camera(sm.getGraphics(),sm , -50 , -50 , 1000 , 500);
 	
 
 	public Level1(StateManager sm, Graphics g) {
@@ -56,7 +56,7 @@ public class Level1 extends Level {
 		g.drawImage(background,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
 		
 		for (int i = 0; i < platforms.length; i++){
-			platforms[i] = new Terrain(i * 40, i * 200, i * 50, i * 50 - 5, null);
+			platforms[i] = new Terrain(i * 400, i * 40, 300, 300, null);
 		}
 
 		playerOne = new PlayerOne(64,64,sm);
@@ -66,7 +66,7 @@ public class Level1 extends Level {
 
 	@Override
 	public void update() {
-		playerOne.updatePlayer();
+		playerOne.updatePlayer(platforms);
 		playerTwo.updatePlayer();
 		
 		if(input.isKeyDown(KeyEvent.VK_ESCAPE)){
