@@ -40,4 +40,6 @@ public class Physics {
 	public void setFriction(double amount){
 		this.friction = amount;
 	}
+	
+	
 }

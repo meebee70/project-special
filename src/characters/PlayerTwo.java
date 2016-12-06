@@ -162,5 +162,8 @@ public class PlayerTwo {
 		keyUp = 0;
 		keyDown = 0;
 	}
+	public void collision(){
+		
+	}
 
 }
