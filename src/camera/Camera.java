@@ -39,8 +39,8 @@ public class Camera {
 	
 	
 	public void move(int x1,int x2, int y1, int y2){
-		double leftBound = (sm.WINDOW_WIDTH * 0.1) + (this.x);
-		double rightBound = (sm.WINDOW_WIDTH - (sm.WINDOW_WIDTH * 0.5)) + (this.x);
+		double leftBound = (xZoom * 0.1) + (this.x);
+		double rightBound = (xZoom - (xZoom * 0.1)) + (this.x);
 		
 		if (doesMove(x1, x2, leftBound,rightBound)){
 			if (getXDirection(x1,x2,y1,y2,leftBound,rightBound) > 0){
