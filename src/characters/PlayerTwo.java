@@ -71,6 +71,7 @@ public class PlayerTwo {
 	public void setCurrentX(double newX) {
 		this.x = newX;
 	}
+	
 	public void setCurrentY(double newY) {
 		this.y = newY;
 	}
