@@ -42,13 +42,15 @@ public class Camera {
 		double leftBound = (sm.WINDOW_WIDTH * 0.1) + (this.x);
 		double rightBound = (sm.WINDOW_WIDTH - (sm.WINDOW_WIDTH * 0.5)) + (this.x);
 		
-		if (doesMove(x1, x2, y1, y2,leftBound,rightBound)){
+		if (doesMove(x1, x2, leftBound,rightBound)){
 			if (getXDirection(x1,x2,y1,y2,leftBound,rightBound) > 0){
-				this.x += speed;
+				this.x = (Math.max(x1, x2) - 250); // actually a magic number
 			}else{
-				this.x -= speed;
+				this.x = (Math.min(x1, x2) - 250); // -100 for good measure
 			}
 		}
+		
+		this.y = (Math.min(y1, y2)) - (this.yZoom / 2);
 		
 	}
 	
@@ -59,7 +61,7 @@ public class Camera {
 			return -1;
 	}
 	
-	private boolean doesMove(int player1X,int player2X, int player1Y, int player2Y, double leftBound, double rightBound){
+	private boolean doesMove(int player1X,int player2X, double leftBound, double rightBound){
 		boolean leftMove = false;
 		boolean rightMove = false;
 		
