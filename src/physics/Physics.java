@@ -4,8 +4,8 @@ public class Physics {
 	private final double defaultGravity = 0.1;
 	private final double defaultFriction = 0.08;
 	
-	public double gravity;
-	public double friction;
+	private double gravity;
+	private double friction;
 	
 
 	public Physics(){
@@ -40,8 +40,4 @@ public class Physics {
 	public void setFriction(double amount){
 		this.friction = amount;
 	}
-
-	
-	
-
 }
