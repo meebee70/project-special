@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import com.sun.glass.events.KeyEvent;
 
+import camera.Camera;
 import characters.PlayerOne;
 import characters.PlayerTwo;
 import mainGameEngine.InputHandler;
@@ -21,8 +22,6 @@ public class Level1 extends Level {
 	private int top = sm.insets.top;
 	private Image background;
 	private InputHandler input = sm.input;
-	private static int universeWidth = 20000;
-	private static int universeHeight = 8000;
 	
 	final private int INITIAL_X_P1 = 0;
 	final private int INITIAL_Y_P1 = 0;
@@ -32,13 +31,12 @@ public class Level1 extends Level {
 	private int x2 = INITIAL_X_P2;
 	private int y2 = INITIAL_Y_P2;
 	
-	private int xUniverse = ((INITIAL_X_P1 + x2)/2);
-	private int yUniverse = ((INITIAL_Y_P1 +y2)/2);
-	
 	private PlayerOne playerOne;
 	private PlayerTwo playerTwo;
 	
 	private Terrain[] platforms = new Terrain[10];
+	
+	private Camera cam = new Camera(sm.getGraphics(),sm , -50 , -50 , 900 , 600);
 	
 
 	public Level1(StateManager sm, Graphics g) {
@@ -74,40 +72,26 @@ public class Level1 extends Level {
 		if(input.isKeyDown(KeyEvent.VK_ESCAPE)){
 			sm.levels.pop();
 		}
-		
-		xUniverse =-((playerOne.getCurrentX() + playerTwo.getCurrentX())/2) + (sm.WINDOW_WIDTH/2);
-		yUniverse =-((playerOne.getCurrentY() +playerTwo.getCurrentY())/2) + (sm.WINDOW_HEIGHT /2);
-		
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
-	}
-
-	@Override/**
-	public void draw() {
-		Graphics universe = sm.backBuffer.getGraphics();
-		drawUniverse(universe);
 		
-		drawScreen(g);
+		cam.move(playerOne.getCurrentX(),playerTwo.getCurrentX(),playerOne.getCurrentY(),playerTwo.getCurrentY());
 	}
-	*/
 	
 	public void drawUniverse(Graphics universe){
 		universe.setColor(Color.PINK);
-		universe.fillRect(0,0,universeWidth,universeHeight);
+		universe.fillRect(0,0,sm.UNIVERSE_WIDTH,sm.UNIVERSE_HEIGHT);
 		universe.setColor(Color.GREEN);
 		for (Terrain thing: platforms){
 			universe.fillRect(thing.getX(), thing.getY(), thing.WIDTH, thing.HEIGHT);
 		}
 		universe.drawImage(background,playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
 		universe.drawImage(background,playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
-		
-		
-		
 	}
 	
 	public void drawScreen(Graphics screen){
 		screen.setColor(Color.BLACK);
 		screen.fillRect(left, top, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT);
-		screen.drawImage(sm.backBuffer, xUniverse, yUniverse, sm);
+		cam.drawImage(sm.backBuffer);
 	}
 
 }
