@@ -7,6 +7,7 @@ import java.util.Stack;
 import javax.swing.JFrame;
 
 import levels.Level;
+import physics.Physics;
 
 public class StateManager extends JFrame {
 	
@@ -21,6 +22,7 @@ public class StateManager extends JFrame {
 	public Insets insets;
 	public BufferedImage backBuffer;
 	public InputHandler input;
+	public Physics physics;
 	
 	public Stack<Level> levels = new Stack<Level>();
 	
@@ -38,5 +40,6 @@ public class StateManager extends JFrame {
 
 		backBuffer = new BufferedImage(UNIVERSE_WIDTH, UNIVERSE_HEIGHT, BufferedImage.TYPE_INT_RGB); 
 		input = new InputHandler(this);
+		physics = new Physics();
 	}
 }
