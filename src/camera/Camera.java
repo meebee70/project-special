@@ -19,7 +19,7 @@ public class Camera {
 		this.frame = window;
 		this.xZoom = xZoom;
 		this.yZoom = yZoom;
-		this.speed = 3;
+		this.speed = 1;
 	}
 
 	public Camera(Graphics window , StateManager sm ,int x,int y, int xZoom, int yZoom){
@@ -44,13 +44,13 @@ public class Camera {
 		
 		if (doesMove(x1, x2, leftBound,rightBound)){
 			if (getXDirection(x1,x2,y1,y2,leftBound,rightBound) > 0){
-				this.x = (Math.max(x1, x2) - 250); // actually a magic number
+				this.x += speed;
 			}else{
-				this.x = (Math.min(x1, x2) - 250); // -100 for good measure
+				this.x -= speed;
 			}
 		}
 		
-		this.y = (Math.min(y1, y2)) - (this.yZoom / 2);
+		this.y = (int) ((Math.max(y1, y2)) - (this.yZoom / 1.6));
 		
 	}
 	
