@@ -127,20 +127,48 @@ public class PlayerOne {
 		if (this.x + xVelocity >= sm.UNIVERSE_WIDTH - WIDTH){
 			this.setCurrentX(sm.UNIVERSE_WIDTH - WIDTH -1);
 			this.xVelocity = 0;
-			System.out.println("End of line");
 		}
 		if (this.getCurrentY() >= sm.UNIVERSE_HEIGHT - HEIGHT){
 			this.setCurrentY(sm.UNIVERSE_HEIGHT - HEIGHT -1);
 			this.yVelocity = 0;
-			System.out.println("End of line");
 		}
+		
+		//Uses collision in physics class to calculate physics for all the objects
+		for (Terrain form: platforms){
+			if (sm.physics.collides((int)(this.getCurrentX() + xVelocity),(int)(this.getCurrentY() + yVelocity), form)){
+				//X Collision
+				int i = 0;
+				if (xVelocity > 0){
+					i = 1;
+				} else if (xVelocity < 0){
+					xVelocity = -1;
+				} else {
+					i = 0;
+				}
+				
+				System.out.println("");
+				System.out.println(xVelocity);
+				System.out.println(keyRight + keyLeft);
+				while (!sm.physics.collides((int)(this.getCurrentX() + i),this.getCurrentY(), form) && xVelocity != 0){
+					xVelocity += i;
+					System.out.println("LOOP");
+					
+					if (xVelocity > 0){
+						i = 1;
+					} else if (xVelocity < 0){
+						xVelocity = -1;
+					} else {
+						i = 0;
+					}
+				}
+				System.out.println(xVelocity);
+				System.out.println("");
+				//Y Collision
+			}
+		}
+		
 		
 		this.moveXandY(xVelocity, yVelocity);
-		
-		for (Terrain form: platforms){
-			sm.physics.collides(this, form);
-		}
-		
 		xVelocity = 0;
 		yVelocity = 0;
 		keyLeft = 0;

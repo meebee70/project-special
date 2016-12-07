@@ -52,11 +52,19 @@ public class Physics {
 		double platX = platform.getX();
 		double platY = platform.getY();
 		
-		if (isInside(platX,platX + platform.WIDTH, player.getCurrentX())){
-			if (isInside(platY,platY + platform.HEIGHT,player.getCurrentY())){
-				System.out.println("true");
-				return true;
-			}
+		if (isInside(platX,platX + platform.WIDTH, player.getCurrentX()) && isInside(platY,platY + platform.HEIGHT,player.getCurrentY())){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean collides(int x, int y, Terrain platform){
+		
+		double platX = platform.getX();
+		double platY = platform.getY();
+		
+		if (isInside(platX,platX + platform.WIDTH, x) && isInside(platY,platY + platform.HEIGHT,y)){
+			return true;
 		}
 		return false;
 	}
