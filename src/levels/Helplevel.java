@@ -34,7 +34,9 @@ public class Helplevel
 
 
 	private int currentlySelected;
-	private String[] menuItems = {"Start","Help","QUIT"};
+	private String[] menuItems = {"Player1", "Movement: (W,A,S,D) Dash attack: Space Hold up to wall climb",
+			"Player2", "Movement: (Arrow Keys) Double Jump: (Up Twice) Ground Pound: (Double Jump, Down) Freeze Time: (Enter)",
+			"QUIT"};
 
 	private Font retroComputer, retroComputerBold;
 
