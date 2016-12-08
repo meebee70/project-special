@@ -20,7 +20,8 @@ import terrain.Terrain;
 public class Level1 extends Level {
 	private int left = sm.insets.left;
 	private int top = sm.insets.top;
-	private Image background;
+	private Image sprPlayerOne;
+	private Image sprPlayerTwo;
 	private InputHandler input = sm.input;
 	
 	final private int INITIAL_X_P1 = 0;
@@ -48,12 +49,16 @@ public class Level1 extends Level {
 		g.clearRect(left, top, sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT);
 		
 		try {
-			background = ImageIO.read(new File("Laughing Stock.gif"));
+			sprPlayerOne = ImageIO.read(new File("PlayerSprites/Player 1.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		g.drawImage(background,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
+		try {
+			sprPlayerTwo = ImageIO.read(new File("PlayerSprites/Player 2.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//g.drawImage(sprPlayerOne,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
 		
 		for (int i = 0; i < platforms.length; i++){
 			platforms[i] = new Terrain(i * 400, i * 40, 300, 300, null);
@@ -84,8 +89,8 @@ public class Level1 extends Level {
 		for (Terrain thing: platforms){
 			universe.fillRect(thing.getX(), thing.getY(), thing.WIDTH, thing.HEIGHT);
 		}
-		universe.drawImage(background,playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
-		universe.drawImage(background,playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
+		universe.drawImage(sprPlayerOne,playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
+		universe.drawImage(sprPlayerTwo,playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
 	}
 	
 	public void drawScreen(Graphics screen){

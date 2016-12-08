@@ -58,11 +58,11 @@ public class PlayerTwo {
 		return (int) y;
 	}
 	
-	public long getHeight() {
+	public int getHeight() {
 		return HEIGHT;
 	}
 
-	public long getWidth() {
+	public int getWidth() {
 		return WIDTH;
 	}
 	

@@ -1,32 +1,33 @@
 package characters;
 
-import java.util.Objects;
-
 import com.sun.glass.events.KeyEvent;
 
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
+import physics.Physics;
 import terrain.Terrain;
 
 public class PlayerOne {
 	final int FPS = 60;
-	
+
 	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
 	private final double BASE_Y_SPEED = 60 / FPS;
-	
+
 	private int keyLeft, keyRight, keyUp, keyDown;
 	private double x, y, xVelocity, yVelocity;
-	
+
 	private String sprite;
-	
+
 	private StateManager sm;
-	
+
 	private InputHandler input;
-	
+
+	Physics physics = new Physics();
+
 	final private int HEIGHT;
 	final private int WIDTH;
-	
-	public PlayerOne(int x, int y, StateManager sm){
+
+	public PlayerOne(int x, int y, StateManager sm, physics){
 		this.x = x;
 		this.y = y;
 		this.xVelocity = 0;
@@ -35,15 +36,15 @@ public class PlayerOne {
 		this.keyRight = 0;
 		this.keyUp = 0;
 		this.keyDown = 0;
-		
+
 		this.HEIGHT = 32;	//Of sprite or Hitbox
 		this.WIDTH = 32;	//Update later
 		this.sm = sm;
 		input = sm.input;
-		
-		
+
+
 	}
-	
+
 	//ACCESSORS
 	public int getCurrentX() {
 		return (int) x;
@@ -52,15 +53,15 @@ public class PlayerOne {
 	public int getCurrentY() {
 		return (int) y;
 	}
-	
-	public long getHeight() {
+
+	public int getHeight() {
 		return HEIGHT;
 	}
 
-	public long getWidth() {
+	public int getWidth() {
 		return WIDTH;
 	}
-	
+
 	//MUTATORS
 	//@Param = new x and/or y coord
 	public void setCurrentX(double newX) {
@@ -73,7 +74,7 @@ public class PlayerOne {
 		this.x = newX;
 		this.y = newY;
 	}
-	
+
 	//Adds @Param to x and/or y coord
 	public void moveX(double xVelocity) {
 		this.x += xVelocity;
@@ -85,13 +86,13 @@ public class PlayerOne {
 		this.x += xVelocity;
 		this.y += yVelocity;
 	}
-	
+
 	//GET INPUT AND USE IT
 	/**
 	 * Updates Player Object while getting input and calculating new x & y
 	 */
 	public void updatePlayer(Terrain[] platforms){
-		
+
 		//Set ySpeed
 		if (input.isKeyDown(KeyEvent.VK_W)){
 			this.keyUp = -1;
@@ -101,7 +102,7 @@ public class PlayerOne {
 			this.keyDown = 1;
 			//System.out.println("S");
 		}
-		
+
 		//Set xSpeed
 		if (input.isKeyDown(KeyEvent.VK_A)){
 			this.keyLeft = -1;
@@ -111,10 +112,10 @@ public class PlayerOne {
 			this.keyRight = 1;
 			//System.out.println("D");
 		}
-		
+
 		xVelocity = (this.keyLeft + this.keyRight) * this.BASE_X_SPEED;
 		yVelocity = (this.keyUp + this.keyDown) * this.BASE_Y_SPEED;
-		
+
 		//Collision (Should we have this in a separate method?)
 		if (this.x + xVelocity < 0){
 			this.setCurrentX(0);
@@ -132,26 +133,37 @@ public class PlayerOne {
 			this.setCurrentY(sm.UNIVERSE_HEIGHT - HEIGHT -1);
 			this.yVelocity = 0;
 		}
-		
+
+
+		this.moveXandY(xVelocity, yVelocity);
+
 		//Uses collision in physics class to calculate physics for all the objects
 		for (Terrain form: platforms){
-			if (sm.physics.collides((int)(this.getCurrentX() + xVelocity),(int)(this.getCurrentY() + yVelocity), form)){
-				//X Collision
-				
-				//Y Collision
+			//X Collision
+			if (physics.collides(this, form)){
+				while(!physics.collides(player, platform)){
+					
+				}
 			}
 		}
-		
-		
-		this.moveXandY(xVelocity, yVelocity);
+
 		xVelocity = 0;
 		yVelocity = 0;
 		keyLeft = 0;
 		keyRight = 0;
 		keyUp = 0;
 		keyDown = 0;
-		
-		
+
+
+	}
+	private int sign(int input){
+		if (input > 0){
+			return 1;
+		} else if (input < 0){
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 
 }
