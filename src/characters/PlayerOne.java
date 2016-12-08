@@ -137,32 +137,7 @@ public class PlayerOne {
 		for (Terrain form: platforms){
 			if (sm.physics.collides((int)(this.getCurrentX() + xVelocity),(int)(this.getCurrentY() + yVelocity), form)){
 				//X Collision
-				int i = 0;
-				if (xVelocity > 0){
-					i = 1;
-				} else if (xVelocity < 0){
-					xVelocity = -1;
-				} else {
-					i = 0;
-				}
 				
-				System.out.println("");
-				System.out.println(xVelocity);
-				System.out.println(keyRight + keyLeft);
-				while (!sm.physics.collides((int)(this.getCurrentX() + i),this.getCurrentY(), form) && xVelocity != 0){
-					xVelocity += i;
-					System.out.println("LOOP");
-					
-					if (xVelocity > 0){
-						i = 1;
-					} else if (xVelocity < 0){
-						xVelocity = -1;
-					} else {
-						i = 0;
-					}
-				}
-				System.out.println(xVelocity);
-				System.out.println("");
 				//Y Collision
 			}
 		}
