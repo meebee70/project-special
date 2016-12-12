@@ -60,11 +60,11 @@ public class Physics {
 		final double bY2 = bY + platform.getHeight();
 
 		int overlap = 0;
-		if (!((aX >= bX2) || (aX <= bX)) || !((aX2 >= bX2) || (aX2 <= bX))){
+		if (!((aX > bX2) || (aX < bX)) || !((aX2 > bX2) || (aX2 < bX))){
 			overlap++;
 		}
 		
-		if (!((aY <= bY2) || (aY >= bY)) || !((aY2 <= bY2) || (aY2 >= bY))){
+		if (!((aY < bY2) || (aY > bY)) || !((aY2 < bY2) || (aY2 > bY))){
 			overlap++;
 		}
 		
@@ -88,10 +88,10 @@ public class Physics {
 		
 		int overlap = 0;
 		
-		if (!((aX >= bX2) || (aX <= bX)) || !((aX2 >= bX2) || (aX2 <= bX))){
+		if ((aX > bX2 || aX < bX) || !(aX2 > bX2 || aX2 < bX)){
 			overlap++;
 		}
-		if (!((aY <= bY2) || (aY >= bY)) || !((aY2 <= bY2) || (aY2 >= bY))){
+		if ((aY < bY2 || aY > bY) || !(aY2 < bY2 || aY2 > bY)){
 			overlap++;
 		}
 		if ( (int)overlap / 2 == 1 ){

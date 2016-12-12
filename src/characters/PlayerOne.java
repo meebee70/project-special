@@ -27,7 +27,7 @@ public class PlayerOne {
 	final private int HEIGHT;
 	final private int WIDTH;
 
-	public PlayerOne(int x, int y, StateManager sm, physics){
+	public PlayerOne(int x, int y, StateManager sm){
 		this.x = x;
 		this.y = y;
 		this.xVelocity = 0;
@@ -117,7 +117,7 @@ public class PlayerOne {
 		yVelocity = (this.keyUp + this.keyDown) * this.BASE_Y_SPEED;
 
 		//Collision (Should we have this in a separate method?)
-		if (this.x + xVelocity < 0){
+		/*if (this.x + xVelocity < 0){
 			this.setCurrentX(0);
 			this.xVelocity = 0;
 		}
@@ -132,20 +132,34 @@ public class PlayerOne {
 		if (this.getCurrentY() >= sm.UNIVERSE_HEIGHT - HEIGHT){
 			this.setCurrentY(sm.UNIVERSE_HEIGHT - HEIGHT -1);
 			this.yVelocity = 0;
-		}
-
-
-		this.moveXandY(xVelocity, yVelocity);
+		}*/
 
 		//Uses collision in physics class to calculate physics for all the objects
 		for (Terrain form: platforms){
+			
+			int aX = this.getCurrentX();
+			final int aY2 = this.getCurrentY();
+			int aX2 = aX + this.getWidth();
+			final int aY = aY2 + this.getHeight();
+			final int bX = form.getX();
+			final int bY2 = form.getY();
+			final int bX2 = bX + form.getWidth();
+			final int bY = bY2 + form.getHeight();
+			
 			//X Collision
-			if (physics.collides(this, form)){
-				while(!physics.collides(player, platform)){
+			if (physics.collides((int)(aX + xVelocity), aY, (int)(aX2 + xVelocity), aY2, bX, bY, bX2, bY2)){
+				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, bX, bY, bX2, bY2)){
+					this.moveX(sign(xVelocity));
 					
+					aX = this.getCurrentX();
+					aX2 = aX + this.getHeight();
 				}
+				xVelocity = 0;
+			} else {
 			}
 		}
+		
+		this.moveXandY(xVelocity, yVelocity);
 
 		xVelocity = 0;
 		yVelocity = 0;
@@ -156,10 +170,10 @@ public class PlayerOne {
 
 
 	}
-	private int sign(int input){
-		if (input > 0){
+	private int sign(double xVelocity){
+		if (xVelocity > 0){
 			return 1;
-		} else if (input < 0){
+		} else if (xVelocity < 0){
 			return -1;
 		} else {
 			return 0;

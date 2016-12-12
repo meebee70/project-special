@@ -24,13 +24,10 @@ public class Level1 extends Level {
 	private Image sprPlayerTwo;
 	private InputHandler input = sm.input;
 	
-	final private int INITIAL_X_P1 = 0;
+	final private int INITIAL_X_P1 = 300;
 	final private int INITIAL_Y_P1 = 0;
 	final private int INITIAL_X_P2 = 100;
 	final private int INITIAL_Y_P2 = 30;
-	
-	private int x2 = INITIAL_X_P2;
-	private int y2 = INITIAL_Y_P2;
 	
 	private PlayerOne playerOne;
 	private PlayerTwo playerTwo;
@@ -64,8 +61,8 @@ public class Level1 extends Level {
 			platforms[i] = new Terrain(i * 400, i * 40, 300, 300, null);
 		}
 
-		playerOne = new PlayerOne(64,64,sm);
-		playerTwo = new PlayerTwo(128,64,sm);
+		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm);
+		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm);
 		
 	}
 
