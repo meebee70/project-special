@@ -58,8 +58,9 @@ public class Level1 extends Level {
 		//g.drawImage(sprPlayerOne,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
 		
 		for (int i = 0; i < platforms.length; i++){
-			platforms[i] = new Terrain(i * 400, i * 40, 300, 300, null);
+			platforms[i] = new Terrain(i * 400, i * 80, 300, 300, null);
 		}
+		platforms[0] = new Terrain(0, 450, sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT, null);
 
 		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm);
 		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm);
