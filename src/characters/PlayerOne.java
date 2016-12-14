@@ -1,5 +1,11 @@
 package characters;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import com.sun.glass.events.KeyEvent;
 
 import mainGameEngine.InputHandler;
@@ -19,7 +25,7 @@ public class PlayerOne {
 	private double x, y, xVelocity, yVelocity;
 	private boolean keyReleased;
 
-	private String sprite;
+	private Image sprite;
 
 	private StateManager sm;
 
@@ -45,6 +51,13 @@ public class PlayerOne {
 		this.WIDTH = 32; //Update later
 		this.sm = sm;
 		input = sm.input;
+		
+		
+		try {
+			this.sprite = ImageIO.read(new File("res/PlayerSprites/Player 1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 
 	}
@@ -64,6 +77,10 @@ public class PlayerOne {
 
 	public int getWidth() {
 		return WIDTH;
+	}
+	
+	public Image getSprite(){
+		return sprite;
 	}
 
 	//MUTATORS

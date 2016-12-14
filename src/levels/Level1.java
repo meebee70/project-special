@@ -20,8 +20,6 @@ import terrain.Terrain;
 public class Level1 extends Level {
 	private int left = sm.insets.left;
 	private int top = sm.insets.top;
-	private Image sprPlayerOne;
-	private Image sprPlayerTwo;
 	private InputHandler input = sm.input;
 	
 	final private int INITIAL_X_P1 = 300;
@@ -44,17 +42,6 @@ public class Level1 extends Level {
 	@Override
 	public void initialize() {
 		g.clearRect(left, top, sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT);
-		
-		try {
-			sprPlayerOne = ImageIO.read(new File("res/PlayerSprites/Player 1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			sprPlayerTwo = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		//g.drawImage(sprPlayerOne,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
 		
 		for (int i = 0; i < platforms.length; i++){
@@ -70,7 +57,7 @@ public class Level1 extends Level {
 	@Override
 	public void update() {
 		playerOne.updatePlayer(platforms);
-		playerTwo.updatePlayer();
+		playerTwo.updatePlayer(platforms);
 		
 		if(input.isKeyDown(KeyEvent.VK_ESCAPE)){
 			sm.levels.pop();
@@ -87,8 +74,8 @@ public class Level1 extends Level {
 		for (Terrain thing: platforms){
 			universe.fillRect(thing.getX(), thing.getY(), thing.WIDTH, thing.HEIGHT);
 		}
-		universe.drawImage(sprPlayerOne,playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
-		universe.drawImage(sprPlayerTwo,playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
+		universe.drawImage(playerOne.getSprite(),playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
+		universe.drawImage(playerTwo.getSprite(),playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
 	}
 	
 	public void drawScreen(Graphics screen){
