@@ -46,12 +46,12 @@ public class Level1 extends Level {
 		g.clearRect(left, top, sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT);
 		
 		try {
-			sprPlayerOne = ImageIO.read(new File("PlayerSprites/Player 1.png"));
+			sprPlayerOne = ImageIO.read(new File("res/PlayerSprites/Player 1.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
-			sprPlayerTwo = ImageIO.read(new File("PlayerSprites/Player 2.png"));
+			sprPlayerTwo = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -60,7 +60,7 @@ public class Level1 extends Level {
 		for (int i = 0; i < platforms.length; i++){
 			platforms[i] = new Terrain(i * 400, i * 80, 300, 300, null);
 		}
-		platforms[0] = new Terrain(0, 450, sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT, null);
+		platforms[0] = new Terrain(0, 460, sm.UNIVERSE_WIDTH,sm.UNIVERSE_HEIGHT, null);
 
 		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm);
 		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm);

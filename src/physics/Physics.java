@@ -101,7 +101,7 @@ public class Physics {
 		}
 	}
 	
-	public boolean collides(int aX, int aY, int aX2, int aY2, int bX, int bY, int bX2, int bY2){
+	public boolean collides(double aX, double aY, double aX2, double aY2, double bX, double bY, double bX2, double bY2){
 		
 		int overlap = 0;
 		

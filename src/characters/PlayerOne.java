@@ -11,13 +11,13 @@ public class PlayerOne {
 	final int FPS = 60;
 
 	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
-	private final double BASE_Y_SPEED = 60 / FPS;
-	private final double JUMPSPEED = 4;
-	private final double GRAVITY = 0.2 / FPS;
+	private final double JUMPSPEED = 2;
+	private final double GRAVITY = 0.7 / FPS;
 	private final int JUMPSMAX = 2;
 
 	private int keyLeft, keyRight, keyUp, keyDown, jumps;
 	private double x, y, xVelocity, yVelocity;
+	private boolean keyReleased;
 
 	private String sprite;
 
@@ -97,24 +97,18 @@ public class PlayerOne {
 	 */
 	public void updatePlayer(Terrain[] platforms){
 
-		//Set ySpeed
-		if (input.isKeyDown(KeyEvent.VK_W)){
+		//Crappy code that tests if key is released
+		if (!keyReleased && input.isKeyDown(KeyEvent.VK_W)){
 			this.keyUp = 1;
-			//System.out.println("W");
 		}
-		if (input.isKeyDown(KeyEvent.VK_S)){
-			this.keyDown = -1;
-			//System.out.println("S");
-		}
+		keyReleased = input.isKeyDown(KeyEvent.VK_W);
 
 		//Set xSpeed
 		if (input.isKeyDown(KeyEvent.VK_A)){
 			this.keyLeft = -1;
-			//System.out.println("A");
 		}
 		if (input.isKeyDown(KeyEvent.VK_D)){
 			this.keyRight = 1;
-			//System.out.println("D");
 		}
 
 		xVelocity = (this.keyLeft + this.keyRight) * this.BASE_X_SPEED;
@@ -139,6 +133,16 @@ public class PlayerOne {
 		}*/
 
 		//Uses collision in physics class to calculate physics for all the objects
+		
+		if (yVelocity < 10){
+			yVelocity += GRAVITY;
+		}
+		
+		if (this.keyUp == 1 && jumps > 0){
+			jumps--;
+			yVelocity = -JUMPSPEED;
+		}
+		
 		for (Terrain form: platforms){
 			
 			int aX = this.getCurrentX();
@@ -151,7 +155,7 @@ public class PlayerOne {
 			final int bY = bY2 + form.getHeight();
 			
 			//X Collision
-			if (physics.collides((int)(aX + xVelocity), aY, (int)(aX2 + xVelocity), aY2, bX, bY, bX2, bY2)){
+			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, bX, bY, bX2, bY2)){
 				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, bX, bY, bX2, bY2)){
 					this.moveX(sign(xVelocity));
 					
@@ -162,26 +166,17 @@ public class PlayerOne {
 			}
 			
 			//Y Collision
-			if (yVelocity < 10){
-				yVelocity += GRAVITY;
-			}
-			
 			if (physics.collides(aX, aY+1, aX2, aY2+1, bX, bY, bX2, bY2)){
 				jumps = JUMPSMAX;
 			}
 			
-			if (this.keyUp == 1 && jumps > 0){
-				jumps -= 1;
-				yVelocity = -JUMPSPEED;
-			}
-			
-			if (physics.collides(aX, (int)(aY + yVelocity), aX2, (int)(aY2 + yVelocity), bX, bY, bX2, bY2)){
-			    while(!physics.collides(aX, (int)(aY + sign(yVelocity)), aX2, (int)(aY2 + sign(yVelocity)), bX, bY, bX2, bY2))
+			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, bX, bY, bX2, bY2)){
+			    while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), bX, bY, bX2, bY2))
 			    {
 			        this.moveY(sign(yVelocity));
 			        
-			        aY = this.getCurrentX();
-					aY2 = aY + this.getHeight();
+			        aY2 = this.getCurrentY();
+					aY = aY2 + this.getHeight();
 			    }
 			    yVelocity = 0;
 			}
