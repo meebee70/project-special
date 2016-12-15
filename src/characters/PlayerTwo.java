@@ -148,8 +148,8 @@ public class PlayerTwo {
 			this.setCurrentX(sm.UNIVERSE_WIDTH - WIDTH -1);
 			this.xVelocity = 0;
 		}
-		
-		
+
+
 		//Tests if Player is in the Air or not
 		inAir = true;
 		for (Terrain form: platforms){
@@ -158,18 +158,13 @@ public class PlayerTwo {
 			int aY2 = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
 			int aY = aY2 + this.getHeight();
-			final int bX = form.getX();
-			final int bY2 = form.getY();
-			final int bX2 = bX + form.getWidth();
-			final int bY = bY2 + form.getHeight();
-			
 			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
 		}
 		if (inAir && this.keyDown == 1){
 			yVelocity += GROUND_POUND_SPEED;
 			System.out.println("Ground Pound");
 		}
-		
+
 		//calculates collision etc.
 		for (Terrain form: platforms){
 
@@ -202,10 +197,10 @@ public class PlayerTwo {
 
 			//if (!physics.collides(aX, aY+yVelocity, aX2, aY2+yVelocity, form)){
 
-				//if (this.keyDown == 1){
-					//this.yVelocity += this.GROUND_POUND_SPEED;
-					//System.out.println("Ground Pound!");
-				//}
+			//if (this.keyDown == 1){
+			//this.yVelocity += this.GROUND_POUND_SPEED;
+			//System.out.println("Ground Pound!");
+			//}
 
 			//}
 
@@ -235,8 +230,8 @@ public class PlayerTwo {
 		keyRight = 0;
 		keyUp = 0;
 		keyDown = 0;
-		
-		
+
+
 
 
 	}

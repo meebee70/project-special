@@ -23,7 +23,7 @@ public class PlayerOne {
 
 	private int keyLeft, keyRight, keyUp, keyDown, jumps;
 	private double x, y, xVelocity, yVelocity;
-	private boolean keyReleased;
+	private boolean keyReleased, inAir;
 
 	private Image sprite;
 
@@ -51,8 +51,8 @@ public class PlayerOne {
 		this.WIDTH = 26; //Update later
 		this.sm = sm;
 		input = sm.input;
-		
-		
+
+
 		try {
 			this.sprite = ImageIO.read(new File("res/PlayerSprites/Player 1.png"));
 		} catch (IOException e) {
@@ -78,7 +78,7 @@ public class PlayerOne {
 	public int getWidth() {
 		return WIDTH;
 	}
-	
+
 	public Image getSprite(){
 		return sprite;
 	}
@@ -142,13 +142,22 @@ public class PlayerOne {
 		}
 
 		//Uses collision in physics class to calculate physics for all the objects
-		
+
 		if (yVelocity < 10){
 			yVelocity += GRAVITY;
 		}
-		
+		//Tests if Player is in the Air or not
+		inAir = true;
 		for (Terrain form: platforms){
-			
+
+			int aX = this.getCurrentX();
+			int aY2 = this.getCurrentY();
+			int aX2 = aX + this.getWidth();
+			int aY = aY2 + this.getHeight();
+			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
+		}
+		for (Terrain form: platforms){
+
 			int aX = this.getCurrentX();
 			int aY = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
@@ -157,41 +166,41 @@ public class PlayerOne {
 			final int bY2 = form.getY();
 			final int bX2 = bX + form.getWidth();
 			final int bY = bY2 + form.getHeight();
-			
+
 			//X Collision
 			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
 				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
 					this.moveX(sign(xVelocity));
-					
+
 					aX = this.getCurrentX();
 					aX2 = aX + this.getHeight();
 				}
 				xVelocity = 0;
 			}
-			
+
 			//Y Collision
 			if (physics.collides(aX, aY+1, aX2, aY2+1, form)){
 				jumps = JUMPSMAX;
 			}
-			
+
 			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
-			    while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
-			    {
-			        this.moveY(sign(yVelocity));
-			        
-			        aY = this.getCurrentY();
+				while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
+				{
+					this.moveY(sign(yVelocity));
+
+					aY = this.getCurrentY();
 					aY2 = aY + this.getHeight();
-			    }
-			    yVelocity = 0;
+				}
+				yVelocity = 0;
 			}
-			
+
 		}
-		
+
 		if (this.keyUp == 1 && jumps > 0){
 			jumps--;
 			yVelocity = -JUMPSPEED;
 		}
-		
+
 		this.moveXandY(xVelocity, yVelocity);
 
 		xVelocity = 0;
