@@ -17,7 +17,7 @@ public class PlayerOne {
 	final int FPS = 60;
 
 	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
-	private final double JUMPSPEED = 2.5;
+	private final double JUMPSPEED = 2.65;
 	private final double GRAVITY = 0.7 / FPS;
 	private final int JUMPSMAX = 1;
 
@@ -159,8 +159,8 @@ public class PlayerOne {
 			final int bY = bY2 + form.getHeight();
 			
 			//X Collision
-			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, bX, bY, bX2, bY2)){
-				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, bX, bY, bX2, bY2)){
+			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
+				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
 					this.moveX(sign(xVelocity));
 					
 					aX = this.getCurrentX();
@@ -170,12 +170,12 @@ public class PlayerOne {
 			}
 			
 			//Y Collision
-			if (physics.collides(aX, aY+1, aX2, aY2+1, bX, bY, bX2, bY2)){
+			if (physics.collides(aX, aY+1, aX2, aY2+1, form)){
 				jumps = JUMPSMAX;
 			}
 			
-			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, bX, bY, bX2, bY2)){
-			    while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), bX, bY, bX2, bY2))
+			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
+			    while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
 			    {
 			        this.moveY(sign(yVelocity));
 			        
