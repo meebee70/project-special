@@ -18,7 +18,7 @@ import javax.sound.sampled.DataLine;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 
-public class Helplevel
+public class Helplevel extends Level
 {     
 	boolean isRunning = true;
 	boolean keyDownWasDown = false;
@@ -34,16 +34,16 @@ public class Helplevel
 
 
 	private int currentlySelected;
-	private String[] menuItems = {"Player1", "Movement: (W,A,S,D) Dash attack: Space Hold up to wall climb",
-			"Player2", "Movement: (Arrow Keys) Double Jump: (Up Twice) Ground Pound: (Double Jump, Down) Freeze Time: (Enter)",
+	private String[] menuItems = {"Player1", "Movement: (W,A,S,D) Dash attack: (Space) Hold up to wall climb",
+			"Player2", "Movement: (Arrow Keys) Double Jump: (Up Twice) Ground Pound: (Double Jump, Down) Freeze Time: ()",
 			"QUIT"};
 
 	private Font retroComputer, retroComputerBold;
 
 
-	public Helplevel(StateManager sm){
-		this.sm = sm;
-	}
+	public Helplevel(StateManager sm, Graphics g){
+		super(sm , g);
+		}
 
 
 
@@ -79,9 +79,10 @@ public class Helplevel
 	/** 
 	 * This method will set up everything need for the game to run 
 	 */ 
-	void initialize() 
+	public void initialize() 
 	{
 
+		g.clearRect(0, 0, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT);
 		
 		try {
 		    File HelplevelMusic = new File("Blitz.wav");
@@ -116,7 +117,7 @@ public class Helplevel
 	 * This method will check for input, move things 
 	 * around and check for win conditions, etc 
 	 */ 
-	void update() 
+	public void update() 
 	{
 
 
@@ -154,14 +155,9 @@ public class Helplevel
 		}
 
 	} 
+	
 
-	/** 
-	 * This method will draw everything 
-	 */ 
-	void draw() 
-	{               
-		Graphics g = sm.getGraphics(); 
-
+	public void drawUniverse(Graphics universe) {
 		Graphics bbg = sm.backBuffer.getGraphics(); 
 
 		bbg.setColor(Color.BLACK); 
@@ -180,8 +176,12 @@ public class Helplevel
 			bbg.drawString(menuItems[i], (sm.WINDOW_WIDTH / 2) - 50, 50 + (i * 90 + sm.WINDOW_HEIGHT/5));
 
 		}
+	}
 
 
-		g.drawImage(sm.backBuffer, sm.insets.left, sm.insets.top, sm); 
+
+	@Override
+	public void drawScreen(Graphics screen) {
+		g.drawImage(sm.backBuffer, sm.insets.left, sm.insets.top, sm);
 	} 
 }

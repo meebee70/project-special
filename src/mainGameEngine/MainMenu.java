@@ -13,6 +13,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
+import levels.Helplevel;
 import levels.Level1;
 import mainGameEngine.InputHandler;
 /**
@@ -145,6 +146,8 @@ public class MainMenu
 				sm.levels.push(firstLevel);
 
 			}else if (currentlySelected == 1){
+				isRunning = false;
+				sm.levels.push(new Helplevel(sm, sm.getGraphics()));
 
 			}else if (currentlySelected == 2){
 				isRunning = false;
