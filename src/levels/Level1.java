@@ -20,23 +20,19 @@ import terrain.Terrain;
 public class Level1 extends Level {
 	private int left = sm.insets.left;
 	private int top = sm.insets.top;
-	private Image background;
 	private InputHandler input = sm.input;
 	
-	final private int INITIAL_X_P1 = 0;
+	final private int INITIAL_X_P1 = 300;
 	final private int INITIAL_Y_P1 = 0;
 	final private int INITIAL_X_P2 = 100;
 	final private int INITIAL_Y_P2 = 30;
-	
-	private int x2 = INITIAL_X_P2;
-	private int y2 = INITIAL_Y_P2;
 	
 	private PlayerOne playerOne;
 	private PlayerTwo playerTwo;
 	
 	private Terrain[] platforms = new Terrain[10];
 	
-	private Camera cam = new Camera(sm.getGraphics(),sm , -50 , -50 , 900 , 600);
+	private Camera cam = new Camera(sm.getGraphics(),sm , -50 , -50 , 1000 , 500);
 	
 
 	public Level1(StateManager sm, Graphics g) {
@@ -46,28 +42,22 @@ public class Level1 extends Level {
 	@Override
 	public void initialize() {
 		g.clearRect(left, top, sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT);
-		
-		try {
-			background = ImageIO.read(new File("Laughing Stock.gif"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		g.drawImage(background,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
+		//g.drawImage(sprPlayerOne,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
 		
 		for (int i = 0; i < platforms.length; i++){
-			platforms[i] = new Terrain(i * 40, i * 200, i * 50, i * 50 - 5, null);
+			platforms[i] = new Terrain(i * 400, i * 80, 300, 300, null);
 		}
+		platforms[0] = new Terrain(0, 460, sm.UNIVERSE_WIDTH,sm.UNIVERSE_HEIGHT, null);
 
-		playerOne = new PlayerOne(64,64,sm);
-		playerTwo = new PlayerTwo(128,64,sm);
+		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm);
+		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm);
 		
 	}
 
 	@Override
 	public void update() {
-		playerOne.updatePlayer();
-		playerTwo.updatePlayer();
+		playerOne.updatePlayer(platforms);
+		playerTwo.updatePlayer(platforms);
 		
 		if(input.isKeyDown(KeyEvent.VK_ESCAPE)){
 			sm.levels.pop();
@@ -84,8 +74,8 @@ public class Level1 extends Level {
 		for (Terrain thing: platforms){
 			universe.fillRect(thing.getX(), thing.getY(), thing.WIDTH, thing.HEIGHT);
 		}
-		universe.drawImage(background,playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
-		universe.drawImage(background,playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
+		universe.drawImage(playerOne.getSprite(),playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
+		universe.drawImage(playerTwo.getSprite(),playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
 	}
 	
 	public void drawScreen(Graphics screen){

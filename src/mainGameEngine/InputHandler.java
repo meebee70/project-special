@@ -8,8 +8,7 @@ import java.awt.event.KeyListener;
 /** 
  * Makes handling input a lot simpler 
  */ 
-public class InputHandler implements KeyListener 
-{        
+public class InputHandler implements KeyListener{
 	private boolean[] keys = new boolean[256];
 
 	/** 
