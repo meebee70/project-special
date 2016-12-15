@@ -22,10 +22,10 @@ public class Level1 extends Level {
 	private int top = sm.insets.top;
 	private InputHandler input = sm.input;
 	
-	final private int INITIAL_X_P1 = 300;
+	final private int INITIAL_X_P1 = 0;
 	final private int INITIAL_Y_P1 = 0;
-	final private int INITIAL_X_P2 = 100;
-	final private int INITIAL_Y_P2 = 30;
+	final private int INITIAL_X_P2 = 64;
+	final private int INITIAL_Y_P2 = 0;
 	
 	private PlayerOne playerOne;
 	private PlayerTwo playerTwo;

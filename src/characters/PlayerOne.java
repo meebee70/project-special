@@ -17,9 +17,9 @@ public class PlayerOne {
 	final int FPS = 60;
 
 	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
-	private final double JUMPSPEED = 2;
+	private final double JUMPSPEED = 2.5;
 	private final double GRAVITY = 0.7 / FPS;
-	private final int JUMPSMAX = 2;
+	private final int JUMPSMAX = 1;
 
 	private int keyLeft, keyRight, keyUp, keyDown, jumps;
 	private double x, y, xVelocity, yVelocity;
@@ -48,7 +48,7 @@ public class PlayerOne {
 		this.jumps = 0;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
-		this.WIDTH = 32; //Update later
+		this.WIDTH = 26; //Update later
 		this.sm = sm;
 		input = sm.input;
 		
@@ -132,22 +132,14 @@ public class PlayerOne {
 		//yVelocity = (this.keyUp + this.keyDown) * this.BASE_Y_SPEED;
 
 		//Collision (Should we have this in a separate method?)
-		/*if (this.x + xVelocity < 0){
+		if (this.x + xVelocity < 0){
 			this.setCurrentX(0);
 			this.xVelocity = 0;
-		}
-		if (this.getCurrentY() < 0){
-			this.setCurrentY(0);
-			this.yVelocity = 0;
 		}
 		if (this.x + xVelocity >= sm.UNIVERSE_WIDTH - WIDTH){
 			this.setCurrentX(sm.UNIVERSE_WIDTH - WIDTH -1);
 			this.xVelocity = 0;
 		}
-		if (this.getCurrentY() >= sm.UNIVERSE_HEIGHT - HEIGHT){
-			this.setCurrentY(sm.UNIVERSE_HEIGHT - HEIGHT -1);
-			this.yVelocity = 0;
-		}*/
 
 		//Uses collision in physics class to calculate physics for all the objects
 		
@@ -155,17 +147,12 @@ public class PlayerOne {
 			yVelocity += GRAVITY;
 		}
 		
-		if (this.keyUp == 1 && jumps > 0){
-			jumps--;
-			yVelocity = -JUMPSPEED;
-		}
-		
 		for (Terrain form: platforms){
 			
 			int aX = this.getCurrentX();
-			int aY2 = this.getCurrentY();
+			int aY = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
-			int aY = aY2 + this.getHeight();
+			int aY2 = aY + this.getHeight();
 			final int bX = form.getX();
 			final int bY2 = form.getY();
 			final int bX2 = bX + form.getWidth();
@@ -192,12 +179,17 @@ public class PlayerOne {
 			    {
 			        this.moveY(sign(yVelocity));
 			        
-			        aY2 = this.getCurrentY();
-					aY = aY2 + this.getHeight();
+			        aY = this.getCurrentY();
+					aY2 = aY + this.getHeight();
 			    }
 			    yVelocity = 0;
 			}
 			
+		}
+		
+		if (this.keyUp == 1 && jumps > 0){
+			jumps--;
+			yVelocity = -JUMPSPEED;
 		}
 		
 		this.moveXandY(xVelocity, yVelocity);
