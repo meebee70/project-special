@@ -13,7 +13,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
-import levels.Helplevel;
 import levels.Level1;
 import mainGameEngine.InputHandler;
 /**
@@ -62,7 +61,6 @@ public class MainMenu
 
 			//  delay for each frame  -   time it took for one frame 
 			time = (1000 / FPS) - (System.currentTimeMillis() - time); 
-			System.out.println("test");
 
 			if (time > 0) 
 			{ 
@@ -83,7 +81,7 @@ public class MainMenu
 
 		
 		try {
-		    File mainMenuMusic = new File("Blitz.wav");
+		    File mainMenuMusic = new File("res/Blitz.wav");
 		    AudioInputStream stream;
 		    AudioFormat format;
 		    DataLine.Info info;
@@ -102,8 +100,8 @@ public class MainMenu
 		
 		
 		try {
-			retroComputer = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 50);
-			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("retroComputerFont.ttf"))).deriveFont(Font.BOLD, 50);
+			retroComputer = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 50);
+			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.BOLD, 50);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -146,8 +144,6 @@ public class MainMenu
 				sm.levels.push(firstLevel);
 
 			}else if (currentlySelected == 1){
-				isRunning = false;
-				sm.levels.push(new Helplevel(sm, sm.getGraphics()));
 
 			}else if (currentlySelected == 2){
 				isRunning = false;
