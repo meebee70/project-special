@@ -19,11 +19,12 @@ public class PlayerTwo {
 	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
 	private final double JUMPSPEED = 2;
 	private final double GRAVITY = 0.7 / FPS;
-	private final int JUMPSMAX = 1;
+	private final double GROUND_POUND_SPEED = GRAVITY * 1.6;
+	private final int JUMPSMAX = 2;
 
 	private int keyLeft, keyRight, keyUp, keyDown, jumps;
 	private double x, y, xVelocity, yVelocity;
-	private boolean keyReleased;
+	private boolean keyReleased, inAir;
 
 	private Image sprite;
 
@@ -48,11 +49,11 @@ public class PlayerTwo {
 		this.jumps = 0;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
-		this.WIDTH = 32; //Update later
+		this.WIDTH = 26; //Update later
 		this.sm = sm;
 		input = sm.input;
-		
-		
+
+
 		try {
 			this.sprite = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
 		} catch (IOException e) {
@@ -78,7 +79,7 @@ public class PlayerTwo {
 	public int getWidth() {
 		return WIDTH;
 	}
-	
+
 	public Image getSprite(){
 		return sprite;
 	}
@@ -121,6 +122,10 @@ public class PlayerTwo {
 		}
 		keyReleased = input.isKeyDown(KeyEvent.VK_UP);
 
+		if (input.isKeyDown(KeyEvent.VK_DOWN)){
+			this.keyDown = 1;
+		}
+
 		//Set xSpeed
 		if (input.isKeyDown(KeyEvent.VK_LEFT)){
 			this.keyLeft = -1;
@@ -131,36 +136,39 @@ public class PlayerTwo {
 
 		xVelocity = (this.keyLeft + this.keyRight) * this.BASE_X_SPEED;
 
+		if (yVelocity < 10){
+			yVelocity += GRAVITY;
+		}
+
 		//Collision (Should we have this in a separate method?)
-		/*if (this.x + xVelocity < 0){
+		if (this.x + xVelocity < 0){
 			this.setCurrentX(0);
 			this.xVelocity = 0;
-		}
-		if (this.getCurrentY() < 0){
-			this.setCurrentY(0);
-			this.yVelocity = 0;
 		}
 		if (this.x + xVelocity >= sm.UNIVERSE_WIDTH - WIDTH){
 			this.setCurrentX(sm.UNIVERSE_WIDTH - WIDTH -1);
 			this.xVelocity = 0;
 		}
-		if (this.getCurrentY() >= sm.UNIVERSE_HEIGHT - HEIGHT){
-			this.setCurrentY(sm.UNIVERSE_HEIGHT - HEIGHT -1);
-			this.yVelocity = 0;
-		}*/
 
-		//Uses collision in physics class to calculate physics for all the objects
-		if (yVelocity < 10){
-			yVelocity += GRAVITY;
-		}
-		
-		if (this.keyUp == 1 && jumps > 0){
-			jumps--;
-			yVelocity = -JUMPSPEED;
-		}
-		
+
+		//Tests if Player is in the Air or not
+		inAir = true;
 		for (Terrain form: platforms){
-			
+
+			int aX = this.getCurrentX();
+			int aY2 = this.getCurrentY();
+			int aX2 = aX + this.getWidth();
+			int aY = aY2 + this.getHeight();
+			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
+		}
+		if (inAir && this.keyDown == 1){
+			yVelocity += GROUND_POUND_SPEED;
+			System.out.println("Ground Pound");
+		}
+
+		//calculates collision etc.
+		for (Terrain form: platforms){
+
 			int aX = this.getCurrentX();
 			int aY2 = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
@@ -169,36 +177,52 @@ public class PlayerTwo {
 			final int bY2 = form.getY();
 			final int bX2 = bX + form.getWidth();
 			final int bY = bY2 + form.getHeight();
-			
+
 			//X Collision
-			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, bX, bY, bX2, bY2)){
-				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, bX, bY, bX2, bY2)){
+			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
+				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
 					this.moveX(sign(xVelocity));
-					
+
 					aX = this.getCurrentX();
 					aX2 = aX + this.getHeight();
 				}
 				xVelocity = 0;
 			}
-			
+
 			//Y Collision
-			if (physics.collides(aX, aY+1, aX2, aY2+1, bX, bY, bX2, bY2)){
+			if (physics.collides(aX, aY+1, aX2, aY2+1, form)){
 				jumps = JUMPSMAX;
+				System.out.println("Jumps Max");
+			} else {
 			}
-			
-			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, bX, bY, bX2, bY2)){
-			    while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), bX, bY, bX2, bY2))
-			    {
-			        this.moveY(sign(yVelocity));
-			        
-			        aY2 = this.getCurrentY();
+
+			//if (!physics.collides(aX, aY+yVelocity, aX2, aY2+yVelocity, form)){
+
+			//if (this.keyDown == 1){
+			//this.yVelocity += this.GROUND_POUND_SPEED;
+			//System.out.println("Ground Pound!");
+			//}
+
+			//}
+
+			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
+
+				while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
+				{
+					this.moveY(sign(yVelocity));
+					aY2 = this.getCurrentY();
 					aY = aY2 + this.getHeight();
-			    }
-			    yVelocity = 0;
+				}
+				yVelocity = 0;
 			}
-			
+
 		}
-		
+
+		if (this.keyUp == 1 && jumps > 0){
+			jumps--;
+			yVelocity = -JUMPSPEED;
+		}
+
 		this.moveXandY(xVelocity, yVelocity);
 
 		xVelocity = 0;
@@ -207,6 +231,8 @@ public class PlayerTwo {
 		keyRight = 0;
 		keyUp = 0;
 		keyDown = 0;
+
+
 
 
 	}

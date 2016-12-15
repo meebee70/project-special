@@ -51,93 +51,57 @@ public class Physics {
 	public boolean collides(PlayerOne player, Terrain platform){
 
 		final double aX = player.getCurrentX();
-		final double aY = player.getCurrentY();
-		final double aX2 = player.getCurrentX() + player.getWidth();
-		final double aY2 = player.getCurrentY() + player.getHeight();
+		final double aY2 = player.getCurrentY();
+		final double aX2 = aX + player.getWidth();
+		final double aY = aY2 + player.getHeight();
 		final double bX = platform.getX();
-		final double bY = platform.getY();
+		final double bY2 = platform.getY();
 		final double bX2 = bX + platform.getWidth();
-		final double bY2 = bY + platform.getHeight();
+		final double bY = bY2 + platform.getHeight();
 
-		int overlap = 0;
-		if (!((aX > bX2) || (aX < bX)) || !((aX2 > bX2) || (aX2 < bX))){
-			overlap++;
-		}
-		
-		if (!((aY < bY2) || (aY > bY)) || !((aY2 < bY2) || (aY2 > bY))){
-			overlap++;
-		}
-		
-		if ( (int)overlap / 2 == 1 ){
-			return true;
-		} else {
-			return false;
-		}
+		return collidesTest(aX, aY, aX2, aY2, bX, bY, bX2, bY2);
 	}
 
 	public boolean collides(PlayerTwo player, Terrain platform){
 
 		final double aX = player.getCurrentX();
-		final double aY = player.getCurrentY();
-		final double aX2 = player.getCurrentX() + player.getWidth();
-		final double aY2 = player.getCurrentY() + player.getHeight();
+		final double aY2 = player.getCurrentY();
+		final double aX2 = aX + player.getWidth();
+		final double aY = aY2 + player.getHeight();
 		final double bX = platform.getX();
-		final double bY = platform.getY();
+		final double bY2 = platform.getY();
 		final double bX2 = bX + platform.getWidth();
-		final double bY2 = bY + platform.getHeight();
-		
-		int overlap = 0;
-		
-		if ((aX > bX2 || aX < bX) || !(aX2 > bX2 || aX2 < bX)){
-			overlap++;
-		}
-		if ((aY < bY2 || aY > bY) || !(aY2 < bY2 || aY2 > bY)){
-			overlap++;
-		}
-		if ( (int)overlap / 2 == 1 ){
-			return true;
-		} else {
-			return false;
-		}
+		final double bY = bY2 + platform.getHeight();
+
+		/*if (!(aX >= bX2 || aX <= bX) || !(aX2 >= bX2 || aX2 <= bX)){
+			if (!((aY <= bY2) || (aY >= bY)) || !((aY2 <= bY2) || (aY2 >= bY))){
+				return true;
+			}
+		}*/
+		return collidesTest(aX, aY, aX2, aY2, bX, bY, bX2, bY2);
 	}
 	
+	public boolean collides(double aX, double aY, double aX2, double aY2, Terrain platform){
+		final double bX = platform.getX();
+		final double bY2 = platform.getY();
+		final double bX2 = bX + platform.getWidth();
+		final double bY = bY2 + platform.getHeight();
+		return collidesTest(aX, aY, aX2, aY2, bX, bY, bX2, bY2);
+	}
+
 	public boolean collides(double aX, double aY, double aX2, double aY2, double bX, double bY, double bX2, double bY2){
-		
-		int overlap = 0;
-		
-		if (!((aX >= bX2) || (aX <= bX)) || !((aX2 >= bX2) || (aX2 <= bX))){
-			overlap++;
-		}
-		if (!((aY <= bY2) || (aY >= bY)) || !((aY2 <= bY2) || (aY2 >= bY))){
-			overlap++;
-		}
-		if ( (int)overlap / 2 == 1 ){
-			return true;
-		} else {
-			return false;
-		}
+		return collidesTest(aX, aY, aX2, aY2, bX, bY, bX2, bY2);
 	}
 
 	
 	
-	//Consider deleting once Chris is cool with changes
-	
-	/*public boolean collides(int x, int y, Terrain platform){
-
-		double platX = platform.getX();
-		double platY = platform.getY();
-
-		if (isInside(platX,platX + platform.WIDTH, x) && isInside(platY,platY + platform.HEIGHT,y)){
-			return true;
+	private boolean collidesTest(double aX, double aY, double aX2, double aY2, double bX, double bY, double bX2, double bY2){
+		if (!(aX >= bX2 || aX <= bX) || !(aX2 >= bX2 || aX2 <= bX)){
+			if (!((aY <= bY2) || (aY >= bY)) || !((aY2 <= bY2) || (aY2 >= bY))){
+				return true;
+			}
 		}
 		return false;
 	}
-
-	private boolean isInside(double leftBound, double rightBound, double value){
-		if (leftBound < value && value < rightBound){
-			return true;
-		}else
-			return false;
-	}*/
 
 }
