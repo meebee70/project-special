@@ -14,12 +14,13 @@ import physics.Physics;
 import terrain.Terrain;
 
 public class PlayerTwo {
+	//Only changes player physics (to be changed later)
 	final int FPS = 60;
 
 	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
 	private final double JUMPSPEED = 2;
 	private final double GRAVITY = 0.7 / FPS;
-	private final double GROUND_POUND_SPEED = GRAVITY * 1.6;
+	private final double GROUND_POUND_SPEED = GRAVITY * 4;
 	private final int JUMPSMAX = 2;
 
 	private int keyLeft, keyRight, keyUp, keyDown, jumps;
@@ -79,6 +80,19 @@ public class PlayerTwo {
 	public int getWidth() {
 		return WIDTH;
 	}
+	
+	public boolean inAir(Terrain[] platforms){
+		inAir = true;
+		for (Terrain form: platforms){
+
+			int aX = this.getCurrentX();
+			int aY2 = this.getCurrentY();
+			int aX2 = aX + this.getWidth();
+			int aY = aY2 + this.getHeight();
+			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
+		}
+		return inAir;
+	}
 
 	public Image getSprite(){
 		return sprite;
@@ -115,108 +129,23 @@ public class PlayerTwo {
 	 * Updates Player Object while getting input and calculating new x & y
 	 */
 	public void updatePlayer(Terrain[] platforms){
-
-		//Crappy code that tests if key is released
-		if (!keyReleased && input.isKeyDown(KeyEvent.VK_UP)){
-			this.keyUp = 1;
-		}
-		keyReleased = input.isKeyDown(KeyEvent.VK_UP);
-
-		if (input.isKeyDown(KeyEvent.VK_DOWN)){
-			this.keyDown = 1;
-		}
-
-		//Set xSpeed
-		if (input.isKeyDown(KeyEvent.VK_LEFT)){
-			this.keyLeft = -1;
-		}
-		if (input.isKeyDown(KeyEvent.VK_RIGHT)){
-			this.keyRight = 1;
-		}
+		this.getInputs();
 
 		xVelocity = (this.keyLeft + this.keyRight) * this.BASE_X_SPEED;
 
 		if (yVelocity < 10){
 			yVelocity += GRAVITY;
 		}
-
-		//Collision (Should we have this in a separate method?)
-		if (this.x + xVelocity < 0){
-			this.setCurrentX(0);
-			this.xVelocity = 0;
-		}
-		if (this.x + xVelocity >= sm.UNIVERSE_WIDTH - WIDTH){
-			this.setCurrentX(sm.UNIVERSE_WIDTH - WIDTH -1);
-			this.xVelocity = 0;
-		}
-
+		
+		this.outerBoundCollides();
 
 		//Tests if Player is in the Air or not
-		inAir = true;
-		for (Terrain form: platforms){
-
-			int aX = this.getCurrentX();
-			int aY2 = this.getCurrentY();
-			int aX2 = aX + this.getWidth();
-			int aY = aY2 + this.getHeight();
-			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
-		}
-		if (inAir && this.keyDown == 1){
+		if (this.inAir(platforms) && this.keyDown == 1){
 			yVelocity += GROUND_POUND_SPEED;
 			System.out.println("Ground Pound");
 		}
 
-		//calculates collision etc.
-		for (Terrain form: platforms){
-
-			int aX = this.getCurrentX();
-			int aY2 = this.getCurrentY();
-			int aX2 = aX + this.getWidth();
-			int aY = aY2 + this.getHeight();
-			final int bX = form.getX();
-			final int bY2 = form.getY();
-			final int bX2 = bX + form.getWidth();
-			final int bY = bY2 + form.getHeight();
-
-			//X Collision
-			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
-				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
-					this.moveX(sign(xVelocity));
-
-					aX = this.getCurrentX();
-					aX2 = aX + this.getHeight();
-				}
-				xVelocity = 0;
-			}
-
-			//Y Collision
-			if (physics.collides(aX, aY+1, aX2, aY2+1, form)){
-				jumps = JUMPSMAX;
-				System.out.println("Jumps Max");
-			} else {
-			}
-
-			//if (!physics.collides(aX, aY+yVelocity, aX2, aY2+yVelocity, form)){
-
-			//if (this.keyDown == 1){
-			//this.yVelocity += this.GROUND_POUND_SPEED;
-			//System.out.println("Ground Pound!");
-			//}
-
-			//}
-
-			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
-
-				while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
-				{
-					this.moveY(sign(yVelocity));
-					aY2 = this.getCurrentY();
-					aY = aY2 + this.getHeight();
-				}
-				yVelocity = 0;
-			}
-
-		}
+		this.collisionCalculate(platforms);
 
 		if (this.keyUp == 1 && jumps > 0){
 			jumps--;
@@ -245,5 +174,79 @@ public class PlayerTwo {
 			return 0;
 		}
 	}
+	
+	private void outerBoundCollides(){
+		if (this.x + xVelocity < 0){
+			this.setCurrentX(0);
+			this.xVelocity = 0;
+		}
+		if (this.x + xVelocity >= sm.UNIVERSE_WIDTH - WIDTH){
+			this.setCurrentX(sm.UNIVERSE_WIDTH - WIDTH -1);
+			this.xVelocity = 0;
+		}
+	}
+	
+	private void getInputs(){
+		if (!keyReleased && input.isKeyDown(KeyEvent.VK_UP)){
+			this.keyUp = 1;
+		}
+		keyReleased = input.isKeyDown(KeyEvent.VK_UP);
+
+		if (input.isKeyDown(KeyEvent.VK_DOWN)){
+			this.keyDown = 1;
+		}
+
+		//Set xSpeed
+		if (input.isKeyDown(KeyEvent.VK_LEFT)){
+			this.keyLeft = -1;
+		}
+		if (input.isKeyDown(KeyEvent.VK_RIGHT)){
+			this.keyRight = 1;
+		}
+	}
+	
+	private void collisionCalculate(Terrain[] platforms){
+		for (Terrain form: platforms){
+
+			int aX = this.getCurrentX();
+			int aY2 = this.getCurrentY();
+			int aX2 = aX + this.getWidth();
+			int aY = aY2 + this.getHeight();
+			//final int bX = form.getX();
+			//final int bY2 = form.getY();
+			//final int bX2 = bX + form.getWidth();
+			//final int bY = bY2 + form.getHeight();
+
+			//X Collision
+			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
+				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
+					this.moveX(sign(xVelocity));
+
+					aX = this.getCurrentX();
+					aX2 = aX + this.getHeight();
+				}
+				xVelocity = 0;
+			}
+			
+			//Sets jumps
+			if (physics.collides(aX, aY+1, aX2, aY2+1, form)){
+				jumps = JUMPSMAX;
+				System.out.println("Jumps Max");
+			}
+			
+			//Y Collision
+			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
+				while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
+				{
+					this.moveY(sign(yVelocity));
+					aY2 = this.getCurrentY();
+					aY = aY2 + this.getHeight();
+				}
+				yVelocity = 0;
+			}
+
+		}
+	}
+
 
 }
