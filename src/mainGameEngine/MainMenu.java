@@ -81,7 +81,7 @@ public class MainMenu
 
 		
 		try {
-		    File mainMenuMusic = new File("res/Blitz.wav");
+		    File mainMenuMusic = new File("res/music/Quiet Meadow.wav");
 		    AudioInputStream stream;
 		    AudioFormat format;
 		    DataLine.Info info;
