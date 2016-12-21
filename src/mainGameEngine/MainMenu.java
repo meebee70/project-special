@@ -1,4 +1,4 @@
-//Most of this is from http://compsci.ca/v3/viewtopic.php?t=25991
+//Some of this is from http://compsci.ca/v3/viewtopic.php?t=25991
 
 package mainGameEngine;
 import java.awt.*; 
