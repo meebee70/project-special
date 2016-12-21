@@ -10,8 +10,11 @@ public class Main {
 	public static void main(String[] args){
 		
 		menu.run();
-		while(!sm.levels.isEmpty()){
-			sm.levels.peek().run();
+		while(true){
+			if (sm.levels.isEmpty()){
+				break;
+			}else
+				sm.levels.peek().run();
 		}
 		
 		System.exit(0);
