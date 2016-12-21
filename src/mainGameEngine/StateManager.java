@@ -54,39 +54,65 @@ public class StateManager extends JFrame {
 		physics = new Physics();
 	}
 
-	
+	/**
+	 * @return the height of the window (excluding insets)
+	 */
 	public int getWindowHeight(){
 		return this.WINDOW_HEIGHT;
 	}
 	
+	/**
+	 * @return the width of the window (excluding Insets)
+	 */
 	public int getWindowWidth(){
 		return this.WINDOW_WIDTH;
 	}
 	
+	/**
+	 * @return the height of the game world
+	 */
 	public int getUniverseHeight(){
 		return this.UNIVERSE_HEIGHT;
 	}
 	
+	/**
+	 * @return the width of the game world
+	 */
 	public int getUniverseWidth(){
 		return this.UNIVERSE_WIDTH;
 	}
 	
+	/**
+	 * @return the group of insets on all sides ofthe screen
+	 */
 	public Insets getOurInsets(){
 		return this.insets;
 	}
 	
+	/**
+	 * @return the Game universe itself
+	 */
 	public BufferedImage getUniverse(){
 		return this.backBuffer;
 	}
 	
+	/**
+	 * @return the mechanism that handles all input
+	 */
 	public InputHandler getInputHandler(){
 		return this.input;
 	}
 	
+	/**
+	 * @return a collection of methods and constants to use to make the game work smoother
+	 */
 	public Physics getPhysics(){
 		return this.physics;
 	}
 	
+	/**
+	 * @return a last-in-first-out (LIFO) collection of levels
+	 */
 	public Stack<Level> getLevels(){
 		return this.levels;
 	}
