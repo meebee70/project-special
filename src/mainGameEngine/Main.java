@@ -3,17 +3,20 @@ package mainGameEngine;
 public class Main {
 	private static StateManager sm = new StateManager();
 	private static MainMenu menu = new MainMenu(sm);
-	/**
-	 * Exits Game and closes window
-	 */
 	
+	/**
+	 * this is the game, DO NOT touch this
+	 */
 	public static void main(String[] args){
 		
 		menu.run();
-		try{
-		sm.levels.peek().run();
-		}catch (java.util.EmptyStackException e){
+		while(true){
+			if (sm.levels.isEmpty()){
+				break;
+			}else
+				sm.levels.peek().run();
 		}
+		
 		System.exit(0);
 	}
 }

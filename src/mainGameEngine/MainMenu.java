@@ -1,4 +1,4 @@
-//Most of this is from http://compsci.ca/v3/viewtopic.php?t=25991
+//Some of this is from http://compsci.ca/v3/viewtopic.php?t=25991
 
 package mainGameEngine;
 import java.awt.*; 
@@ -81,7 +81,7 @@ public class MainMenu
 
 		
 		try {
-		    File mainMenuMusic = new File("res/Blitz.wav");
+		    File mainMenuMusic = new File("res/music/Quiet Meadow.wav");
 		    AudioInputStream stream;
 		    AudioFormat format;
 		    DataLine.Info info;

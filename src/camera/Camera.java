@@ -33,7 +33,12 @@ public class Camera {
 	}
 	
 	public void drawImage(Image image){
-		frame.drawImage(image,sm.insets.left,sm.insets.top,sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT, this.x, this.y, this.x + xZoom, this.y + yZoom, sm);
+		frame.drawImage(image,
+				0,
+				0,
+				sm.getWidth(),
+				sm.getHeight(),
+				this.x, this.y, this.x + xZoom, this.y + yZoom, sm);
 	}
 	
 	
@@ -74,10 +79,8 @@ public class Camera {
 		
 		
 		if (leftMove ^ rightMove){
-			System.out.println("true");
 			return true;
 		}else{
-			System.out.println("false");
 			return false;
 		}
 	}

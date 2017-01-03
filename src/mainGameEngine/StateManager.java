@@ -1,9 +1,12 @@
 package mainGameEngine;
 
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Stack;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import levels.Level;
@@ -24,14 +27,22 @@ public class StateManager extends JFrame {
 	public InputHandler input;
 	public Physics physics;
 	
+	private Image img;
+	
 	public Stack<Level> levels = new Stack<Level>();
 	
 	public StateManager(){
-		setTitle("Game Tutorial"); 
+		setTitle("Project Helios"); 
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT); 
 		setResizable(false); 
 		setDefaultCloseOperation(EXIT_ON_CLOSE); 
-		setVisible(true);
+		
+		try{
+			img = ImageIO.read(new File("res/Laughing Stock.gif"));
+		}catch (Exception e){}
+		setIconImage(img);
+		
+		this.setVisible(true);
 		
 		
 		insets = getInsets(); 
@@ -41,5 +52,68 @@ public class StateManager extends JFrame {
 		backBuffer = new BufferedImage(UNIVERSE_WIDTH, UNIVERSE_HEIGHT, BufferedImage.TYPE_INT_RGB); 
 		input = new InputHandler(this);
 		physics = new Physics();
+	}
+
+	/**
+	 * @return the height of the window (excluding insets)
+	 */
+	public int getWindowHeight(){
+		return this.WINDOW_HEIGHT;
+	}
+	
+	/**
+	 * @return the width of the window (excluding Insets)
+	 */
+	public int getWindowWidth(){
+		return this.WINDOW_WIDTH;
+	}
+	
+	/**
+	 * @return the height of the game world
+	 */
+	public int getUniverseHeight(){
+		return this.UNIVERSE_HEIGHT;
+	}
+	
+	/**
+	 * @return the width of the game world
+	 */
+	public int getUniverseWidth(){
+		return this.UNIVERSE_WIDTH;
+	}
+	
+	/**
+	 * @return the group of insets on all sides ofthe screen
+	 */
+	public Insets getOurInsets(){
+		return this.insets;
+	}
+	
+	/**
+	 * @return the Game universe itself
+	 */
+	public BufferedImage getUniverse(){
+		return this.backBuffer;
+	}
+	
+	/**
+	 * @return the mechanism that handles all input
+	 */
+	public InputHandler getInputHandler(){
+		return this.input;
+	}
+	
+	/**
+	 * @return a collection of methods and constants to use to make the game work smoother
+	 */
+	public Physics getPhysics(){
+		return this.physics;
+	}
+	
+	/**
+	 * @return a last-in-first-out (LIFO) collection of levels
+	 */
+	public Stack<Level> getLevels(){
+		return this.levels;
 	}
 }
