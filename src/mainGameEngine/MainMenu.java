@@ -116,7 +116,10 @@ public class MainMenu
 	void update() 
 	{
 
-
+		if (input.isKeyDown(KeyEvent.VK_ESCAPE)){
+			isRunning = false;
+		}
+		
 		//moves the selector up and down
 		if (input.isKeyDown(KeyEvent.VK_UP) && !keyUpWasDown){
 			keyUpWasDown = true;
