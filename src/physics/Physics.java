@@ -46,7 +46,7 @@ public class Physics {
 	}
 
 
-	//usefull stuff anything might use
+	//useful stuff anything might use
 
 	public boolean collides(PlayerOne player, Terrain platform){
 
@@ -73,11 +73,6 @@ public class Physics {
 		final double bX2 = bX + platform.getWidth();
 		final double bY = bY2 + platform.getHeight();
 
-		/*if (!(aX >= bX2 || aX <= bX) || !(aX2 >= bX2 || aX2 <= bX)){
-			if (!((aY <= bY2) || (aY >= bY)) || !((aY2 <= bY2) || (aY2 >= bY))){
-				return true;
-			}
-		}*/
 		return collidesTest(aX, aY, aX2, aY2, bX, bY, bX2, bY2);
 	}
 	
