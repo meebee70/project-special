@@ -54,8 +54,8 @@ public class Helplevel extends Level
 	{
 
 		try {
-			retroComputerHelp = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 50);
-			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.BOLD, 50);
+			retroComputerHelp = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 15);
+			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.BOLD, 15);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -124,7 +124,7 @@ public class Helplevel extends Level
 				universe.setFont(retroComputerBold);
 				universe.setColor(Color.BLUE);
 			}
-			universe.drawString(menuItems[i], (sm.WINDOW_WIDTH / 2) - 50, 50 + (i * 90 + sm.WINDOW_HEIGHT/5));
+			universe.drawString(menuItems[i], 0, 50 + (i * 90 + sm.WINDOW_HEIGHT/5));
 
 		}
 		
