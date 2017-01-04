@@ -21,7 +21,6 @@ import mainGameEngine.StateManager;
  */
 public class Helplevel extends Level
 {        
-	boolean isRunning = true;
 	boolean keyDownWasDown = false;
 	boolean keyUpWasDown = false;
 	
@@ -34,8 +33,9 @@ public class Helplevel extends Level
 
 
 	private int currentlySelected;
-	private String[] menuItems = {"Player1:  Movement: (W,A,S,D) Dash attack: (Space) Hold up to wall climb",
-			"Player2:  Movement: (Arrow Keys) Double Jump: (Up Twice) Ground Pound: (Double Jump, Down) Freeze Time: ()","QUIT"};
+	private String[] menuItems = {"Player one",  "Movement: (W,A,S,D) Dash attack: (Space) Hold up to wall climb"
+			,"Player Two",  "Movement: (Arrow Keys) Double Jump: (Up Twice) Ground Pound: (Double Jump, Down) Freeze Time: ()"
+			,"QUIT"};
 
 	private Font retroComputerHelp, retroComputerBold;
 
@@ -54,8 +54,8 @@ public class Helplevel extends Level
 	{
 
 		try {
-			retroComputerHelp = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 15);
-			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.BOLD, 15);
+			retroComputerHelp = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 13);
+			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.BOLD, 13);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -92,19 +92,11 @@ public class Helplevel extends Level
 
 
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
-			if (currentlySelected == 0){
-				isRunning = false;
-				Level1 firstLevel = new Level1(sm,sm.getGraphics());
-				sm.levels.push(firstLevel);
-
-			}else if (currentlySelected == 1){
-				
-
-			}else if (currentlySelected == 2){
-				isRunning = false;
+			
+			if (currentlySelected == 4){
+				this.isRunning = false;
 			}
 		}
-
 	} 
 
 
@@ -124,7 +116,7 @@ public class Helplevel extends Level
 				universe.setFont(retroComputerBold);
 				universe.setColor(Color.BLUE);
 			}
-			universe.drawString(menuItems[i], 0, 50 + (i * 90 + sm.WINDOW_HEIGHT/5));
+			universe.drawString(menuItems[i], 0, (i * 90 + sm.WINDOW_HEIGHT/5) - 25);
 
 		}
 		
