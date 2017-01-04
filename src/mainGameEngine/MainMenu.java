@@ -14,17 +14,18 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
 import levels.Helplevel;
+
+import levels.Level;
 import levels.Level1;
 import mainGameEngine.InputHandler;
 /**
  * Builds Game window
  */
-public class MainMenu 
+public class MainMenu extends Level 
 {        
 	boolean isRunning = true;
 	boolean keyDownWasDown = false;
 	boolean keyUpWasDown = false;
-	private StateManager sm;
 	
 	InputHandler input;
 	
@@ -40,8 +41,8 @@ public class MainMenu
 	private Font retroComputer, retroComputerBold;
 
 
-	public MainMenu(StateManager sm){
-		this.sm = sm;
+	public MainMenu(StateManager sm, Graphics g){
+		super(sm,g);
 	}
 
 
@@ -77,7 +78,7 @@ public class MainMenu
 	/** 
 	 * This method will set up everything need for the game to run 
 	 */ 
-	void initialize() 
+	public void initialize() 
 	{
 
 		
@@ -114,10 +115,14 @@ public class MainMenu
 	 * This method will check for input, move things 
 	 * around and check for win conditions, etc 
 	 */ 
-	void update() 
+	public void update() 
 	{
 
-
+		if (input.isKeyDown(KeyEvent.VK_ESCAPE)){
+			isRunning = false;
+			sm.levels.pop();
+		}
+		
 		//moves the selector up and down
 		if (input.isKeyDown(KeyEvent.VK_UP) && !keyUpWasDown){
 			keyUpWasDown = true;
@@ -152,6 +157,7 @@ public class MainMenu
 
 			}else if (currentlySelected == 2){
 				isRunning = false;
+				sm.levels.pop();
 			}
 		}
 
@@ -160,7 +166,7 @@ public class MainMenu
 	/** 
 	 * This method will draw everything 
 	 */ 
-	void draw() 
+	public void draw() 
 	{               
 		Graphics g = sm.getGraphics(); 
 
@@ -185,5 +191,21 @@ public class MainMenu
 
 
 		g.drawImage(sm.backBuffer, sm.insets.left, sm.insets.top, sm); 
+	}
+
+
+
+	@Override
+	public void drawUniverse(Graphics universe) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void drawScreen(Graphics screen) {
+		// TODO Auto-generated method stub
+		
 	} 
 } 

@@ -21,7 +21,7 @@ public class PlayerOne {
 	private final double GRAVITY = 0.7 / FPS;
 	private final int JUMPSMAX = 1;
 
-	private int keyLeft, keyRight, keyUp, keyDown, jumps;
+	private int keyLeft, keyRight, keyUp, jumps;
 	private double x, y, xVelocity, yVelocity;
 	private boolean keyReleased, inAir;
 
@@ -44,7 +44,6 @@ public class PlayerOne {
 		this.keyLeft = 0;
 		this.keyRight = 0;
 		this.keyUp = 0;
-		this.keyDown = 0;
 		this.jumps = 0;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
@@ -162,10 +161,7 @@ public class PlayerOne {
 			int aY = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
 			int aY2 = aY + this.getHeight();
-			final int bX = form.getX();
-			final int bY2 = form.getY();
-			final int bX2 = bX + form.getWidth();
-			final int bY = bY2 + form.getHeight();
+
 
 			//X Collision
 			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
@@ -208,7 +204,6 @@ public class PlayerOne {
 		keyLeft = 0;
 		keyRight = 0;
 		keyUp = 0;
-		keyDown = 0;
 
 
 	}
