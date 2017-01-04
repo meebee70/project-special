@@ -17,7 +17,8 @@ public abstract class Level {
 	}
 	
 	public void run(){
-		initialize();
+		
+		//initialize();
 		
 		long time = System.currentTimeMillis();
 		

@@ -116,4 +116,9 @@ public class StateManager extends JFrame {
 	public Stack<Level> getLevels(){
 		return this.levels;
 	}
+	
+	public void popLevel(){
+		levels.pop();
+		levels.peek().isRunning = true;
+	}
 }

@@ -32,12 +32,14 @@ public class Level1 extends Level {
 
 	public Level1(StateManager sm, Graphics g) {
 		super(sm,g);
+		
+		initialize();
 	}
 
 	@Override
 	public void initialize() {
 		g.clearRect(left, top, sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT);
-		//g.drawImage(sprPlayerOne,(int)INITIAL_X_P1 , (int)INITIAL_Y_P1, sm);
+		
 		
 		for (int i = 0; i < platforms.length; i++){
 			platforms[i] = new Terrain(i * 400, i * 80, 300, 300, null);
@@ -55,7 +57,11 @@ public class Level1 extends Level {
 		playerTwo.updatePlayer(platforms);
 		
 		if(input.isKeyDown(KeyEvent.VK_ESCAPE)){
-			sm.levels.pop();
+			sm.popLevel();
+			isRunning = false;
+			try{
+				Thread.sleep(300);
+			}catch (Exception e){}
 		}
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 		

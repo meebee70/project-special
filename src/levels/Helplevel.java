@@ -48,6 +48,8 @@ public class Helplevel extends Level
 
 	public Helplevel(StateManager sm,Graphics g){
 		super(sm,g);
+		
+		initialize();
 	}
 
 

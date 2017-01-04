@@ -23,7 +23,6 @@ import mainGameEngine.InputHandler;
  */
 public class MainMenu extends Level 
 {        
-	boolean isRunning = true;
 	boolean keyDownWasDown = false;
 	boolean keyUpWasDown = false;
 	
@@ -43,37 +42,10 @@ public class MainMenu extends Level
 
 	public MainMenu(StateManager sm, Graphics g){
 		super(sm,g);
+		
+		initialize();
 	}
 
-
-
-	/** 
-	 * This method starts the game and runs it in a loop 
-	 */ 
-	public void run() 
-	{ 
-		initialize(); 
-
-		while(isRunning) 
-		{ 
-			long time = System.currentTimeMillis(); 
-
-			update(); 
-			draw(); 
-
-			//  delay for each frame  -   time it took for one frame 
-			time = (1000 / FPS) - (System.currentTimeMillis() - time); 
-
-			if (time > 0) 
-			{ 
-				try 
-				{ 
-					Thread.sleep(time); 
-				} 
-				catch(Exception e){} 
-			} 
-		}  
-	} 
 
 	/** 
 	 * This method will set up everything need for the game to run 
