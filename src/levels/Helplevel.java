@@ -21,6 +21,7 @@ import mainGameEngine.StateManager;
  */
 public class Helplevel extends Level
 {        
+	boolean isRunning = true;
 	boolean keyDownWasDown = false;
 	boolean keyUpWasDown = false;
 	
@@ -33,9 +34,15 @@ public class Helplevel extends Level
 
 
 	private int currentlySelected;
-	private String[] menuItems = {"Player one",  "Movement: (W,A,S,D) Dash attack: (Space) Hold up to wall climb"
-			,"Player Two",  "Movement: (Arrow Keys) Double Jump: (Up Twice) Ground Pound: (Double Jump, Down) Freeze Time: ()"
-			,"QUIT"};
+	private String[] menuItems = {
+			"Player One",
+			"Movement WASD	Dash attack Space",
+			"Hold up to wall climb",
+			"Player Two",
+			"Movement Arrow Keys	Double Jump Up Twice",
+			"Ground Pound Jump+Down	Freeze Time: ()",
+			"QUIT"
+			};
 
 	private Font retroComputerHelp, retroComputerBold;
 
@@ -54,8 +61,8 @@ public class Helplevel extends Level
 	{
 
 		try {
-			retroComputerHelp = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 13);
-			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.BOLD, 13);
+			retroComputerHelp = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 15);
+			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.BOLD, 15);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -90,13 +97,12 @@ public class Helplevel extends Level
 			currentlySelected = 0;
 		}
 
-
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
-			
-			if (currentlySelected == 4){
-				this.isRunning = false;
+			if (currentlySelected == 0){
+				//to be added
 			}
 		}
+
 	} 
 
 
@@ -106,17 +112,28 @@ public class Helplevel extends Level
 		universe.setColor(Color.BLACK); 
 		universe.fillRect(0, 0, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT); 
 
-
+		//Forces currentlySelected to only be 0, 3 or 6
+		while(!(currentlySelected == 0 || currentlySelected == 3 || currentlySelected == 6)){
+			if (keyUpWasDown){
+				currentlySelected--;
+			} else {
+				currentlySelected++;
+			}
+			if (currentlySelected >= menuItems.length){
+				currentlySelected -= menuItems.length;
+			}
+		}
+		
+		//Draws Text
 		for (int i = 0;i < menuItems.length;i++){
 			if (currentlySelected == i){
-				universe.setFont(retroComputerHelp);
-				universe.setColor(Color.GREEN);
-
-			}else{
 				universe.setFont(retroComputerBold);
+				universe.setColor(Color.GREEN);
+			}else{
+				universe.setFont(retroComputerHelp);
 				universe.setColor(Color.BLUE);
 			}
-			universe.drawString(menuItems[i], 0, (i * 90 + sm.WINDOW_HEIGHT/5) - 25);
+			universe.drawString(menuItems[i], 80, 50 + (i * 50 + sm.WINDOW_HEIGHT/5));
 
 		}
 		

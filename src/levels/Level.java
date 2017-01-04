@@ -7,21 +7,16 @@ import mainGameEngine.StateManager;
 public abstract class Level {
 	
 	public Graphics g;
-	public boolean isRunning = true;
+	private boolean isRunning = true;
 	private final int FPS = 60;
 	public StateManager sm;
-	
-
-	
-	
-	
 	
 	public Level( StateManager sm, Graphics g){
 		this.sm = sm;
 		this.g = sm.getGraphics();
 	}
 	
-public void run(){
+	public void run(){
 		initialize();
 		
 		long time = System.currentTimeMillis();
