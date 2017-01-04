@@ -7,13 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-
-import levels.Level1;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 /**
@@ -35,7 +28,7 @@ public class Helplevel extends Level
 	private int currentlySelected;
 	private String[] menuItems = {
 			"Player One",
-			"Movement WASD	Dash attack Space",
+			"Movement WASD  Dash attack Space",
 			"Hold up to wall climb",
 			"Player Two",
 			"Movement Arrow Keys	Double Jump Up Twice",
@@ -48,6 +41,8 @@ public class Helplevel extends Level
 
 	public Helplevel(StateManager sm,Graphics g){
 		super(sm,g);
+		
+		initialize();
 	}
 
 
@@ -75,8 +70,6 @@ public class Helplevel extends Level
 	 */ 
 	public void update() 
 	{
-
-
 		//moves the selector up and down
 		if (input.isKeyDown(KeyEvent.VK_UP) && !keyUpWasDown){
 			keyUpWasDown = true;
@@ -98,7 +91,7 @@ public class Helplevel extends Level
 
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
 			if (currentlySelected == 6){
-				isRunning = false;
+				exitLevel(100);
 			}
 		}
 
@@ -119,7 +112,7 @@ public class Helplevel extends Level
 				currentlySelected++;
 			}
 			if (currentlySelected >= menuItems.length){
-				currentlySelected -= menuItems.length;
+				currentlySelected = 0;
 			}
 		}
 		
@@ -132,7 +125,7 @@ public class Helplevel extends Level
 				universe.setFont(retroComputerHelp);
 				universe.setColor(Color.BLUE);
 			}
-			universe.drawString(menuItems[i], 80, 50 + (i * 50 + sm.WINDOW_HEIGHT/5));
+			universe.drawString(menuItems[i], 80, 50 + (i * 50));
 
 		}
 		

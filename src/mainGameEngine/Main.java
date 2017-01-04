@@ -10,6 +10,8 @@ public class Main {
 	public static void main(String[] args){
 		
 		sm.levels.push(menu);
+		
+		
 		while(!sm.levels.isEmpty()){
 				sm.levels.peek().run();
 		}
