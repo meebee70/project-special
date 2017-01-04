@@ -1,10 +1,8 @@
-package levels;
+//Some of this is from http://compsci.ca/v3/viewtopic.php?t=25991
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.event.KeyEvent;
+package levels;
+import java.awt.*; 
+import java.awt.event.KeyEvent; 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,15 +13,16 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
+import levels.Level1;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
-
+/**
+ * Builds Game window
+ */
 public class Helplevel extends Level
-{     
-	boolean isRunning = true;
+{        
 	boolean keyDownWasDown = false;
 	boolean keyUpWasDown = false;
-	private StateManager sm;
 	
 	InputHandler input;
 	
@@ -34,78 +33,35 @@ public class Helplevel extends Level
 
 
 	private int currentlySelected;
-	private String[] menuItems = {"Player1", "Movement: (W,A,S,D) Dash attack: (Space) Hold up to wall climb",
-			"Player2", "Movement: (Arrow Keys) Double Jump: (Up Twice) Ground Pound: (Double Jump, Down) Freeze Time: ()",
-			"QUIT"};
+	private String[] menuItems = {
+			"Player One",
+			"Movement WASD	Dash attack Space",
+			"Hold up to wall climb",
+			"Player Two",
+			"Movement Arrow Keys	Double Jump Up Twice",
+			"Ground Pound Jump+Down	Freeze Time: ()",
+			"QUIT"
+			};
 
-	private Font retroComputer, retroComputerBold;
+	private Font retroComputerHelp, retroComputerBold;
 
 
-	public Helplevel(StateManager sm, Graphics g){
-		super(sm , g);
-		}
+	public Helplevel(StateManager sm,Graphics g){
+		super(sm,g);
+	}
 
 
 
-	/** 
-	 * This method starts the game and runs it in a loop 
-	 */ 
-	public void run() 
-	{ 
-		initialize(); 
-
-		while(isRunning) 
-		{ 
-			long time = System.currentTimeMillis(); 
-
-			update(); 
-			draw(); 
-
-			//  delay for each frame  -   time it took for one frame 
-			time = (1000 / FPS) - (System.currentTimeMillis() - time); 
-			System.out.println("test");
-
-			if (time > 0) 
-			{ 
-				try 
-				{ 
-					Thread.sleep(time); 
-				} 
-				catch(Exception e){} 
-			} 
-		}  
-	} 
-
+	
 	/** 
 	 * This method will set up everything need for the game to run 
 	 */ 
 	public void initialize() 
 	{
 
-		g.clearRect(0, 0, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT);
-		
 		try {
-		    File HelplevelMusic = new File("Blitz.wav");
-		    AudioInputStream stream;
-		    AudioFormat format;
-		    DataLine.Info info;
-		    Clip clip;
-
-		    stream = AudioSystem.getAudioInputStream(HelplevelMusic);
-		    format = stream.getFormat();
-		    info = new DataLine.Info(Clip.class, format);
-		    clip = (Clip) AudioSystem.getLine(info);
-		    clip.open(stream);
-		    clip.loop(128);
-		}
-		catch (Exception e) {
-			System.out.println("Exception e");
-		}
-		
-		
-		try {
-			retroComputer = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 50);
-			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("retroComputerFont.ttf"))).deriveFont(Font.BOLD, 50);
+			retroComputerHelp = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.PLAIN, 15);
+			retroComputerBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("res/retroComputerFont.ttf"))).deriveFont(Font.BOLD, 15);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -140,48 +96,52 @@ public class Helplevel extends Level
 			currentlySelected = 0;
 		}
 
-
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
-			if (currentlySelected == 0){
-				isRunning = false;
-				Level1 firstLevel = new Level1(sm,sm.getGraphics());
-				sm.levels.push(firstLevel);
-
-			}else if (currentlySelected == 1){
-
-			}else if (currentlySelected == 2){
+			if (currentlySelected == 6){
 				isRunning = false;
 			}
 		}
 
 	} 
-	
 
+
+
+	@Override
 	public void drawUniverse(Graphics universe) {
-		Graphics bbg = sm.backBuffer.getGraphics(); 
+		universe.setColor(Color.BLACK); 
+		universe.fillRect(0, 0, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT); 
 
-		bbg.setColor(Color.BLACK); 
-		bbg.fillRect(0, 0, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT); 
-
-
+		//Forces currentlySelected to only be 0, 3 or 6
+		while(!(currentlySelected == 0 || currentlySelected == 3 || currentlySelected == 6)){
+			if (keyUpWasDown){
+				currentlySelected--;
+			} else {
+				currentlySelected++;
+			}
+			if (currentlySelected >= menuItems.length){
+				currentlySelected -= menuItems.length;
+			}
+		}
+		
+		//Draws Text
 		for (int i = 0;i < menuItems.length;i++){
 			if (currentlySelected == i){
-				bbg.setFont(retroComputer);
-				bbg.setColor(Color.GREEN);
-
+				universe.setFont(retroComputerBold);
+				universe.setColor(Color.GREEN);
 			}else{
-				bbg.setFont(retroComputerBold);
-				bbg.setColor(Color.BLUE);
+				universe.setFont(retroComputerHelp);
+				universe.setColor(Color.BLUE);
 			}
-			bbg.drawString(menuItems[i], (sm.WINDOW_WIDTH / 2) - 50, 50 + (i * 90 + sm.WINDOW_HEIGHT/5));
+			universe.drawString(menuItems[i], 80, 50 + (i * 50 + sm.WINDOW_HEIGHT/5));
 
 		}
+		
 	}
 
 
 
 	@Override
 	public void drawScreen(Graphics screen) {
-		g.drawImage(sm.backBuffer, sm.insets.left, sm.insets.top, sm);
+		screen.drawImage(sm.backBuffer, sm.insets.left, sm.insets.top, sm); 
 	} 
-}
+} 

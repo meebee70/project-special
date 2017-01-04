@@ -7,7 +7,7 @@ import mainGameEngine.StateManager;
 public abstract class Level {
 	
 	public Graphics g;
-	private boolean isRunning = true;
+	public boolean isRunning = true;
 	private final int FPS = 60;
 	public StateManager sm;
 	

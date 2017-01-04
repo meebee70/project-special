@@ -13,6 +13,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
+import levels.Helplevel;
+
 import levels.Level;
 import levels.Level1;
 import mainGameEngine.InputHandler;
@@ -146,8 +148,12 @@ public class MainMenu extends Level
 				isRunning = false;
 				Level1 firstLevel = new Level1(sm,sm.getGraphics());
 				sm.levels.push(firstLevel);
-
+				
 			}else if (currentlySelected == 1){
+				isRunning = false;
+				Helplevel helpLevel = new Helplevel(sm,sm.getGraphics());
+				sm.levels.push(helpLevel);
+						
 
 			}else if (currentlySelected == 2){
 				isRunning = false;
