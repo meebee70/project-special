@@ -34,8 +34,15 @@ public class Helplevel extends Level
 
 
 	private int currentlySelected;
-	private String[] menuItems = {"Player1:  Movement: (W,A,S,D) Dash attack: (Space) Hold up to wall climb",
-			"Player2:  Movement: (Arrow Keys) Double Jump: (Up Twice) Ground Pound: (Double Jump, Down) Freeze Time: ()","QUIT"};
+	private String[] menuItems = {
+			"Player One",
+			"Movement WASD	Dash attack Space",
+			"Hold up to wall climb",
+			"Player Two",
+			"Movement Arrow Keys	Double Jump Up Twice",
+			"Ground Pound Jump+Down	Freeze Time: ()",
+			"QUIT"
+			};
 
 	private Font retroComputerHelp, retroComputerBold;
 
@@ -93,15 +100,6 @@ public class Helplevel extends Level
 
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
 			if (currentlySelected == 0){
-				isRunning = false;
-				Level1 firstLevel = new Level1(sm,sm.getGraphics());
-				sm.levels.push(firstLevel);
-
-			}else if (currentlySelected == 1){
-				
-
-			}else if (currentlySelected == 2){
-				isRunning = false;
 			}
 		}
 
@@ -114,17 +112,25 @@ public class Helplevel extends Level
 		universe.setColor(Color.BLACK); 
 		universe.fillRect(0, 0, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT); 
 
-
+		while(!(currentlySelected == 0 || currentlySelected == 3 || currentlySelected == 6)){
+			if (keyUpWasDown){
+				currentlySelected--;
+			} else {
+				currentlySelected++;
+			}
+			if (currentlySelected >= menuItems.length){
+				currentlySelected -= menuItems.length;
+			}
+		}
 		for (int i = 0;i < menuItems.length;i++){
 			if (currentlySelected == i){
-				universe.setFont(retroComputerHelp);
-				universe.setColor(Color.GREEN);
-
-			}else{
 				universe.setFont(retroComputerBold);
+				universe.setColor(Color.GREEN);
+			}else{
+				universe.setFont(retroComputerHelp);
 				universe.setColor(Color.BLUE);
 			}
-			universe.drawString(menuItems[i], 0, 50 + (i * 90 + sm.WINDOW_HEIGHT/5));
+			universe.drawString(menuItems[i], 80, 50 + (i * 50 + sm.WINDOW_HEIGHT/5));
 
 		}
 		
