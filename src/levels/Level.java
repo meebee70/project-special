@@ -67,4 +67,31 @@ public abstract class Level {
 	 */
 	public abstract void drawScreen(Graphics screen);
 	
+	
+	/**leaves the level to return to the last level opened
+	 * 
+	 * @param waitTime how long the program waits to give control back to user !!setting this too low will cause issues with selecting unwanted items
+	 */
+	public void exitLevel(int waitTime){
+		sm.popLevel();
+		isRunning = false;
+		try{
+			Thread.sleep(waitTime);
+		}catch (Exception e){}
+		
+	}
+	
+	public void exitToMenu(int waitTime){
+		isRunning = false;
+		
+		while (sm.levels.size() > 1){
+			sm.levels.pop();
+		}
+		
+		try{
+			Thread.sleep(waitTime);
+		}catch (Exception e){}
+		
+	}
+	
 }

@@ -128,8 +128,7 @@ public class MainMenu extends Level
 						
 
 			}else if (currentlySelected == 2){
-				isRunning = false;
-				sm.levels.pop();
+				exitLevel(300);
 			}
 		}
 

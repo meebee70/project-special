@@ -77,8 +77,6 @@ public class Helplevel extends Level
 	 */ 
 	public void update() 
 	{
-
-
 		//moves the selector up and down
 		if (input.isKeyDown(KeyEvent.VK_UP) && !keyUpWasDown){
 			keyUpWasDown = true;
@@ -100,7 +98,7 @@ public class Helplevel extends Level
 
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
 			if (currentlySelected == 6){
-				isRunning = false;
+				exitLevel(100);
 			}
 		}
 

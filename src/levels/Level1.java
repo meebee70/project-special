@@ -57,11 +57,7 @@ public class Level1 extends Level {
 		playerTwo.updatePlayer(platforms);
 		
 		if(input.isKeyDown(KeyEvent.VK_ESCAPE)){
-			sm.popLevel();
-			isRunning = false;
-			try{
-				Thread.sleep(300);
-			}catch (Exception e){}
+			exitLevel(300);
 		}
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 		
