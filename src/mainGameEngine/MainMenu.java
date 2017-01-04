@@ -89,11 +89,6 @@ public class MainMenu extends Level
 	 */ 
 	public void update() 
 	{
-
-		if (input.isKeyDown(KeyEvent.VK_ESCAPE)){
-			isRunning = false;
-			sm.levels.pop();
-		}
 		
 		//moves the selector up and down
 		if (input.isKeyDown(KeyEvent.VK_UP) && !keyUpWasDown){
@@ -128,7 +123,8 @@ public class MainMenu extends Level
 						
 
 			}else if (currentlySelected == 2){
-				exitLevel(300);
+				sm.levels.pop();
+				isRunning = false;
 			}
 		}
 

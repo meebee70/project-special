@@ -15,7 +15,6 @@ import terrain.Terrain;
 public class Level1 extends Level {
 	private int left = sm.insets.left;
 	private int top = sm.insets.top;
-	private InputHandler input = sm.input;
 	
 	final private int INITIAL_X_P1 = 0;
 	final private int INITIAL_Y_P1 = 0;
@@ -56,9 +55,6 @@ public class Level1 extends Level {
 		playerOne.updatePlayer(platforms);
 		playerTwo.updatePlayer(platforms);
 		
-		if(input.isKeyDown(KeyEvent.VK_ESCAPE)){
-			exitLevel(300);
-		}
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 		
 		cam.move(playerOne.getCurrentX(),playerTwo.getCurrentX(),playerOne.getCurrentY(),playerTwo.getCurrentY());
