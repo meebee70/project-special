@@ -97,9 +97,9 @@ public class Helplevel extends Level
 			currentlySelected = 0;
 		}
 
-
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
 			if (currentlySelected == 0){
+				//to be added
 			}
 		}
 
@@ -112,6 +112,7 @@ public class Helplevel extends Level
 		universe.setColor(Color.BLACK); 
 		universe.fillRect(0, 0, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT); 
 
+		//Forces currentlySelected to only be 0, 3 or 6
 		while(!(currentlySelected == 0 || currentlySelected == 3 || currentlySelected == 6)){
 			if (keyUpWasDown){
 				currentlySelected--;
@@ -122,6 +123,8 @@ public class Helplevel extends Level
 				currentlySelected -= menuItems.length;
 			}
 		}
+		
+		//Draws Text
 		for (int i = 0;i < menuItems.length;i++){
 			if (currentlySelected == i){
 				universe.setFont(retroComputerBold);
