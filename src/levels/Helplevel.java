@@ -17,8 +17,6 @@ public class Helplevel extends Level
 	boolean keyDownWasDown = false;
 	boolean keyUpWasDown = false;
 	
-	InputHandler input;
-	
 	final int FPS = 30;
 
 	BufferedImage backBuffer; 

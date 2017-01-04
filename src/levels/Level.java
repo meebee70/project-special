@@ -1,7 +1,9 @@
 package levels;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
+import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 
 public abstract class Level {
@@ -10,10 +12,13 @@ public abstract class Level {
 	public boolean isRunning = true;
 	private final int FPS = 60;
 	public StateManager sm;
+	public InputHandler input;
 	
 	public Level( StateManager sm, Graphics g){
 		this.sm = sm;
 		this.g = sm.getGraphics();
+		this.input = sm.getInputHandler();
+		
 	}
 	
 	public void run(){
@@ -23,6 +28,11 @@ public abstract class Level {
 		long time = System.currentTimeMillis();
 		
 		while (isRunning){
+			
+			if (exitIsPressed()){
+				exitLevel(250);
+			}
+			
 			update();
 			draw();
 			
@@ -93,5 +103,11 @@ public abstract class Level {
 		}catch (Exception e){}
 		
 	}
+	
+	public boolean exitIsPressed(){
+		return (input.isKeyDown(KeyEvent.VK_ESCAPE));
+				
+	}
+	
 	
 }
