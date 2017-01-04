@@ -28,7 +28,7 @@ public class Helplevel extends Level
 	private int currentlySelected;
 	private String[] menuItems = {
 			"Player One",
-			"Movement WASD	Dash attack Space",
+			"Movement WASD  Dash attack Space",
 			"Hold up to wall climb",
 			"Player Two",
 			"Movement Arrow Keys	Double Jump Up Twice",
@@ -112,7 +112,7 @@ public class Helplevel extends Level
 				currentlySelected++;
 			}
 			if (currentlySelected >= menuItems.length){
-				currentlySelected -= menuItems.length;
+				currentlySelected = 0;
 			}
 		}
 		
@@ -125,7 +125,7 @@ public class Helplevel extends Level
 				universe.setFont(retroComputerHelp);
 				universe.setColor(Color.BLUE);
 			}
-			universe.drawString(menuItems[i], 80, 50 + (i * 50 + sm.WINDOW_HEIGHT/5));
+			universe.drawString(menuItems[i], 80, 50 + (i * 50));
 
 		}
 		
