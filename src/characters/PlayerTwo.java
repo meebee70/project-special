@@ -179,10 +179,16 @@ public class PlayerTwo {
 		if (this.x + xVelocity < 0){
 			this.setCurrentX(0);
 			this.xVelocity = 0;
-		}
-		if (this.x + xVelocity >= sm.UNIVERSE_WIDTH - WIDTH){
+		}else if (this.x + xVelocity >= sm.UNIVERSE_WIDTH - WIDTH){
 			this.setCurrentX(sm.UNIVERSE_WIDTH - WIDTH -1);
 			this.xVelocity = 0;
+		}
+		
+		if (getCurrentY() + yVelocity < 0){
+			yVelocity = 0;
+		}else if (getCurrentY() + yVelocity > sm.UNIVERSE_HEIGHT){
+			yVelocity = 0;
+			y = sm.UNIVERSE_HEIGHT - 50;
 		}
 	}
 	

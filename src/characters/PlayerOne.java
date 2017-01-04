@@ -153,15 +153,9 @@ public class PlayerOne {
 			int aY2 = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
 			int aY = aY2 + this.getHeight();
+			
 			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
-		}
-		for (Terrain form: platforms){
-
-			int aX = this.getCurrentX();
-			int aY = this.getCurrentY();
-			int aX2 = aX + this.getWidth();
-			int aY2 = aY + this.getHeight();
-
+		
 
 			//X Collision
 			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
@@ -187,6 +181,10 @@ public class PlayerOne {
 					aY = this.getCurrentY();
 					aY2 = aY + this.getHeight();
 				}
+				yVelocity = 0;
+			}
+			
+			if (getCurrentY() + yVelocity < 0){
 				yVelocity = 0;
 			}
 
