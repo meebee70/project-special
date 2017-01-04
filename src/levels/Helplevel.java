@@ -21,7 +21,6 @@ import mainGameEngine.StateManager;
  */
 public class Helplevel extends Level
 {        
-	boolean isRunning = true;
 	boolean keyDownWasDown = false;
 	boolean keyUpWasDown = false;
 	
@@ -98,8 +97,8 @@ public class Helplevel extends Level
 		}
 
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
-			if (currentlySelected == 0){
-				//to be added
+			if (currentlySelected == 6){
+				isRunning = false;
 			}
 		}
 
