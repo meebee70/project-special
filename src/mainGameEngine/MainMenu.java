@@ -145,11 +145,11 @@ public class MainMenu extends Level
 
 		for (int i = 0;i < menuItems.length;i++){
 			if (currentlySelected == i){
-				bbg.setFont(retroComputer);
+				bbg.setFont(retroComputerBold);
 				bbg.setColor(Color.GREEN);
 
 			}else{
-				bbg.setFont(retroComputerBold);
+				bbg.setFont(retroComputer);
 				bbg.setColor(Color.BLUE);
 			}
 			bbg.drawString(menuItems[i], (sm.WINDOW_WIDTH / 2) - 50, 50 + (i * 90 + sm.WINDOW_HEIGHT/5));
