@@ -42,7 +42,6 @@ public class Camera {
 	}
 	
 	
-	
 	public void move(int x1,int x2, int y1, int y2){
 		double leftBound = (xZoom * 0.3) + (this.x);
 		double rightBound = (xZoom - (xZoom * 0.3)) + (this.x);
@@ -76,7 +75,15 @@ public class Camera {
 		if (player1X > rightBound || player2X > rightBound){
 			rightMove = true;
 		}
-		
+		if (leftside < leftBound){
+			leftMove = false;
+		}
+		if (rightside < rightBound){
+			rightMove = false;
+		}
+		if (topside < topBound){
+			topMove = false;
+		}
 		
 		if (leftMove ^ rightMove){
 			return true;
