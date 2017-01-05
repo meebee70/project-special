@@ -74,17 +74,8 @@ public class Camera {
 		}
 		if (player1X > rightBound || player2X > rightBound){
 			rightMove = true;
+
 		}
-		if (leftside < leftBound){
-			leftMove = false;
-		}
-		if (rightside < rightBound){
-			rightMove = false;
-		}
-		if (topside < topBound){
-			topMove = false;
-		}
-		
 		if (leftMove ^ rightMove){
 			return true;
 		}else{
