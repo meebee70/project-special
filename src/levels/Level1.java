@@ -26,7 +26,7 @@ public class Level1 extends Level {
 	
 	private Terrain[] platforms = new Terrain[10];
 	
-	private Camera cam = new Camera(sm.getGraphics(),sm , -50 , -50 , 1000 , 500);
+	private Camera cam = new Camera(sm.getGraphics(),sm , 0 , 0 , 1000 , 500);
 	
 
 	public Level1(StateManager sm, Graphics g) {
