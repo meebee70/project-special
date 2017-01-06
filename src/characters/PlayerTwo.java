@@ -29,7 +29,7 @@ public class PlayerTwo {
 	private double x, y, xVelocity, yVelocity, freezeTimer;
 	private boolean keyReleasedUp, keyReleasedCtrl, inAir;
 
-	private Image playerTwoSprite, playerTwoStationairy, playerTwoFreeze, playerTwoRight, playerTwoLeft;
+	private Image playerTwoSprite, playerTwoStationairy, playerTwoFreeze, playerTwoGroundPound, playerTwoRight, playerTwoLeft;
 
 	private StateManager sm;
 
@@ -63,6 +63,7 @@ public class PlayerTwo {
 		try {
 			this.playerTwoStationairy = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
 			this.playerTwoFreeze = ImageIO.read(new File("res/PlayerSprites/Player 2 Freeze.gif"));
+			this.playerTwoGroundPound = ImageIO.read(new File("res/PlayerSprites/Player 2 Ground Pound.gif"));
 			this.playerTwoRight = ImageIO.read(new File("res/PlayerSprites/Player 2 walk right.gif"));
 			this.playerTwoLeft = ImageIO.read(new File("res/PlayerSprites/Player 2 walk left.gif"));
 		} catch (IOException e) {
@@ -158,8 +159,8 @@ public class PlayerTwo {
 		
 		this.outerBoundCollides();
 
-		//Tests if Player is in the Air or not
-		if (this.inAir && this.keyDown == 1){
+		//Does a Ground Pound
+		if (this.inAir && this.keyDown == 1 && !(freezeTimer > 0) ){
 			yVelocity += GROUND_POUND_SPEED;
 		}
 
@@ -189,7 +190,7 @@ public class PlayerTwo {
 		updateSprites();
 
 		xVelocity = 0;
-		//yVelocity = 0;
+		
 		keyLeft = 0;
 		keyRight = 0;
 		keyUp = 0;
@@ -291,6 +292,8 @@ public class PlayerTwo {
 	public void updateSprites(){
 		if (this.freezeTimer > 0){
 			this.setSprite(playerTwoFreeze);
+		} else if (this.inAir && this.keyDown == 1){
+			this.setSprite(playerTwoGroundPound);
 		} else if (xVelocity > 0){
 			this.setSprite(playerTwoRight);
 		} else if (xVelocity < 0){

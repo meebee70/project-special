@@ -25,7 +25,7 @@ public class PlayerOne {
 	private double x, y, xVelocity, yVelocity;
 	private boolean keyReleased, inAir;
 
-	private Image sprite;
+	private Image playerOneStationairy, playerOneRight, playerOneLeft, playerOneSprite;
 
 	private StateManager sm;
 
@@ -53,7 +53,9 @@ public class PlayerOne {
 
 
 		try {
-			this.sprite = ImageIO.read(new File("res/PlayerSprites/Player 1.png"));
+			this.playerOneStationairy = ImageIO.read(new File("res/PlayerSprites/Player 1.png"));
+			this.playerOneRight = ImageIO.read(new File("res/PlayerSprites/Player 1 walk right.gif"));
+			this.playerOneLeft = ImageIO.read(new File("res/PlayerSprites/Player 1 walk left.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -79,7 +81,11 @@ public class PlayerOne {
 	}
 
 	public Image getSprite(){
-		return sprite;
+		return playerOneSprite;
+	}
+	
+	public void setSprite(Image sprite){
+		this.playerOneSprite = sprite;
 	}
 
 	//MUTATORS
@@ -107,11 +113,25 @@ public class PlayerOne {
 		this.y += yVelocity;
 	}
 
+	public boolean inAir(Terrain[] platforms){
+		inAir = true;
+		for (Terrain form: platforms){
+
+			int aX = this.getCurrentX();
+			int aY2 = this.getCurrentY();
+			int aX2 = aX + this.getWidth();
+			int aY = aY2 + this.getHeight();
+			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
+		}
+		return inAir;
+	}
+
 	//GET INPUT AND USE IT
 	/**
 	 * Updates Player Object while getting input and calculating new x & y
 	 */
 	public void updatePlayer(Terrain[] platforms){
+		System.out.println(this.inAir(platforms));
 
 		//Crappy code that tests if key is released
 		if (!keyReleased && input.isKeyDown(KeyEvent.VK_W)){
@@ -146,16 +166,13 @@ public class PlayerOne {
 			yVelocity += GRAVITY;
 		}
 		//Tests if Player is in the Air or not
-		inAir = true;
 		for (Terrain form: platforms){
 
 			int aX = this.getCurrentX();
 			int aY2 = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
 			int aY = aY2 + this.getHeight();
-			
-			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
-		
+
 
 			//X Collision
 			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
@@ -183,7 +200,7 @@ public class PlayerOne {
 				}
 				yVelocity = 0;
 			}
-			
+
 			if (getCurrentY() + yVelocity < 0){
 				yVelocity = 0;
 			}
@@ -196,6 +213,8 @@ public class PlayerOne {
 		}
 
 		this.moveXandY(xVelocity, yVelocity);
+		
+		this.updateSprites();
 
 		xVelocity = 0;
 		//yVelocity = 0;
@@ -212,6 +231,17 @@ public class PlayerOne {
 			return -1;
 		} else {
 			return 0;
+		}
+	}
+
+	//Changes Sprites Based on Movement/Actions
+	public void updateSprites(){
+		if (xVelocity > 0){
+			this.setSprite(playerOneRight);
+		} else if (xVelocity < 0){
+			this.setSprite(playerOneLeft);
+		} else {
+			this.setSprite(playerOneStationairy);
 		}
 	}
 
