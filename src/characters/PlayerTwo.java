@@ -18,10 +18,10 @@ public class PlayerTwo {
 	final int FPS = 60;
 
 	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
-	private final double JUMPSPEED = 2;
-	private final double GRAVITY = 0.7 / FPS;
+	private final double JUMPSPEED = 2.4;
+	private final double GRAVITY = 0.9/ FPS;
 	private final double GROUND_POUND_SPEED = GRAVITY * 4;
-	private final int JUMPSMAX = 2;
+	private final int JUMPSMAX = 12;
 
 	private int keyLeft, keyRight, keyUp, keyDown, jumps;
 	private double x, y, xVelocity, yVelocity;

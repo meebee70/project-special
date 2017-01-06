@@ -42,7 +42,6 @@ public class Camera {
 	}
 	
 	
-	
 	public void move(int x1,int x2, int y1, int y2){
 		double leftBound = (xZoom * 0.3) + (this.x);
 		double rightBound = (xZoom - (xZoom * 0.3)) + (this.x);
@@ -56,8 +55,7 @@ public class Camera {
 		}
 		
 		this.y = (int) ((Math.max(y1, y2)) - (this.yZoom / 1.6));
-		
-	}
+		}
 	
 	private int getXDirection(int x1, int x2, int y1, int y2, double leftBound, double rightBound){
 		if ((x1 > rightBound) ^ (x2 > rightBound)){
@@ -75,9 +73,8 @@ public class Camera {
 		}
 		if (player1X > rightBound || player2X > rightBound){
 			rightMove = true;
+
 		}
-		
-		
 		if (leftMove ^ rightMove){
 			return true;
 		}else{
