@@ -18,10 +18,10 @@ public class PlayerTwo {
 	final int FPS = 60;
 
 	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
-	private final double JUMPSPEED = 2.2;
+	private final double JUMPSPEED = 2.1;
 	private final double GRAVITY = 0.9 / FPS;
 	private final double GROUND_POUND_SPEED = GRAVITY * 4;
-	private final double PAUSE_LENGTH_MAX = 280 / FPS;
+	private final double PAUSE_LENGTH_MAX = 8000 / FPS;
 	private final int JUMPSMAX = 2;
 
 	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps;
@@ -100,6 +100,10 @@ public class PlayerTwo {
 	public Image getSprite(){
 		return sprite;
 	}
+	
+	public void setSprite(Image sprite){
+		this.sprite = sprite;
+	}
 
 	//MUTATORS
 	//@Param = new x and/or y coord
@@ -150,7 +154,7 @@ public class PlayerTwo {
 
 		this.collisionCalculate(platforms);
 
-		if (this.keyUp == 1 && jumps > 0){
+		if (this.keyUp == 1 && jumps > 0 && inAirTimer == 0){
 			jumps--;
 			yVelocity = -JUMPSPEED;
 		}
@@ -159,10 +163,12 @@ public class PlayerTwo {
 			inAirTimer--;
 			xVelocity = 0;
 			yVelocity = 0;
-		} else if (keyCtrl == 1 && inAir && inAirTimer == 0){
+		}
+		if (keyCtrl == 1 && inAir && inAirTimer == 0){
 			inAirTimer = PAUSE_LENGTH_MAX;
 			xVelocity = 0;
 			yVelocity = 0;
+			this.jumps = 0;
 		}
 		
 		this.moveXandY(xVelocity, yVelocity);
