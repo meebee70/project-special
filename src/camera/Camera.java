@@ -55,8 +55,7 @@ public class Camera {
 		}
 		
 		this.y = (int) ((Math.max(y1, y2)) - (this.yZoom / 1.6));
-		
-	}
+		}
 	
 	private int getXDirection(int x1, int x2, int y1, int y2, double leftBound, double rightBound){
 		if ((x1 > rightBound) ^ (x2 > rightBound)){
