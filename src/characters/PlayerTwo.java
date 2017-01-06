@@ -25,7 +25,7 @@ public class PlayerTwo {
 	private final int PAUSES_LEFT_MAX = 1;
 	private final int JUMPSMAX = 2;
 
-	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps, pausesLeft;
+	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps, pausesLeft, xDirection;
 	private double x, y, xVelocity, yVelocity, freezeTimer;
 	private boolean keyReleasedUp, keyReleasedCtrl, inAir;
 
@@ -137,7 +137,6 @@ public class PlayerTwo {
 		this.y += yVelocity;
 	}
 
-	//GET INPUT AND USE IT
 	/**
 	 * Updates Player Object while getting input and calculating new x & y
 	 */
@@ -150,8 +149,8 @@ public class PlayerTwo {
 			jumps = JUMPSMAX;
 			pausesLeft = PAUSES_LEFT_MAX;
 		}
-
-		xVelocity = (this.keyLeft + this.keyRight) * this.BASE_X_SPEED;
+		xDirection = this.keyLeft + this.keyRight;
+		xVelocity = xDirection * this.BASE_X_SPEED;
 
 		if (yVelocity < 10){
 			yVelocity += GRAVITY;
@@ -294,9 +293,9 @@ public class PlayerTwo {
 			this.setSprite(playerTwoFreeze);
 		} else if (this.inAir && this.keyDown == 1){
 			this.setSprite(playerTwoGroundPound);
-		} else if (xVelocity > 0){
+		} else if (this.xDirection == 1){
 			this.setSprite(playerTwoRight);
-		} else if (xVelocity < 0){
+		} else if (this.xDirection == -1){
 			this.setSprite(playerTwoLeft);
 		} else {
 			this.setSprite(playerTwoStationairy);
