@@ -17,8 +17,8 @@ public class PlayerOne {
 	final int FPS = 60;
 
 	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
-	private final double JUMPSPEED = 3;
-	private final double GRAVITY = 0.9/ FPS;
+	private final double JUMPSPEED = 2.1; //2.65
+	private final double GRAVITY = 0.9 / FPS;
 	private final int JUMPSMAX = 1;
 
 	private int keyLeft, keyRight, keyUp, jumps;
