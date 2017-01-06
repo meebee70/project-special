@@ -21,14 +21,15 @@ public class PlayerTwo {
 	private final double JUMPSPEED = 2.1;
 	private final double GRAVITY = 0.9 / FPS;
 	private final double GROUND_POUND_SPEED = GRAVITY * 4;
-	private final double PAUSE_LENGTH_MAX = 8000 / FPS;
+	private final double FREEZE_LENGTH_MAX = 8000 / FPS;
+	private final int PAUSES_LEFT_MAX = 1;
 	private final int JUMPSMAX = 2;
 
-	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps;
-	private double x, y, xVelocity, yVelocity, inAirTimer;
+	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps, pausesLeft;
+	private double x, y, xVelocity, yVelocity, freezeTimer;
 	private boolean keyReleasedUp, keyReleasedCtrl, inAir;
 
-	private Image playerTwoSprite, playerTwoStationairy, playerTwoFreeze;
+	private Image playerTwoSprite, playerTwoStationairy, playerTwoFreeze, playerTwoRight, playerTwoLeft;
 
 	private StateManager sm;
 
@@ -50,7 +51,8 @@ public class PlayerTwo {
 		this.keyDown = 0;
 		this.keyCtrl = 0;
 		this.jumps = 0;
-		this.inAirTimer = 0;
+		this.pausesLeft = 0;
+		this.freezeTimer = 0;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
 		this.WIDTH = 26; //Update later
@@ -60,7 +62,9 @@ public class PlayerTwo {
 
 		try {
 			this.playerTwoStationairy = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
-			this.playerTwoFreeze = ImageIO.read(new File("res/PlayerSprites/Player 2 Freeze.png"));
+			this.playerTwoFreeze = ImageIO.read(new File("res/PlayerSprites/Player 2 Freeze.gif"));
+			this.playerTwoRight = ImageIO.read(new File("res/PlayerSprites/Player 2 walk right.gif"));
+			this.playerTwoLeft = ImageIO.read(new File("res/PlayerSprites/Player 2 walk left.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -103,7 +107,7 @@ public class PlayerTwo {
 	}
 	
 	public void setSprite(Image sprite){
-		this.playerTwoStationairy = sprite;
+		this.playerTwoSprite = sprite;
 	}
 
 	//MUTATORS
@@ -138,6 +142,13 @@ public class PlayerTwo {
 	 */
 	public void updatePlayer(Terrain[] platforms){
 		this.getInputs();
+		this.inAir(platforms);
+		
+		//Sets jumps
+		if (!this.inAir){
+			jumps = JUMPSMAX;
+			pausesLeft = PAUSES_LEFT_MAX;
+		}
 
 		xVelocity = (this.keyLeft + this.keyRight) * this.BASE_X_SPEED;
 
@@ -148,31 +159,34 @@ public class PlayerTwo {
 		this.outerBoundCollides();
 
 		//Tests if Player is in the Air or not
-		if (this.inAir(platforms) && this.keyDown == 1){
+		if (this.inAir && this.keyDown == 1){
 			yVelocity += GROUND_POUND_SPEED;
-			System.out.println("Ground Pound");
 		}
 
 		this.collisionCalculate(platforms);
 
-		if (this.keyUp == 1 && jumps > 0 && inAirTimer == 0){
+		if (this.keyUp == 1 && jumps > 0 && freezeTimer == 0){
 			jumps--;
 			yVelocity = -JUMPSPEED;
 		}
 		
-		if (inAirTimer > 0){
-			inAirTimer--;
+		if (freezeTimer > 0){
+			freezeTimer--;
 			xVelocity = 0;
 			yVelocity = 0;
 		}
-		if (keyCtrl == 1 && inAir && inAirTimer == 0){
-			inAirTimer = PAUSE_LENGTH_MAX;
-			xVelocity = 0;
-			yVelocity = 0;
+		if (keyCtrl == 1 && inAir && freezeTimer == 0 && pausesLeft > 0){
+			freezeTimer = FREEZE_LENGTH_MAX;
+			pausesLeft--;
+			this.xVelocity = 0;
+			this.yVelocity = 0;
 			this.jumps = 0;
+			
 		}
 		
 		this.moveXandY(xVelocity, yVelocity);
+		
+		updateSprites();
 
 		xVelocity = 0;
 		//yVelocity = 0;
@@ -260,12 +274,6 @@ public class PlayerTwo {
 				xVelocity = 0;
 			}
 			
-			//Sets jumps
-			if (physics.collides(aX, aY+1, aX2, aY2+1, form)){
-				jumps = JUMPSMAX;
-				System.out.println("Jumps Max");
-			}
-			
 			//Y Collision
 			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
 				while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
@@ -279,10 +287,14 @@ public class PlayerTwo {
 
 		}
 	}
-	
+	//Changes Sprites Based on Movement/Actions
 	public void updateSprites(){
-		if (this.inAirTimer > 0){
+		if (this.freezeTimer > 0){
 			this.setSprite(playerTwoFreeze);
+		} else if (xVelocity > 0){
+			this.setSprite(playerTwoRight);
+		} else if (xVelocity < 0){
+			this.setSprite(playerTwoLeft);
 		} else {
 			this.setSprite(playerTwoStationairy);
 		}
