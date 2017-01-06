@@ -28,7 +28,7 @@ public class PlayerTwo {
 	private double x, y, xVelocity, yVelocity, inAirTimer;
 	private boolean keyReleasedUp, keyReleasedCtrl, inAir;
 
-	private Image sprite;
+	private Image playerTwoSprite, playerTwoStationairy, playerTwoFreeze;
 
 	private StateManager sm;
 
@@ -59,7 +59,8 @@ public class PlayerTwo {
 
 
 		try {
-			this.sprite = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
+			this.playerTwoStationairy = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
+			this.playerTwoFreeze = ImageIO.read(new File("res/PlayerSprites/Player 2 Freeze.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -98,11 +99,11 @@ public class PlayerTwo {
 	}
 
 	public Image getSprite(){
-		return sprite;
+		return playerTwoSprite;
 	}
 	
 	public void setSprite(Image sprite){
-		this.sprite = sprite;
+		this.playerTwoStationairy = sprite;
 	}
 
 	//MUTATORS
@@ -276,6 +277,14 @@ public class PlayerTwo {
 				yVelocity = 0;
 			}
 
+		}
+	}
+	
+	public void updateSprites(){
+		if (this.inAirTimer > 0){
+			this.setSprite(playerTwoFreeze);
+		} else {
+			this.setSprite(playerTwoStationairy);
 		}
 	}
 
