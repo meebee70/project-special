@@ -3,12 +3,9 @@ package levels;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.sun.glass.events.KeyEvent;
-
 import camera.Camera;
 import characters.PlayerOne;
 import characters.PlayerTwo;
-import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 import terrain.Terrain;
 
