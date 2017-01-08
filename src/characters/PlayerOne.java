@@ -1,10 +1,14 @@
 package characters;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 import com.sun.glass.events.KeyEvent;
 
@@ -20,12 +24,14 @@ public class PlayerOne {
 	private final double JUMPSPEED = 2.1; //2.65
 	private final double GRAVITY = 0.9 / FPS;
 	private final int JUMPSMAX = 1;
+	private final int ANIMATION_SPEED = 4;
 
-	private int keyLeft, keyRight, keyUp, keyDown, keyShift, jumps, xDirection;
+	private int keyLeft, keyRight, keyUp, keyDown, keyShift, jumps, xDirection, frame;
 	private double x, y, xVelocity, yVelocity;
 	private boolean inAir, keyReleasedUp, keyReleasedShift;
 
-	private Image playerOneStationairy, playerOneRight, playerOneLeft, playerOneSprite;
+	private Image playerOneStationairy, playerOneSprite;
+	private ArrayList<Image> playerOneRight, playerOneLeft;
 
 	private StateManager sm;
 
@@ -45,6 +51,7 @@ public class PlayerOne {
 		this.keyRight = 0;
 		this.keyUp = 0;
 		this.jumps = 0;
+		this.frame = 0;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
 		this.WIDTH = 32; //Update later
@@ -54,12 +61,17 @@ public class PlayerOne {
 
 		try {
 			this.playerOneStationairy = ImageIO.read(new File("res/PlayerSprites/Player 1.png"));
-			this.playerOneRight = ImageIO.read(new File("res/PlayerSprites/Player 1 walk right.gif"));
-			this.playerOneLeft = ImageIO.read(new File("res/PlayerSprites/Player 1 walk left.gif"));
+			//this.playerOneRight = ImageIO.read(new File("res/PlayerSprites/Player 1 walk right.gif"));
+			//this.playerOneLeft = ImageIO.read(new File("res/PlayerSprites/Player 1 walk left.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		playerOneRight = new ArrayList<Image>();
+		playerOneLeft = new ArrayList<Image>();
+		loadSprite(playerOneRight, "res/PlayerSprites/Player 1 walk right.gif");
+		loadSprite(playerOneLeft, "res/PlayerSprites/Player 1 walk left.gif");
+		
 
 	}
 
@@ -83,11 +95,36 @@ public class PlayerOne {
 	public Image getSprite(){
 		return playerOneSprite;
 	}
+
 	
+
 	public void setSprite(Image sprite){
 		this.playerOneSprite = sprite;
 	}
+	public void setSprite(ArrayList<Image> sprite){
+		this.playerOneSprite = sprite.get((int)((this.frame / ANIMATION_SPEED) % sprite.size()));
+		
+	}
+	public void setSprite(ArrayList<Image> sprite, int i){
+		this.playerOneSprite = sprite.get(i);
+	}
+	
+	private void loadSprite(ArrayList<Image> gifList, String fileName){
+		try {
+			ImageReader reader = ImageIO.getImageReadersByFormatName("gif").next();
+			File input = new File(fileName);
+			ImageInputStream stream = ImageIO.createImageInputStream(input);
+			reader.setInput(stream);
 
+			int count = reader.getNumImages(true);
+			for (int index = 0; index < count; index++) {
+				BufferedImage frame = reader.read(index);
+				// Here you go
+				gifList.add(frame);
+			}
+		} catch (IOException ex) {
+		}
+	}
 	//MUTATORS
 	//@Param = new x and/or y coord
 	public void setCurrentX(double newX) {
@@ -133,6 +170,7 @@ public class PlayerOne {
 	public void updatePlayer(Terrain[] platforms){
 		this.inAir(platforms);
 		getInputs();
+		frame++;
 		
 		xDirection = this.keyLeft + this.keyRight;
 
