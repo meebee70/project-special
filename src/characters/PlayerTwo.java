@@ -1,10 +1,14 @@
 package characters;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 import com.sun.glass.events.KeyEvent;
 
@@ -24,13 +28,15 @@ public class PlayerTwo {
 	private final double FREEZE_LENGTH_MAX = 8000 / FPS;
 	private final int PAUSES_LEFT_MAX = 1;
 	private final int JUMPSMAX = 2;
+	private final int ANIMATION_SPEED = 4;
 
-	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps, pausesLeft, xDirection;
+	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps, pausesLeft, xDirection, frame;
 	private double x, y, xVelocity, yVelocity, freezeTimer;
 	private boolean keyReleasedUp, keyReleasedCtrl, inAir;
 
-	private Image playerTwoSprite, playerTwoStationairy, playerTwoFreeze, playerTwoGroundPound, playerTwoRight, playerTwoLeft;
-
+	private Image playerTwoSprite, playerTwoStationairy, playerTwoFreeze;
+	private ArrayList<Image> playerTwoRight, playerTwoLeft, playerTwoGroundPound;
+	
 	private StateManager sm;
 
 	private InputHandler input;
@@ -53,6 +59,7 @@ public class PlayerTwo {
 		this.jumps = 0;
 		this.pausesLeft = 0;
 		this.freezeTimer = 0;
+		this.frame = 0;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
 		this.WIDTH = 26; //Update later
@@ -63,14 +70,19 @@ public class PlayerTwo {
 		try {
 			this.playerTwoStationairy = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
 			this.playerTwoFreeze = ImageIO.read(new File("res/PlayerSprites/Player 2 Freeze.gif"));
-			this.playerTwoGroundPound = ImageIO.read(new File("res/PlayerSprites/Player 2 Ground Pound.gif"));
-			this.playerTwoRight = ImageIO.read(new File("res/PlayerSprites/Player 2 walk right.gif"));
-			this.playerTwoLeft = ImageIO.read(new File("res/PlayerSprites/Player 2 walk left.gif"));
+			//this.playerTwoGroundPound = ImageIO.read(new File("res/PlayerSprites/Player 2 Ground Pound.gif"));
+			//this.playerTwoRight = ImageIO.read(new File("res/PlayerSprites/Player 2 walk right.gif"));
+			//this.playerTwoLeft = ImageIO.read(new File("res/PlayerSprites/Player 2 walk left.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
+		playerTwoRight = new ArrayList<Image>();
+		playerTwoLeft = new ArrayList<Image>();
+		playerTwoGroundPound = new ArrayList<Image>();
+		loadSprite(playerTwoRight, "res/PlayerSprites/Player 2 walk right.gif");
+		loadSprite(playerTwoLeft, "res/PlayerSprites/Player 2 walk left.gif");
+		loadSprite(playerTwoGroundPound, "res/PlayerSprites/Player 2 Ground Pound.gif");
+		
 	}
 
 	//ACCESSORS
@@ -89,7 +101,7 @@ public class PlayerTwo {
 	public int getWidth() {
 		return WIDTH;
 	}
-	
+
 	public boolean inAir(Terrain[] platforms){
 		inAir = true;
 		for (Terrain form: platforms){
@@ -102,21 +114,47 @@ public class PlayerTwo {
 		}
 		return inAir;
 	}
+	
 
 	public Image getSprite(){
 		return playerTwoSprite;
 	}
+
 	
+
 	public void setSprite(Image sprite){
 		this.playerTwoSprite = sprite;
 	}
+	public void setSprite(ArrayList<Image> sprite){
+		this.playerTwoSprite = sprite.get((int)((this.frame / ANIMATION_SPEED) % sprite.size()));
+		
+	}
+	public void setSprite(ArrayList<Image> sprite, int i){
+		this.playerTwoSprite = sprite.get(i);
+	}
+	
+	private void loadSprite(ArrayList<Image> gifList, String fileName){
+		try {
+			ImageReader reader = ImageIO.getImageReadersByFormatName("gif").next();
+			File input = new File(fileName);
+			ImageInputStream stream = ImageIO.createImageInputStream(input);
+			reader.setInput(stream);
 
+			int count = reader.getNumImages(true);
+			for (int index = 0; index < count; index++) {
+				BufferedImage frame = reader.read(index);
+				// Here you go
+				gifList.add(frame);
+			}
+		} catch (IOException ex) {
+		}
+	}
+	
 	//MUTATORS
 	//@Param = new x and/or y coord
 	public void setCurrentX(double newX) {
 		this.x = newX;
 	}
-	
 	public void setCurrentY(double newY) {
 		this.y = newY;
 	}
@@ -144,6 +182,8 @@ public class PlayerTwo {
 		this.getInputs();
 		this.inAir(platforms);
 		
+		frame++;
+
 		//Sets jumps
 		if (!this.inAir){
 			jumps = JUMPSMAX;
@@ -155,7 +195,7 @@ public class PlayerTwo {
 		if (yVelocity < 10){
 			yVelocity += GRAVITY;
 		}
-		
+
 		this.outerBoundCollides();
 
 		//Does a Ground Pound
@@ -169,7 +209,7 @@ public class PlayerTwo {
 			jumps--;
 			yVelocity = -JUMPSPEED;
 		}
-		
+
 		if (freezeTimer > 0){
 			freezeTimer--;
 			xVelocity = 0;
@@ -181,15 +221,15 @@ public class PlayerTwo {
 			this.xVelocity = 0;
 			this.yVelocity = 0;
 			this.jumps = 0;
-			
+
 		}
-		
+
 		this.moveXandY(xVelocity, yVelocity);
-		
+
 		updateSprites();
 
 		xVelocity = 0;
-		
+
 		keyLeft = 0;
 		keyRight = 0;
 		keyUp = 0;
@@ -209,7 +249,7 @@ public class PlayerTwo {
 			return 0;
 		}
 	}
-	
+
 	private void outerBoundCollides(){
 		if (this.x + xVelocity < 0){
 			this.setCurrentX(0);
@@ -218,7 +258,7 @@ public class PlayerTwo {
 			this.setCurrentX(sm.UNIVERSE_WIDTH - WIDTH -1);
 			this.xVelocity = 0;
 		}
-		
+
 		if (getCurrentY() + yVelocity < 0){
 			yVelocity = 0;
 		}else if (getCurrentY() + yVelocity > sm.UNIVERSE_HEIGHT){
@@ -226,7 +266,7 @@ public class PlayerTwo {
 			y = sm.UNIVERSE_HEIGHT - 50;
 		}
 	}
-	
+
 	private void getInputs(){
 		if (!keyReleasedUp && input.isKeyDown(KeyEvent.VK_UP)){
 			this.keyUp = 1;
@@ -244,13 +284,13 @@ public class PlayerTwo {
 		if (input.isKeyDown(KeyEvent.VK_RIGHT)){
 			this.keyRight = 1;
 		}
-		
+
 		if (!keyReleasedCtrl && input.isKeyDown(KeyEvent.VK_CONTROL)){
 			this.keyCtrl = 1;
 		}
 		keyReleasedCtrl = input.isKeyDown(KeyEvent.VK_CONTROL);
 	}
-	
+
 	private void collisionCalculate(Terrain[] platforms){
 		for (Terrain form: platforms){
 
@@ -273,7 +313,7 @@ public class PlayerTwo {
 				}
 				xVelocity = 0;
 			}
-			
+
 			//Y Collision
 			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
 				while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
