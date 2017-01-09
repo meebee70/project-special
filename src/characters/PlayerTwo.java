@@ -12,6 +12,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import com.sun.glass.events.KeyEvent;
 
+import levels.Level;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 import physics.Physics;
@@ -19,16 +20,10 @@ import terrain.Terrain;
 
 public class PlayerTwo {
 	//Only changes player physics (to be changed later)
-	final int FPS = 60;
+	final int FPS;
 
-	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
-	private final double JUMPSPEED = 2.1;
-	private final double GRAVITY = 0.9 / FPS;
-	private final double GROUND_POUND_SPEED = GRAVITY * 4;
-	private final double FREEZE_LENGTH_MAX = 8000 / FPS;
-	private final int PAUSES_LEFT_MAX = 1;
-	private final int JUMPSMAX = 2;
-	private final int ANIMATION_SPEED = 4;
+	private final double BASE_X_SPEED, JUMPSPEED,GRAVITY, GROUND_POUND_SPEED, FREEZE_LENGTH_MAX; // pixels/frame
+	private final int PAUSES_LEFT_MAX,JUMPSMAX,ANIMATION_SPEED;
 
 	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps, pausesLeft, xDirection, frame;
 	private double x, y, xVelocity, yVelocity, freezeTimer;
@@ -38,6 +33,8 @@ public class PlayerTwo {
 	private ArrayList<Image> playerTwoRight, playerTwoLeft, playerTwoGroundPound;
 	
 	private StateManager sm;
+	
+	private Level level;
 
 	private InputHandler input;
 
@@ -46,7 +43,7 @@ public class PlayerTwo {
 	final private int HEIGHT;
 	final private int WIDTH;
 
-	public PlayerTwo(int x, int y, StateManager sm){
+	public PlayerTwo(int x, int y, StateManager sm, Level level){
 		this.x = x;
 		this.y = y;
 		this.xVelocity = 0;
@@ -60,6 +57,19 @@ public class PlayerTwo {
 		this.pausesLeft = 0;
 		this.freezeTimer = 0;
 		this.frame = 0;
+		
+		this.level = level;
+		
+		this.FPS = level.getFPS();
+		
+		BASE_X_SPEED = 60 / FPS; // pixels/frame
+		JUMPSPEED = 2.1;
+		GRAVITY = 0.9 / FPS;
+		GROUND_POUND_SPEED = GRAVITY * 4;
+		FREEZE_LENGTH_MAX = 8000 / FPS;
+		PAUSES_LEFT_MAX = 1;
+		JUMPSMAX = 2;
+		ANIMATION_SPEED = 4;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
 		this.WIDTH = 26; //Update later

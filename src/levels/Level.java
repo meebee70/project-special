@@ -109,5 +109,9 @@ public abstract class Level {
 				
 	}
 	
+	public int getFPS(){
+		return FPS;
+	}
+	
 	
 }
