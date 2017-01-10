@@ -42,7 +42,7 @@ public class Level1 extends Level {
 		}
 		platforms[0] = new Terrain(0, 460, sm.UNIVERSE_WIDTH,sm.UNIVERSE_HEIGHT, null);
 
-		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm);
+		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm,this);
 		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm,this);
 		
 	}
