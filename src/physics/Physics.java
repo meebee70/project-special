@@ -5,7 +5,7 @@ import characters.PlayerTwo;
 import terrain.Terrain;
 
 public class Physics {
-	private final double defaultGravity = 0.1;
+	private final double defaultGravity = 0.9;
 	private final double defaultFriction = 0.08;
 
 	private double gravity;
