@@ -7,8 +7,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public enum Type {
-	GOOMBA(""),
-	FLYER("");
+	GOOMBA("res/Laughing Stock.gif"),
+	FLYER("res/Tainted Ground v1.png");
 	//add more as we need them, also change these as needed
 	
 	

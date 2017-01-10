@@ -27,5 +27,7 @@ public class Enemy {
 		this.y = startY;
 	}
 
-	
+	public Image getSprite(){
+		return this.sprite;
+	}
 }
