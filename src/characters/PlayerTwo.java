@@ -64,7 +64,7 @@ public class PlayerTwo {
 		
 		BASE_X_SPEED = 60 / FPS; // pixels/frame
 		JUMPSPEED = 2.1;
-		GRAVITY = 0.9 / FPS;
+		GRAVITY = physics.getGravity();
 		GROUND_POUND_SPEED = GRAVITY * 4;
 		FREEZE_LENGTH_MAX = 8000 / FPS;
 		PAUSES_LEFT_MAX = 1;

@@ -59,7 +59,7 @@ public class PlayerOne {
 		
 		BASE_X_SPEED = 60 / FPS; // pixels/frame
 		JUMPSPEED = 2.1;
-		GRAVITY = 0.9 / FPS;
+		GRAVITY = physics.getGravity();
 		JUMPSMAX = 1;
 		ANIMATION_SPEED = 4;
 		touchesWall = false;
@@ -169,7 +169,7 @@ public class PlayerOne {
 			int aY2 = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
 			int aY = aY2 + this.getHeight();
-			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
+			inAir = !(Physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
 		}
 		return inAir;
 	}
@@ -264,8 +264,8 @@ public class PlayerOne {
 
 
 			//X Collision
-			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
-				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
+			if (Physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
+				while(!Physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
 					this.moveX(sign(xVelocity));
 
 					aX = this.getCurrentX();
@@ -278,12 +278,12 @@ public class PlayerOne {
 			}
 
 			//Y Collision
-			if (physics.collides(aX, aY+1, aX2, aY2+1, form)){
+			if (Physics.collides(aX, aY+1, aX2, aY2+1, form)){
 				jumps = JUMPSMAX;
 			}
 
-			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
-				while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
+			if (Physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
+				while(!Physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
 				{
 					this.moveY(sign(yVelocity));
 
