@@ -26,7 +26,7 @@ public class PlayerOne {
 
 	private int keyLeft, keyRight, keyUp, jumps, xDirection, frame;
 	private double x, y, xVelocity, yVelocity;
-	private boolean keyReleasedUp, inAir;
+	private boolean keyReleasedUp, inAir,touchesWall;
 
 	private Image playerOneStationairy, playerOneSprite;
 	private ArrayList<Image> playerOneRight, playerOneLeft;
@@ -60,11 +60,12 @@ public class PlayerOne {
 		BASE_X_SPEED = 60 / FPS; // pixels/frame
 		JUMPSPEED = 2.1;
 		GRAVITY = 0.9 / FPS;
-		JUMPSMAX = 2;
+		JUMPSMAX = 1;
 		ANIMATION_SPEED = 4;
+		touchesWall = false;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
-		this.WIDTH = 32; //Update later
+		this.WIDTH = 26; //Update later
 		this.sm = sm;
 		input = sm.input;
 
@@ -205,7 +206,9 @@ public class PlayerOne {
 		
 		this.collisionCalculate(platforms);
 
-		if (this.keyUp == 1 && jumps > 0){
+		if (touchesWall && input.isKeyDown(KeyEvent.VK_W)){
+			yVelocity = -this.BASE_X_SPEED;
+		}else if (this.keyUp == 1 && jumps > 0){
 			jumps--;
 			yVelocity = -JUMPSPEED;
 		}
@@ -219,7 +222,6 @@ public class PlayerOne {
 		keyLeft = 0;
 		keyRight = 0;
 		keyUp = 0;
-
 
 	}
 	
@@ -249,8 +251,12 @@ public class PlayerOne {
 	}
 	
 	private void collisionCalculate(Terrain[] platforms){
+		boolean[] touches = new boolean[platforms.length];
 		for (Terrain form: platforms){
+			
 
+			int i = 0;
+			
 			int aX = this.getCurrentX();
 			int aY2 = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
@@ -264,8 +270,11 @@ public class PlayerOne {
 
 					aX = this.getCurrentX();
 					aX2 = aX + this.getHeight();
+					
+					
 				}
 				xVelocity = 0;
+				touches[i] = true;
 			}
 
 			//Y Collision
@@ -288,6 +297,13 @@ public class PlayerOne {
 				yVelocity = 0;
 			}
 
+			i++;
+		}
+		
+		touchesWall = false;
+		
+		for (int i = 0; i < platforms.length; i++){
+			touchesWall = touches[i] || touchesWall;
 		}
 	}
 
