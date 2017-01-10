@@ -12,23 +12,21 @@ import javax.imageio.stream.ImageInputStream;
 
 import com.sun.glass.events.KeyEvent;
 
+import levels.Level;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 import physics.Physics;
 import terrain.Terrain;
 
 public class PlayerOne {
-	final int FPS = 60;
+	final int FPS;
 
-	private final double BASE_X_SPEED = 60 / FPS; // pixels/frame
-	private final double JUMPSPEED = 2.1; //2.65
-	private final double GRAVITY = 0.9 / FPS;
-	private final int JUMPSMAX = 1;
-	private final int ANIMATION_SPEED = 4;
+	private final double BASE_X_SPEED, JUMPSPEED,GRAVITY; // pixels/frame
+	private final int JUMPSMAX,ANIMATION_SPEED;
 
-	private int keyLeft, keyRight, keyUp, keyDown, keyShift, jumps, xDirection, frame;
+	private int keyLeft, keyRight, keyUp, jumps, xDirection, frame;
 	private double x, y, xVelocity, yVelocity;
-	private boolean inAir, keyReleasedUp, keyReleasedShift;
+	private boolean keyReleasedUp, inAir;
 
 	private Image playerOneStationairy, playerOneSprite;
 	private ArrayList<Image> playerOneRight, playerOneLeft;
@@ -36,13 +34,15 @@ public class PlayerOne {
 	private StateManager sm;
 
 	private InputHandler input;
+	
+	private Level level;
 
 	Physics physics = new Physics();
 
 	final private int HEIGHT;
 	final private int WIDTH;
 
-	public PlayerOne(int x, int y, StateManager sm){
+	public PlayerOne(int x, int y, StateManager sm, Level level){
 		this.x = x;
 		this.y = y;
 		this.xVelocity = 0;
@@ -52,6 +52,16 @@ public class PlayerOne {
 		this.keyUp = 0;
 		this.jumps = 0;
 		this.frame = 0;
+		
+		this.level = level;
+		
+		this.FPS = level.getFPS();
+		
+		BASE_X_SPEED = 60 / FPS; // pixels/frame
+		JUMPSPEED = 2.1;
+		GRAVITY = 0.9 / FPS;
+		JUMPSMAX = 2;
+		ANIMATION_SPEED = 4;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
 		this.WIDTH = 32; //Update later
@@ -229,10 +239,6 @@ public class PlayerOne {
 		}
 		keyReleasedUp = input.isKeyDown(KeyEvent.VK_W);
 
-		if (input.isKeyDown(KeyEvent.VK_S)){
-			this.keyDown = 1;
-		}
-
 		//Set xSpeed
 		if (input.isKeyDown(KeyEvent.VK_A)){
 			this.keyLeft = -1;
@@ -240,11 +246,6 @@ public class PlayerOne {
 		if (input.isKeyDown(KeyEvent.VK_D)){
 			this.keyRight = 1;
 		}
-		
-		if (!keyReleasedShift && input.isKeyDown(KeyEvent.VK_SHIFT)){
-			this.keyShift = 1;
-		}
-		keyReleasedShift = input.isKeyDown(KeyEvent.VK_SHIFT);
 	}
 	
 	private void collisionCalculate(Terrain[] platforms){
