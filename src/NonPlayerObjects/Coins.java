@@ -10,8 +10,6 @@ package NonPlayerObjects;
 
 public class Coins {
 
-		final int FPS = 60;
-
 		private double x, y;
 
 		private Image sprite;
