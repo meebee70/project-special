@@ -12,6 +12,8 @@ import camera.Camera;
 import characters.PlayerOne;
 import characters.PlayerTwo;
 import mainGameEngine.StateManager;
+import nonPlayerCharacters.Enemy;
+import nonPlayerCharacters.Type;
 import terrain.Terrain;
 
 public class Level1 extends Level {
@@ -32,6 +34,7 @@ public class Level1 extends Level {
 	
 	private Camera cam = new Camera(sm.getGraphics(),sm , 0 , 0 , 1000 , 500);
 	
+	private Enemy enemy1 = new Enemy(sm, Type.GOOMBA, this, 400, 10);
 
 	public Level1(StateManager sm, Graphics g) {
 		super(sm,g);
@@ -68,6 +71,8 @@ public class Level1 extends Level {
 		playerOne.updatePlayer(platforms);
 		playerTwo.updatePlayer(platforms);
 		
+		enemy1.compute();
+		
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 		
 		cam.move(playerOne.getCurrentX(),playerTwo.getCurrentX(),playerOne.getCurrentY(),playerTwo.getCurrentY());
@@ -84,6 +89,7 @@ public class Level1 extends Level {
 		}
 		universe.drawImage(playerOne.getSprite(),playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
 		universe.drawImage(playerTwo.getSprite(),playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
+		universe.drawImage(enemy1.getSprite(),(enemy1.getX()), enemy1.getY(), sm);
 	}
 	
 	public void drawScreen(Graphics screen){
