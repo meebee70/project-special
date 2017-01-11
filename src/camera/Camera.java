@@ -65,7 +65,6 @@ public class Camera {
 		}else
 			toReturn = -1;
 		
-		System.out.println(toReturn);
 		return toReturn;
 	}
 	
