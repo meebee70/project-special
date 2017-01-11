@@ -1,6 +1,10 @@
 package nonPlayerCharacters;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import characters.PlayerOne;
 import characters.PlayerTwo;
@@ -9,12 +13,14 @@ import mainGameEngine.StateManager;
 import physics.Physics;
 import terrain.Terrain;
 
-public class Enemy {
+public class LaughingStock {
 	
 	private StateManager sm;
 	
-	private final Type type;
 	private Image sprite;
+		
+	
+	
 	
 	private double width,height,x,y,direction,speedX,speedY;
 	private final double GRAVITY;
@@ -27,18 +33,20 @@ public class Enemy {
 	
 	private Level level;
 	
-	
-	public Enemy(StateManager sm, Type type,Level level, double startX, double startY){
+	public LaughingStock(StateManager sm,Level level, double startX, double startY){
 		this.sm = sm;
+		
+		this.tags = new Tags[]{Tags.UNSPECIAL};
 		
 		this.level = level;
 		
 		phys = sm.getPhysics();
-		this.type = type;
 		this.FPS = level.getFPS();
-		
-		this.sprite = type.getImage();
-		this.tags = type.getTags();
+		try {
+			this.sprite = ImageIO.read(new File("res/Laughing Stock.gif"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		this.x = startX;
 		this.y = startY;
@@ -46,7 +54,7 @@ public class Enemy {
 		this.height = 26;
 		
 		this.direction = 1;
-		this.speedX = type.getSpeed();
+		this.speedX = 1;
 		this.speedY = 0;
 		
 		this.GRAVITY = 0.9 / FPS;
@@ -61,6 +69,8 @@ public class Enemy {
 		
 		if (!hasTag(Tags.FLYING)){
 			xToMove = speedX * direction;
+		}else if(hasTag(Tags.FLYING)){
+			
 		}
 		
 		if (isInAir){

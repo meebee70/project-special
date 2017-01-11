@@ -12,8 +12,7 @@ import camera.Camera;
 import characters.PlayerOne;
 import characters.PlayerTwo;
 import mainGameEngine.StateManager;
-import nonPlayerCharacters.Enemy;
-import nonPlayerCharacters.Type;
+import nonPlayerCharacters.LaughingStock;
 import terrain.Terrain;
 
 public class Level1 extends Level {
@@ -34,7 +33,7 @@ public class Level1 extends Level {
 	
 	private Camera cam = new Camera(sm.getGraphics(),sm , 0 , 0 , 1000 , 500);
 	
-	private Enemy enemy1 = new Enemy(sm, Type.GOOMBA, this, 400, 10);
+	private LaughingStock enemy1 = new LaughingStock(sm, this, 400, 10);
 
 	public Level1(StateManager sm, Graphics g) {
 		super(sm,g);
@@ -57,7 +56,9 @@ public class Level1 extends Level {
 			platforms[i] = new Terrain(i * 400, i * 80, 300, 300, taintedGround);
 		}
 		platforms[0] = new Terrain(0, 460, sm.UNIVERSE_WIDTH/4,sm.UNIVERSE_HEIGHT/4, taintedGround);
-		platforms[1] = new Terrain(600, 600, 300,300, taintedGround);
+		platforms[1] = new Terrain(500, 600, 300,300, taintedGround);
+		platforms[2] = new Terrain(800,460,sm.UNIVERSE_WIDTH/4,sm.UNIVERSE_HEIGHT/4, taintedGround);
+		
 		platforms[8] = new Terrain(-8, -8, 4, 4, null);
 		platforms[9] = new Terrain(-8, -8, 4, 4, null);
 
