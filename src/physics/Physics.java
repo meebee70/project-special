@@ -88,7 +88,6 @@ public class Physics {
 	public static boolean collides(double aX, double aY, double aX2, double aY2, double bX, double bY, double bX2, double bY2){
 		return collidesTest(aX, aY, aX2, aY2, bX, bY, bX2, bY2);
 	}
-
 	
 	
 	private static boolean collidesTest(double aX, double aY, double aX2, double aY2, double bX, double bY, double bX2, double bY2){

@@ -262,10 +262,10 @@ public class PlayerOne {
 			int aY = aY2 + this.getHeight();
 
 			//player 2 coords
-			int bX = player2.getCurrentX();
+			int bX = player2.getCurrentX() - 1;
+			int bY2 = player2.getCurrentY() - 1;
 			int bX2 = bX + player2.getWidth();
-			int bY = player2.getCurrentY();
-			int bY2 = bY + player2.getHeight();
+			int bY =  bY2 + player2.getHeight();
 			
 			//X Collision
 			if (Physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
@@ -285,7 +285,6 @@ public class PlayerOne {
 			
 			if (Physics.collides(aX + xVelocity,aY,aX2 + xVelocity,aY2,bX,bY,bX2,bY2)){
 				xVelocity = 0;
-				System.out.println(true);
 			}
 			
 
@@ -302,6 +301,10 @@ public class PlayerOne {
 					aY = this.getCurrentY();
 					aY2 = aY + this.getHeight();
 				}
+				yVelocity = 0;
+			}
+			
+			if (Physics.collides(aX,aY + yVelocity,aX2,aY2 + yVelocity,bX,bY,bX2,bY2)){
 				yVelocity = 0;
 			}
 
