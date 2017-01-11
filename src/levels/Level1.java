@@ -55,6 +55,8 @@ public class Level1 extends Level {
 		}
 		platforms[0] = new Terrain(0, 460, sm.UNIVERSE_WIDTH/4,sm.UNIVERSE_HEIGHT/4, taintedGround);
 		platforms[1] = new Terrain(600, 600, 300,300, taintedGround);
+		platforms[8] = new Terrain(-8, -8, 4, 4, null);
+		platforms[9] = new Terrain(-8, -8, 4, 4, null);
 
 		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm,this);
 		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm,this);
@@ -69,6 +71,8 @@ public class Level1 extends Level {
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 		
 		cam.move(playerOne.getCurrentX(),playerTwo.getCurrentX(),playerOne.getCurrentY(),playerTwo.getCurrentY());
+		platforms[platforms.length - 2] = new Terrain(cam.getX() - 20, cam.getY(), 4, 4000, taintedGround);
+		platforms[platforms.length - 1] = new Terrain(cam.getX() + sm.WINDOW_WIDTH - 20, cam.getY(), 4, 4000, taintedGround);
 	}
 	
 	public void drawUniverse(Graphics universe){

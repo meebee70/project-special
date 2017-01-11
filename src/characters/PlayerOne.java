@@ -174,7 +174,6 @@ public class PlayerOne {
 		return inAir;
 	}
 
-	//GET INPUT AND USE IT
 	/**
 	 * Updates Player Object while getting input and calculating new x & y
 	 */
@@ -254,7 +253,6 @@ public class PlayerOne {
 		boolean[] touches = new boolean[platforms.length];
 		for (Terrain form: platforms){
 			
-
 			int i = 0;
 			
 			int aX = this.getCurrentX();
