@@ -16,6 +16,7 @@ import levels.Level;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 import physics.Physics;
+import terrain.LevelEnder;
 import terrain.Terrain;
 
 public class PlayerTwo {
@@ -330,6 +331,9 @@ public class PlayerTwo {
 					aX = this.getCurrentX();
 					aX2 = aX + this.getHeight();
 				}
+				if (form.getClass() == LevelEnder.class){
+					((LevelEnder) form).goToNextLevel();
+				}
 				xVelocity = 0;
 			}
 			
@@ -344,6 +348,9 @@ public class PlayerTwo {
 					this.moveY(sign(yVelocity));
 					aY2 = this.getCurrentY();
 					aY = aY2 + this.getHeight();
+				}
+				if (form.getClass() == LevelEnder.class){
+					((LevelEnder) form).goToNextLevel();
 				}
 				yVelocity = 0;
 			}
