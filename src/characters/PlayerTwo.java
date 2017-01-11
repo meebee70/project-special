@@ -122,7 +122,7 @@ public class PlayerTwo {
 			int aY2 = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
 			int aY = aY2 + this.getHeight();
-			inAir = !(physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
+			inAir = !(Physics.collides(aX, aY+1, aX2, aY2+1, form) || !inAir);
 		}
 		return inAir;
 	}
@@ -194,7 +194,7 @@ public class PlayerTwo {
 	/**
 	 * Updates Player Object while getting input and calculating new x & y
 	 */
-	public void updatePlayer(Terrain[] platforms){
+	public void updatePlayer(Terrain[] platforms, PlayerOne player1){
 		this.getInputs();
 		this.inAir(platforms);
 		
@@ -219,7 +219,7 @@ public class PlayerTwo {
 			yVelocity += GROUND_POUND_SPEED;
 		}
 
-		this.collisionCalculate(platforms);
+		this.collisionCalculate(platforms,player1);
 
 		if (this.keyUp == 1 && jumps > 0 && freezeTimer == 0){
 			jumps--;
@@ -307,21 +307,24 @@ public class PlayerTwo {
 		keyReleasedCtrl = input.isKeyDown(KeyEvent.VK_CONTROL);
 	}
 
-	private void collisionCalculate(Terrain[] platforms){
+	private void collisionCalculate(Terrain[] platforms,PlayerOne player1){
 		for (Terrain form: platforms){
 
+			//player 1 coords
 			int aX = this.getCurrentX();
 			int aY2 = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
 			int aY = aY2 + this.getHeight();
-			//final int bX = form.getX();
-			//final int bY2 = form.getY();
-			//final int bX2 = bX + form.getWidth();
-			//final int bY = bY2 + form.getHeight();
+
+			//player 2 coords
+			int bX = player1.getCurrentX() - 1;
+			int bY2 = player1.getCurrentY() - 1;
+			int bX2 = bX + player1.getWidth();
+			int bY =  bY2 + player1.getHeight();
 
 			//X Collision
-			if (physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
-				while(!physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
+			if (Physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
+				while(!Physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
 					this.moveX(sign(xVelocity));
 
 					aX = this.getCurrentX();
@@ -329,15 +332,23 @@ public class PlayerTwo {
 				}
 				xVelocity = 0;
 			}
+			
+			if (Physics.collides(aX + xVelocity,aY,aX2 + xVelocity,aY2,bX,bY,bX2,bY2)){
+				xVelocity = 0;
+			}
 
 			//Y Collision
-			if (physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
-				while(!physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
+			if (Physics.collides(aX, aY + yVelocity, aX2, aY2 + yVelocity, form)){
+				while(!Physics.collides(aX, aY + sign(yVelocity), aX2, aY2 + sign(yVelocity), form))
 				{
 					this.moveY(sign(yVelocity));
 					aY2 = this.getCurrentY();
 					aY = aY2 + this.getHeight();
 				}
+				yVelocity = 0;
+			}
+			if (Physics.collides(aX,aY + yVelocity,aX2,aY2 + yVelocity,bX,bY,bX2,bY2)){
+				moveY(-1);
 				yVelocity = 0;
 			}
 

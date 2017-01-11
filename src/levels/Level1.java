@@ -70,7 +70,7 @@ public class Level1 extends Level {
 	@Override
 	public void update() {
 		playerOne.updatePlayer(platforms,playerTwo);
-		playerTwo.updatePlayer(platforms);
+		playerTwo.updatePlayer(platforms,playerOne);
 		
 		enemy1.compute(platforms);
 		
