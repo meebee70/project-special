@@ -16,6 +16,7 @@ import levels.Level;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 import physics.Physics;
+import terrain.LevelEnder;
 import terrain.Terrain;
 
 public class PlayerOne {
@@ -277,17 +278,21 @@ public class PlayerOne {
 					
 					
 				}
+				
+				if (form.getClass() == LevelEnder.class){
+					((LevelEnder) form).goToNextLevel();
+				}
+				
 				xVelocity = 0;
 				touches[i] = true;
 			}
-			
-			
 			
 			if (Physics.collides(aX + xVelocity,aY,aX2 + xVelocity,aY2,bX,bY,bX2,bY2)){
 				xVelocity = 0;
 			}
 			
 
+			
 			//Y Collision
 			if (Physics.collides(aX, aY+1, aX2, aY2+1, form)){
 				jumps = JUMPSMAX;
@@ -301,6 +306,10 @@ public class PlayerOne {
 					aY = this.getCurrentY();
 					aY2 = aY + this.getHeight();
 				}
+				if (form.getClass() == LevelEnder.class){
+					((LevelEnder) form).goToNextLevel();
+				}
+				
 				yVelocity = 0;
 			}
 			

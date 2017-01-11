@@ -13,6 +13,7 @@ import characters.PlayerOne;
 import characters.PlayerTwo;
 import mainGameEngine.StateManager;
 import nonPlayerCharacters.LaughingStock;
+import terrain.LevelEnder;
 import terrain.Terrain;
 
 public class Level1 extends Level {
@@ -26,6 +27,8 @@ public class Level1 extends Level {
 	
 	private PlayerOne playerOne;
 	private PlayerTwo playerTwo;
+	
+	private LevelEnder portal;
 	
 	private Image taintedGround;
 	
@@ -65,6 +68,14 @@ public class Level1 extends Level {
 		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm,this);
 		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm,this);
 		
+		try {
+			portal = new LevelEnder(1800,200,40,80,
+				ImageIO.read(new File("res/Dimensional Tear.gif")),
+				new Helplevel(sm, g),
+				sm
+				);
+		} catch (IOException e) {e.printStackTrace();}
+		platforms [7] = portal;
 	}
 
 	@Override
