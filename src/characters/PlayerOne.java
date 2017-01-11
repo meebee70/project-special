@@ -177,7 +177,7 @@ public class PlayerOne {
 	/**
 	 * Updates Player Object while getting input and calculating new x & y
 	 */
-	public void updatePlayer(Terrain[] platforms){
+	public void updatePlayer(Terrain[] platforms,PlayerTwo player2){
 		this.inAir(platforms);
 		getInputs();
 		frame++;
@@ -203,7 +203,7 @@ public class PlayerOne {
 			yVelocity += GRAVITY;
 		}
 		
-		this.collisionCalculate(platforms);
+		this.collisionCalculate(platforms,player2);
 
 		if (touchesWall && input.isKeyDown(KeyEvent.VK_W)){
 			yVelocity = -this.BASE_X_SPEED;
@@ -249,18 +249,24 @@ public class PlayerOne {
 		}
 	}
 	
-	private void collisionCalculate(Terrain[] platforms){
+	private void collisionCalculate(Terrain[] platforms, PlayerTwo player2){
 		boolean[] touches = new boolean[platforms.length];
 		for (Terrain form: platforms){
 			
 			int i = 0;
 			
+			//player 1 coords
 			int aX = this.getCurrentX();
 			int aY2 = this.getCurrentY();
 			int aX2 = aX + this.getWidth();
 			int aY = aY2 + this.getHeight();
 
-
+			//player 2 coords
+			int bX = player2.getCurrentX() - 1;
+			int bY2 = player2.getCurrentY() - 1;
+			int bX2 = bX + player2.getWidth();
+			int bY =  bY2 + player2.getHeight();
+			
 			//X Collision
 			if (Physics.collides(aX + xVelocity, aY, aX2 + xVelocity, aY2, form)){
 				while(!Physics.collides(aX + sign(xVelocity), aY, aX2 + sign(xVelocity), aY2, form)){
@@ -274,6 +280,13 @@ public class PlayerOne {
 				xVelocity = 0;
 				touches[i] = true;
 			}
+			
+			
+			
+			if (Physics.collides(aX + xVelocity,aY,aX2 + xVelocity,aY2,bX,bY,bX2,bY2)){
+				xVelocity = 0;
+			}
+			
 
 			//Y Collision
 			if (Physics.collides(aX, aY+1, aX2, aY2+1, form)){
@@ -288,6 +301,10 @@ public class PlayerOne {
 					aY = this.getCurrentY();
 					aY2 = aY + this.getHeight();
 				}
+				yVelocity = 0;
+			}
+			
+			if (Physics.collides(aX,aY + yVelocity,aX2,aY2 + yVelocity,bX,bY,bX2,bY2)){
 				yVelocity = 0;
 			}
 

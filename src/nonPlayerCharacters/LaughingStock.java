@@ -105,7 +105,6 @@ public class LaughingStock {
 				
 			}
 		}
-		System.out.println(isInAir);
 	}
 	
 	
