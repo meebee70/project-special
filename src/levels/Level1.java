@@ -71,7 +71,7 @@ public class Level1 extends Level {
 		playerOne.updatePlayer(platforms);
 		playerTwo.updatePlayer(platforms);
 		
-		enemy1.compute();
+		enemy1.compute(platforms);
 		
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 		
