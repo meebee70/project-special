@@ -5,7 +5,8 @@ import characters.PlayerTwo;
 import terrain.Terrain;
 
 public class Physics {
-	private final double defaultGravity = 0.9;
+
+	private final double defaultGravity = 1.1 / 60;
 	private final double defaultFriction = 0.08;
 
 	private double gravity;
@@ -48,7 +49,7 @@ public class Physics {
 
 	//useful stuff anything might use
 
-	public boolean collides(PlayerOne player, Terrain platform){
+	public static boolean collides(PlayerOne player, Terrain platform){
 
 		final double aX = player.getCurrentX();
 		final double aY2 = player.getCurrentY();
@@ -62,7 +63,7 @@ public class Physics {
 		return collidesTest(aX, aY, aX2, aY2, bX, bY, bX2, bY2);
 	}
 
-	public boolean collides(PlayerTwo player, Terrain platform){
+	public static boolean collides(PlayerTwo player, Terrain platform){
 
 		final double aX = player.getCurrentX();
 		final double aY2 = player.getCurrentY();
@@ -76,7 +77,7 @@ public class Physics {
 		return collidesTest(aX, aY, aX2, aY2, bX, bY, bX2, bY2);
 	}
 	
-	public boolean collides(double aX, double aY, double aX2, double aY2, Terrain platform){
+	public static boolean collides(double aX, double aY, double aX2, double aY2, Terrain platform){
 		final double bX = platform.getX();
 		final double bY2 = platform.getY();
 		final double bX2 = bX + platform.getWidth();
@@ -90,7 +91,7 @@ public class Physics {
 
 	
 	
-	private boolean collidesTest(double aX, double aY, double aX2, double aY2, double bX, double bY, double bX2, double bY2){
+	private static boolean collidesTest(double aX, double aY, double aX2, double aY2, double bX, double bY, double bX2, double bY2){
 		if (!(aX >= bX2 || aX <= bX) || !(aX2 >= bX2 || aX2 <= bX)){
 			if (!((aY <= bY2) || (aY >= bY)) || !((aY2 <= bY2) || (aY2 >= bY))){
 				return true;

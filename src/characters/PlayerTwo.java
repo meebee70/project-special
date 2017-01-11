@@ -23,14 +23,14 @@ public class PlayerTwo {
 	final int FPS;
 
 	private final double BASE_X_SPEED, JUMPSPEED,GRAVITY, GROUND_POUND_SPEED, FREEZE_LENGTH_MAX; // pixels/frame
-	private final int PAUSES_LEFT_MAX,JUMPSMAX,ANIMATION_SPEED;
+	private final int PAUSES_LEFT_MAX,JUMPSMAX, ANIMATION_SPEED;
 
 	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps, pausesLeft, xDirection, frame;
 	private double x, y, xVelocity, yVelocity, freezeTimer;
 	private boolean keyReleasedUp, keyReleasedCtrl, inAir;
 
-	private Image playerTwoSprite, playerTwoStationairy, playerTwoFreeze;
-	private ArrayList<Image> playerTwoRight, playerTwoLeft, playerTwoGroundPound;
+	private Image playerTwoSprite, playerTwoStationairy;
+	private ArrayList<Image> playerTwoRight, playerTwoLeft, playerTwoGroundPound, playerTwoFreeze;
 	
 	private StateManager sm;
 	
@@ -64,7 +64,7 @@ public class PlayerTwo {
 		
 		BASE_X_SPEED = 60 / FPS; // pixels/frame
 		JUMPSPEED = 2.1;
-		GRAVITY = 0.9 / FPS;
+		GRAVITY = physics.getGravity();
 		GROUND_POUND_SPEED = GRAVITY * 4;
 		FREEZE_LENGTH_MAX = 8000 / FPS;
 		PAUSES_LEFT_MAX = 1;
@@ -79,7 +79,7 @@ public class PlayerTwo {
 
 		try {
 			this.playerTwoStationairy = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
-			this.playerTwoFreeze = ImageIO.read(new File("res/PlayerSprites/Player 2 Freeze.gif"));
+			//this.playerTwoFreeze = ImageIO.read(new File("res/PlayerSprites/Player 2 Freeze.gif"));
 			//this.playerTwoGroundPound = ImageIO.read(new File("res/PlayerSprites/Player 2 Ground Pound.gif"));
 			//this.playerTwoRight = ImageIO.read(new File("res/PlayerSprites/Player 2 walk right.gif"));
 			//this.playerTwoLeft = ImageIO.read(new File("res/PlayerSprites/Player 2 walk left.gif"));
@@ -89,9 +89,11 @@ public class PlayerTwo {
 		playerTwoRight = new ArrayList<Image>();
 		playerTwoLeft = new ArrayList<Image>();
 		playerTwoGroundPound = new ArrayList<Image>();
+		playerTwoFreeze = new ArrayList<Image>();
 		loadSprite(playerTwoRight, "res/PlayerSprites/Player 2 walk right.gif");
 		loadSprite(playerTwoLeft, "res/PlayerSprites/Player 2 walk left.gif");
 		loadSprite(playerTwoGroundPound, "res/PlayerSprites/Player 2 Ground Pound.gif");
+		loadSprite(playerTwoFreeze, "res/PlayerSprites/Player 2 Freeze.gif");
 		
 	}
 
@@ -136,7 +138,11 @@ public class PlayerTwo {
 		this.playerTwoSprite = sprite;
 	}
 	public void setSprite(ArrayList<Image> sprite){
-		this.playerTwoSprite = sprite.get((int)((this.frame / ANIMATION_SPEED) % sprite.size()));
+		if (freezeTimer > 0){
+			this.playerTwoSprite = sprite.get((int)((this.frame / (ANIMATION_SPEED*4)) % sprite.size()));
+		} else {
+			this.playerTwoSprite = sprite.get((int)((this.frame / ANIMATION_SPEED) % sprite.size()));
+		}
 		
 	}
 	public void setSprite(ArrayList<Image> sprite, int i){
