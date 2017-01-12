@@ -4,7 +4,9 @@ package NonPlayerObjects;
 	import java.io.File;
 	import java.io.IOException;
 	import javax.imageio.ImageIO;
-	import mainGameEngine.InputHandler;
+
+import levels.Level;
+import mainGameEngine.InputHandler;
 	import mainGameEngine.StateManager;
 	import physics.Physics;
 
@@ -12,29 +14,32 @@ public class Coins {
 
 		private double x, y;
 
-		private Image sprite;
+		public Image sprite;
 
 		private StateManager sm;
-
-		private InputHandler input;
+		
+		private boolean hasGivenPoints;
 
 		Physics physics = new Physics();
 
 		final private int HEIGHT;
 		final private int WIDTH;
 
-		public Coins(int x, int y, StateManager sm){
+		public Coins(int x, int y, StateManager sm, Level level){
 			this.x = x;
 			this.y = y;
 
 			this.HEIGHT = 32;	//Of sprite or Hitbox
 			this.WIDTH = 32; //Update later
 			this.sm = sm;
-			input = sm.input;
+			this.sprite = null;
+			this.hasGivenPoints = true;
+			
+			level.getCoinsList().add(this);
 
 
 			try {
-				this.sprite = ImageIO.read(new File("res/PlayerSprites/Player 1.png"));
+				this.sprite = ImageIO.read(new File("res/bitcoin_coin_32.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -60,22 +65,20 @@ public class Coins {
 		}
 
 		public Image getSprite(){
-			return sprite;
+			return this.sprite;
 		}
-
-		//MUTATORS
-		//@Param = new x and/or y coord
-		public void setCurrentX(double newX) {
-			this.x = newX;
+		
+		public void setSprite(Image sprite){
+			this.sprite = sprite;
 		}
-		public void setCurrentY(double newY) {
-			this.y = newY;
+		
+		public boolean getPoints(){
+			return hasGivenPoints;
 		}
-		public void setXandY(double newX, double newY){
-			this.x = newX;
-			this.y = newY;
+		
+		public void givePoints(){
+			this.hasGivenPoints = false;
 		}
-
-
+	
 }
 

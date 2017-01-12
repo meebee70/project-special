@@ -2,7 +2,9 @@ package levels;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
+import NonPlayerObjects.Coins;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 
@@ -13,11 +15,13 @@ public abstract class Level {
 	private final int FPS = 60;
 	public StateManager sm;
 	public InputHandler input;
+	private ArrayList<Coins> listOfCoins = new ArrayList<Coins>();
 	
 	public Level( StateManager sm, Graphics g){
 		this.sm = sm;
 		this.g = sm.getGraphics();
 		this.input = sm.getInputHandler();
+		this.listOfCoins = listOfCoins;
 		
 	}
 	
@@ -107,6 +111,10 @@ public abstract class Level {
 	public boolean exitIsPressed(){
 		return (input.isKeyDown(KeyEvent.VK_ESCAPE));
 				
+	}
+	
+	public ArrayList<Coins> getCoinsList(){
+		return this.listOfCoins;
 	}
 	
 	

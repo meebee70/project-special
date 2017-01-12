@@ -2,9 +2,11 @@ package levels;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import com.sun.glass.events.KeyEvent;
 
+import NonPlayerObjects.Coins;
 import camera.Camera;
 import characters.PlayerOne;
 import characters.PlayerTwo;
@@ -20,7 +22,10 @@ public class Level1 extends Level {
 	final private int INITIAL_Y_P1 = 0;
 	final private int INITIAL_X_P2 = 64;
 	final private int INITIAL_Y_P2 = 0;
+	final private int INITIAL_X_Coin = 128;
+	final private int INITIAL_Y_Coin = 128;
 	
+	private Coins coin;
 	private PlayerOne playerOne;
 	private PlayerTwo playerTwo;
 	
@@ -28,7 +33,9 @@ public class Level1 extends Level {
 	
 	private Camera cam = new Camera(sm.getGraphics(),sm , -50 , -50 , 1000 , 500);
 	
-
+	private ArrayList<Coins> listOfCoins = new ArrayList<Coins>();
+	
+	
 	public Level1(StateManager sm, Graphics g) {
 		super(sm,g);
 		
@@ -38,6 +45,7 @@ public class Level1 extends Level {
 	@Override
 	public void initialize() {
 		g.clearRect(left, top, sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT);
+		this.listOfCoins = listOfCoins;
 		
 		
 		for (int i = 0; i < platforms.length; i++){
@@ -45,9 +53,9 @@ public class Level1 extends Level {
 		}
 		platforms[0] = new Terrain(0, 460, sm.UNIVERSE_WIDTH,sm.UNIVERSE_HEIGHT, null);
 
-		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm);
-		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm);
-		
+		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm, this);
+		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm, this);
+		coin = new Coins(INITIAL_X_Coin,INITIAL_Y_Coin,sm, this);
 	}
 
 	@Override
@@ -69,6 +77,7 @@ public class Level1 extends Level {
 		}
 		universe.drawImage(playerOne.getSprite(),playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
 		universe.drawImage(playerTwo.getSprite(),playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
+		universe.drawImage(coin.getSprite(),coin.getCurrentX(),coin.getCurrentY(),sm);
 	}
 	
 	public void drawScreen(Graphics screen){
