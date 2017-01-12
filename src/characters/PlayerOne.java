@@ -66,13 +66,13 @@ public class PlayerOne {
 		touchesWall = false;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
-		this.WIDTH = 26; //Update later
+		this.WIDTH = 22; //Update later
 		this.sm = sm;
 		input = sm.input;
 
 
 		try {
-			this.playerOneStationairy = ImageIO.read(new File("res/PlayerSprites/Player 1.png"));
+			this.playerOneStationairy = ImageIO.read(new File("res/PlayerSprites/Player 1.gif"));
 			//this.playerOneRight = ImageIO.read(new File("res/PlayerSprites/Player 1 walk right.gif"));
 			//this.playerOneLeft = ImageIO.read(new File("res/PlayerSprites/Player 1 walk left.gif"));
 		} catch (IOException e) {

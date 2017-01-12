@@ -73,13 +73,13 @@ public class PlayerTwo {
 		ANIMATION_SPEED = 4;
 
 		this.HEIGHT = 32;	//Of sprite or Hitbox
-		this.WIDTH = 26; //Update later
+		this.WIDTH = 22; //Update later
 		this.sm = sm;
 		input = sm.input;
 
 
 		try {
-			this.playerTwoStationairy = ImageIO.read(new File("res/PlayerSprites/Player 2.png"));
+			this.playerTwoStationairy = ImageIO.read(new File("res/PlayerSprites/Player 2.gif"));
 			//this.playerTwoFreeze = ImageIO.read(new File("res/PlayerSprites/Player 2 Freeze.gif"));
 			//this.playerTwoGroundPound = ImageIO.read(new File("res/PlayerSprites/Player 2 Ground Pound.gif"));
 			//this.playerTwoRight = ImageIO.read(new File("res/PlayerSprites/Player 2 walk right.gif"));
