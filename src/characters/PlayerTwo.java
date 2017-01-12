@@ -12,6 +12,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import com.sun.glass.events.KeyEvent;
 
+import NonPlayerObjects.Coins;
 import levels.Level;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
@@ -20,12 +21,13 @@ import terrain.LevelEnder;
 import terrain.Terrain;
 
 public class PlayerTwo {
+
 	//Only changes player physics (to be changed later)
 	final int FPS;
 
 	private final double BASE_X_SPEED, JUMPSPEED,GRAVITY, GROUND_POUND_SPEED, FREEZE_LENGTH_MAX; // pixels/frame
 	private final int PAUSES_LEFT_MAX,JUMPSMAX, ANIMATION_SPEED;
-
+  
 	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps, pausesLeft, xDirection, frame;
 	private double x, y, xVelocity, yVelocity, freezeTimer;
 	private boolean keyReleasedUp, keyReleasedCtrl, inAir;
@@ -38,13 +40,16 @@ public class PlayerTwo {
 	private Level level;
 
 	private InputHandler input;
+	
+	private Level level;
 
 	Physics physics = new Physics();
 
 	final private int HEIGHT;
 	final private int WIDTH;
 
-	public PlayerTwo(int x, int y, StateManager sm, Level level){
+	public PlayerTwo(int x, int y, StateManager sm, Level levelThatWeAreIn){
+    
 		this.x = x;
 		this.y = y;
 		this.xVelocity = 0;
@@ -55,6 +60,8 @@ public class PlayerTwo {
 		this.keyDown = 0;
 		this.keyCtrl = 0;
 		this.jumps = 0;
+
+		this.playerTwoPoints = 0;
 		this.pausesLeft = 0;
 		this.freezeTimer = 0;
 		this.frame = 0;
@@ -75,6 +82,7 @@ public class PlayerTwo {
 		this.HEIGHT = 32;	//Of sprite or Hitbox
 		this.WIDTH = 22; //Update later
 		this.sm = sm;
+		this.level = levelThatWeAreIn;
 		input = sm.input;
 
 
@@ -227,6 +235,9 @@ public class PlayerTwo {
 			yVelocity = -JUMPSPEED;
 		}
 
+
+		coinCollision();
+    
 		if (freezeTimer > 0){
 			freezeTimer--;
 			xVelocity = 0;
@@ -336,7 +347,7 @@ public class PlayerTwo {
 				}
 				xVelocity = 0;
 			}
-			
+
 			if (Physics.collides(aX + xVelocity,aY,aX2 + xVelocity,aY2,bX,bY,bX2,bY2)){
 				xVelocity = 0;
 			}
@@ -358,7 +369,7 @@ public class PlayerTwo {
 				moveY(-1);
 				yVelocity = 0;
 			}
-
+			
 		}
 	}
 	//Changes Sprites Based on Movement/Actions
@@ -377,4 +388,28 @@ public class PlayerTwo {
 	}
 
 
+	}
+	
+	private void coinCollision(){
+		ArrayList<Coins> listOfCoins = this.level.getCoinsList();
+		
+		for (Coins coin : listOfCoins){
+			final double aX = this.getCurrentX();
+			final double aY2 = this.getCurrentY();
+			final double aX2 = aX + this.getWidth();
+			final double aY = aY2 + this.getHeight();
+			final double bX = coin.getCurrentX();
+			final double bY2 = coin.getCurrentY();
+			final double bX2 = bX + coin.getWidth();
+			final double bY = bY2 + coin.getHeight();
+			//Coin Collision
+			if (physics.collides(aX, aY, aX2, aY2, bX, bY, bX2, bY2) && coin.getPoints()){
+				coin.setSprite(null);
+				playerTwoPoints++;
+				coin.givePoints();
+				System.out.println(playerTwoPoints);
+				}
+			}
+		}
 }
+

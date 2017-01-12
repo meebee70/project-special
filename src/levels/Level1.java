@@ -2,12 +2,17 @@ package levels;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import java.util.ArrayList;
+
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
+
 import javax.imageio.ImageIO;
 
+import NonPlayerObjects.Coins;
 import camera.Camera;
 import characters.PlayerOne;
 import characters.PlayerTwo;
@@ -24,7 +29,10 @@ public class Level1 extends Level {
 	final private int INITIAL_Y_P1 = 0;
 	final private int INITIAL_X_P2 = 64;
 	final private int INITIAL_Y_P2 = 0;
+	final private int INITIAL_X_Coin = 128;
+	final private int INITIAL_Y_Coin = 128;
 	
+	private Coins coin;
 	private PlayerOne playerOne;
 	private PlayerTwo playerTwo;
 	
@@ -35,6 +43,8 @@ public class Level1 extends Level {
 	private Terrain[] platforms = new Terrain[10];
 	
 	private Camera cam = new Camera(sm.getGraphics(),sm , 0 , 0 , 1000 , 500);
+	
+	private ArrayList<Coins> listOfCoins = new ArrayList<Coins>();
 	
 	private LaughingStock enemy1 = new LaughingStock(sm, this, 400, 10);
 
@@ -47,6 +57,7 @@ public class Level1 extends Level {
 	@Override
 	public void initialize() {
 		g.clearRect(left, top, sm.WINDOW_WIDTH,sm.WINDOW_HEIGHT);
+		this.listOfCoins = listOfCoins;
 		
 		try {
 			taintedGround = ImageIO.read(new File("res/Tainted Ground v1.png"));
@@ -65,8 +76,9 @@ public class Level1 extends Level {
 		platforms[8] = new Terrain(-8, -8, 4, 4, null);
 		platforms[9] = new Terrain(-8, -8, 4, 4, null);
 
-		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm,this);
-		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm,this);
+		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm, this);
+		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm, this);
+		coin = new Coins(INITIAL_X_Coin,INITIAL_Y_Coin,sm, this);
 		
 		try {
 			portal = new LevelEnder(1800,200,14,80,
@@ -101,6 +113,9 @@ public class Level1 extends Level {
 		}
 		universe.drawImage(playerOne.getSprite(),playerOne.getCurrentX(),playerOne.getCurrentY(),sm);
 		universe.drawImage(playerTwo.getSprite(),playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
+
+		universe.drawImage(coin.getSprite(),coin.getCurrentX(),coin.getCurrentY(),sm);
+    
 		universe.drawImage(enemy1.getSprite(),(enemy1.getX()), enemy1.getY(), sm);
 	}
 	

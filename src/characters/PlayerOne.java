@@ -12,6 +12,8 @@ import javax.imageio.stream.ImageInputStream;
 
 import com.sun.glass.events.KeyEvent;
 
+import NonPlayerObjects.Coins;
+
 import levels.Level;
 import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
@@ -21,12 +23,14 @@ import terrain.Terrain;
 
 public class PlayerOne {
 	final int FPS;
-
+	
+	private Level level;
+  
 	private final double BASE_X_SPEED, JUMPSPEED,GRAVITY; // pixels/frame
 	private final int JUMPSMAX,ANIMATION_SPEED;
 
 	private int keyLeft, keyRight, keyUp, jumps, xDirection, frame;
-	private double x, y, xVelocity, yVelocity;
+	private double x, y, xVelocity, yVelocity, playerOnePoints;
 	private boolean keyReleasedUp, inAir,touchesWall;
 
 	private Image playerOneStationairy, playerOneSprite;
@@ -43,7 +47,7 @@ public class PlayerOne {
 	final private int HEIGHT;
 	final private int WIDTH;
 
-	public PlayerOne(int x, int y, StateManager sm, Level level){
+	public PlayerOne(int x, int y, StateManager sm, Level levelThatWeAreIn){
 		this.x = x;
 		this.y = y;
 		this.xVelocity = 0;
@@ -52,6 +56,7 @@ public class PlayerOne {
 		this.keyRight = 0;
 		this.keyUp = 0;
 		this.jumps = 0;
+    this.playerOnePoints = 0;
 		this.frame = 0;
 		
 		this.level = level;
@@ -68,6 +73,7 @@ public class PlayerOne {
 		this.HEIGHT = 32;	//Of sprite or Hitbox
 		this.WIDTH = 22; //Update later
 		this.sm = sm;
+		this.level = levelThatWeAreIn;
 		input = sm.input;
 
 
@@ -290,9 +296,6 @@ public class PlayerOne {
 			if (Physics.collides(aX + xVelocity,aY,aX2 + xVelocity,aY2,bX,bY,bX2,bY2)){
 				xVelocity = 0;
 			}
-			
-
-			
 			//Y Collision
 			if (Physics.collides(aX, aY+1, aX2, aY2+1, form)){
 				jumps = JUMPSMAX;
@@ -329,6 +332,45 @@ public class PlayerOne {
 		for (int i = 0; i < platforms.length; i++){
 			touchesWall = touches[i] || touchesWall;
 		}
+		
+		coinCollision();
+		this.moveXandY(xVelocity, yVelocity);
+
+		xVelocity = 0;
+		//yVelocity = 0;
+		keyLeft = 0;
+		keyRight = 0;
+		keyUp = 0;
+
+
+	}
+	
+	private void coinCollision(){
+		ArrayList<Coins> listOfCoins = this.level.getCoinsList();
+		
+		for (Coins coin : listOfCoins){
+			final double aX = this.getCurrentX();
+			final double aY2 = this.getCurrentY();
+			final double aX2 = aX + this.getWidth();
+			final double aY = aY2 + this.getHeight();
+			final double bX = coin.getCurrentX();
+			final double bY2 = coin.getCurrentY();
+			final double bX2 = bX + coin.getWidth();
+			final double bY = bY2 + coin.getHeight();
+			//Coin Collision
+			if (physics.collides(aX, aY, aX2, aY2, bX, bY, bX2, bY2) && coin.getPoints()){
+				coin.setSprite(null);
+				playerOnePoints++;
+				coin.givePoints();
+				System.out.println(playerOnePoints);
+				}
+			}
+		}
+	private int sign(double velocity){
+		if (velocity > 0){
+			return 1;
+		} else if (velocity < 0){
+			return -1;
 	}
 
 	//Changes Sprites Based on Movement/Actions
