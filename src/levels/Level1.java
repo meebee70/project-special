@@ -69,7 +69,7 @@ public class Level1 extends Level {
 		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm,this);
 		
 		try {
-			portal = new LevelEnder(1800,200,40,80,
+			portal = new LevelEnder(1800,200,14,80,
 				ImageIO.read(new File("res/Dimensional Tear.gif")),
 				new Helplevel(sm, g),
 				sm
