@@ -1,5 +1,7 @@
 package terrain;
 
+import java.awt.Image;
+
 public class Terrain {
 	
 	public int x;
@@ -7,15 +9,17 @@ public class Terrain {
 	public final int WIDTH;
 	public final int HEIGHT;
 	
-	private final String sprite;
+	private Image sprite;
 	
 	
-	public Terrain(int x, int y, int width, int height,String sprite){
+	public Terrain(int x, int y, int width, int height, Image sprite){
 		this.x = x;
 		this.y = y;
 		this.WIDTH = width;
 		this.HEIGHT = height;
 		this.sprite = sprite;
+		
+		setSprite(sprite);
 	}
 	
 	/*gets the left most x position of this terrain
@@ -49,7 +53,11 @@ public class Terrain {
 	/*gets the address (as a string) of the sprite
 	 * 
 	 */
-	public String getSprite(){
+	public Image getSprite(){
 		return this.sprite;
+	}
+	
+	public void setSprite(Image sprite){
+		this.sprite = sprite;
 	}
 }

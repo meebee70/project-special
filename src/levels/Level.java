@@ -34,7 +34,7 @@ public abstract class Level {
 		while (isRunning){
 			
 			if (exitIsPressed()){
-				exitLevel(250);
+				exitToMenu(250);
 			}
 			
 			update();
@@ -106,6 +106,8 @@ public abstract class Level {
 			Thread.sleep(waitTime);
 		}catch (Exception e){}
 		
+		sm.levels.peek().isRunning = true;
+		
 	}
 	
 	public boolean exitIsPressed(){
@@ -113,8 +115,13 @@ public abstract class Level {
 				
 	}
 	
+
 	public ArrayList<Coins> getCoinsList(){
 		return this.listOfCoins;
+  }
+
+	public int getFPS(){
+		return FPS;
 	}
 	
 	

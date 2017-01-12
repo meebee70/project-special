@@ -42,28 +42,30 @@ public class Camera {
 	}
 	
 	
-	
 	public void move(int x1,int x2, int y1, int y2){
-		double leftBound = (xZoom * 0.3) + (this.x);
-		double rightBound = (xZoom - (xZoom * 0.3)) + (this.x);
+		double leftBound = (xZoom * 0.4) + (this.x);
+		double rightBound = (xZoom - (xZoom * 0.4)) + (this.x);
 		
 		if (doesMove(x1, x2, leftBound,rightBound)){
-			if (getXDirection(x1,x2,y1,y2,leftBound,rightBound) > 0){
-				this.x += speed;
+			if (getXDirection(x1,x2,y1,y2,leftBound,rightBound) == 1){
+				this.x = Math.min(this.x + speed, sm.UNIVERSE_WIDTH - this.xZoom);
 			}else{
-				this.x -= speed;
+				this.x = Math.max(this.x - speed, 0);
 			}
 		}
 		
-		this.y = (int) ((Math.max(y1, y2)) - (this.yZoom / 1.6));
-		
-	}
+		this.y = (int) (Math.max(((y1+y2)/2) - (this.yZoom / 2),-sm.insets.top));
+		//this.y = (int) (Math.max((Math.max(y1, y2)) - (this.yZoom / 2),-sm.insets.top));
+		}
 	
 	private int getXDirection(int x1, int x2, int y1, int y2, double leftBound, double rightBound){
-		if ((x1 > rightBound) ^ (x2 > rightBound)){
-			return 1;
+		int toReturn;
+		if ((x1 > rightBound) || ((x2 > rightBound))){
+			toReturn = 1;
 		}else
-			return -1;
+			toReturn = -1;
+		
+		return toReturn;
 	}
 	
 	private boolean doesMove(int player1X,int player2X, double leftBound, double rightBound){
@@ -77,11 +79,17 @@ public class Camera {
 			rightMove = true;
 		}
 		
-		
 		if (leftMove ^ rightMove){
 			return true;
 		}else{
 			return false;
 		}
+	}
+	
+	public int getX(){
+		return this.x;
+	}
+	public int getY(){
+		return this.y;
 	}
 }

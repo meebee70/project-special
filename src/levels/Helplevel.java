@@ -1,5 +1,3 @@
-//Some of this is from http://compsci.ca/v3/viewtopic.php?t=25991
-
 package levels;
 import java.awt.*; 
 import java.awt.event.KeyEvent; 
@@ -7,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 
-import mainGameEngine.InputHandler;
 import mainGameEngine.StateManager;
 /**
  * Builds Game window
@@ -26,11 +23,14 @@ public class Helplevel extends Level
 	private int currentlySelected;
 	private String[] menuItems = {
 			"Player One",
-			"Movement WASD  Dash attack Space",
+			"Movement WASD",
+			"Dash attack Space",
 			"Hold up to wall climb",
 			"Player Two",
-			"Movement Arrow Keys	Double Jump Up Twice",
-			"Ground Pound Jump+Down	Freeze Time: ()",
+			"Movement Arrow Keys",
+			"Double Jump Up Twice",
+			"Ground Pound Jump+Down",
+			"Freeze Time CTRL",
 			"QUIT"
 			};
 
@@ -88,7 +88,7 @@ public class Helplevel extends Level
 		}
 
 		if (input.isKeyDown(KeyEvent.VK_ENTER)){
-			if (currentlySelected == 6){
+			if (currentlySelected == menuItems.length - 1){
 				exitLevel(100);
 			}
 		}
@@ -103,7 +103,7 @@ public class Helplevel extends Level
 		universe.fillRect(0, 0, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT); 
 
 		//Forces currentlySelected to only be 0, 3 or 6
-		while(!(currentlySelected == 0 || currentlySelected == 3 || currentlySelected == 6)){
+		while(!(currentlySelected == 0 || currentlySelected == 4 || currentlySelected == menuItems.length - 1)){
 			if (keyUpWasDown){
 				currentlySelected--;
 			} else {
@@ -123,7 +123,7 @@ public class Helplevel extends Level
 				universe.setFont(retroComputerHelp);
 				universe.setColor(Color.BLUE);
 			}
-			universe.drawString(menuItems[i], 80, 50 + (i * 50));
+			universe.drawString(menuItems[i], 80, 50 + (i * 40));
 
 		}
 		
