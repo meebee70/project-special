@@ -151,7 +151,6 @@ public class PlayerTwo {
 		//Tests if Player is in the Air or not
 		if (this.inAir(platforms) && this.keyDown == 1){
 			yVelocity += GROUND_POUND_SPEED;
-			System.out.println("Ground Pound");
 		}
 
 		this.collisionCalculate(platforms);
@@ -161,6 +160,7 @@ public class PlayerTwo {
 			yVelocity = -JUMPSPEED;
 		}
 
+		coinCollision();
 		this.moveXandY(xVelocity, yVelocity);
 
 		xVelocity = 0;
@@ -259,43 +259,32 @@ public class PlayerTwo {
 				}
 				yVelocity = 0;
 			}
-				coinCollision();
-				this.moveXandY(xVelocity, yVelocity);
-	
-				xVelocity = 0;
-				//yVelocity = 0;
-				keyLeft = 0;
-				keyRight = 0;
-				keyUp = 0;
+			
+		}
 
-			private void coinCollision(){
-				ArrayList<Coins> listOfCoins = this.level.getCoinsList();
-				
-				for (Coins coin : listOfCoins){
-					final double aX1 = this.getCurrentX();
-					final double aY21 = this.getCurrentY();
-					final double aX21 = aX1 + this.getWidth();
-					final double aY1 = aY21 + this.getHeight();
-					final double bX = coin.getCurrentX();
-					final double bY2 = coin.getCurrentY();
-					final double bX2 = bX + coin.getWidth();
-					final double bY = bY2 + coin.getHeight();
-					//Coin Collision
-					if (physics.collides(aX1, aY1, aX21, aY21, bX, bY, bX2, bY2) && coin.getPoints()){
-						coin.setSprite(null);
-						playerTwoPoints++;
-						coin.givePoints();
-						System.out.println(playerTwoPoints);
-					}
+
+	}
+	
+	private void coinCollision(){
+		ArrayList<Coins> listOfCoins = this.level.getCoinsList();
+		
+		for (Coins coin : listOfCoins){
+			final double aX = this.getCurrentX();
+			final double aY2 = this.getCurrentY();
+			final double aX2 = aX + this.getWidth();
+			final double aY = aY2 + this.getHeight();
+			final double bX = coin.getCurrentX();
+			final double bY2 = coin.getCurrentY();
+			final double bX2 = bX + coin.getWidth();
+			final double bY = bY2 + coin.getHeight();
+			//Coin Collision
+			if (physics.collides(aX, aY, aX2, aY2, bX, bY, bX2, bY2) && coin.getPoints()){
+				coin.setSprite(null);
+				playerTwoPoints++;
+				coin.givePoints();
+				System.out.println(playerTwoPoints);
 				}
 			}
 		}
-	}
-
-	private void coinCollision() {
-		
-		
-	}
-
-
 }
+
