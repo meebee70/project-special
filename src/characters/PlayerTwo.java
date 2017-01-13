@@ -29,7 +29,7 @@ public class PlayerTwo {
 	private final int PAUSES_LEFT_MAX,JUMPSMAX, ANIMATION_SPEED;
   
 	private int keyLeft, keyRight, keyUp, keyDown, keyCtrl, jumps, pausesLeft, xDirection, frame;
-	private double x, y, xVelocity, yVelocity, freezeTimer;
+	private double x, y, xVelocity, yVelocity, freezeTimer, playerTwoPoints;
 	private boolean keyReleasedUp, keyReleasedCtrl, inAir;
 
 	private Image playerTwoSprite, playerTwoStationairy;
@@ -40,8 +40,6 @@ public class PlayerTwo {
 	private Level level;
 
 	private InputHandler input;
-	
-	private Level level;
 
 	Physics physics = new Physics();
 
@@ -66,9 +64,7 @@ public class PlayerTwo {
 		this.freezeTimer = 0;
 		this.frame = 0;
 		
-		this.level = level;
-		
-		this.FPS = level.getFPS();
+		this.FPS = levelThatWeAreIn.getFPS();
 		
 		BASE_X_SPEED = 60 / FPS; // pixels/frame
 		JUMPSPEED = 2.1;
@@ -386,9 +382,6 @@ public class PlayerTwo {
 			this.setSprite(playerTwoStationairy);
 		}
 	}
-
-
-	}
 	
 	private void coinCollision(){
 		ArrayList<Coins> listOfCoins = this.level.getCoinsList();
@@ -403,7 +396,7 @@ public class PlayerTwo {
 			final double bX2 = bX + coin.getWidth();
 			final double bY = bY2 + coin.getHeight();
 			//Coin Collision
-			if (physics.collides(aX, aY, aX2, aY2, bX, bY, bX2, bY2) && coin.getPoints()){
+			if (Physics.collides(aX, aY, aX2, aY2, bX, bY, bX2, bY2) && coin.getPoints()){
 				coin.setSprite(null);
 				playerTwoPoints++;
 				coin.givePoints();

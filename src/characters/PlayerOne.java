@@ -39,8 +39,6 @@ public class PlayerOne {
 	private StateManager sm;
 
 	private InputHandler input;
-	
-	private Level level;
 
 	Physics physics = new Physics();
 
@@ -59,9 +57,7 @@ public class PlayerOne {
     this.playerOnePoints = 0;
 		this.frame = 0;
 		
-		this.level = level;
-		
-		this.FPS = level.getFPS();
+		this.FPS = levelThatWeAreIn.getFPS();
 		
 		BASE_X_SPEED = 60 / FPS; // pixels/frame
 		JUMPSPEED = 2.1;
@@ -219,8 +215,8 @@ public class PlayerOne {
 			yVelocity = -JUMPSPEED;
 		}
 
+		coinCollision();
 		this.moveXandY(xVelocity, yVelocity);
-		
 		this.updateSprites();
 
 		xVelocity = 0;
@@ -332,16 +328,6 @@ public class PlayerOne {
 		for (int i = 0; i < platforms.length; i++){
 			touchesWall = touches[i] || touchesWall;
 		}
-		
-		coinCollision();
-		this.moveXandY(xVelocity, yVelocity);
-
-		xVelocity = 0;
-		//yVelocity = 0;
-		keyLeft = 0;
-		keyRight = 0;
-		keyUp = 0;
-
 
 	}
 	
@@ -358,7 +344,7 @@ public class PlayerOne {
 			final double bX2 = bX + coin.getWidth();
 			final double bY = bY2 + coin.getHeight();
 			//Coin Collision
-			if (physics.collides(aX, aY, aX2, aY2, bX, bY, bX2, bY2) && coin.getPoints()){
+			if (Physics.collides(aX, aY, aX2, aY2, bX, bY, bX2, bY2) && coin.getPoints()){
 				coin.setSprite(null);
 				playerOnePoints++;
 				coin.givePoints();
@@ -366,12 +352,7 @@ public class PlayerOne {
 				}
 			}
 		}
-	private int sign(double velocity){
-		if (velocity > 0){
-			return 1;
-		} else if (velocity < 0){
-			return -1;
-	}
+
 
 	//Changes Sprites Based on Movement/Actions
 	public void updateSprites(){

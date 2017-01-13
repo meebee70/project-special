@@ -12,7 +12,7 @@ public abstract class Level {
 	
 	public Graphics g;
 	public boolean isRunning = true;
-	private final int FPS = 60;
+	protected final int FPS = 60;
 	public StateManager sm;
 	public InputHandler input;
 	private ArrayList<Coins> listOfCoins = new ArrayList<Coins>();
@@ -118,7 +118,7 @@ public abstract class Level {
 
 	public ArrayList<Coins> getCoinsList(){
 		return this.listOfCoins;
-  }
+	}
 
 	public int getFPS(){
 		return FPS;
