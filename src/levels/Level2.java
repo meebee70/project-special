@@ -16,11 +16,10 @@ import camera.Camera;
 import characters.PlayerOne;
 import characters.PlayerTwo;
 import mainGameEngine.StateManager;
-import nonPlayerCharacters.LaughingStock;
 import terrain.LevelEnder;
 import terrain.Terrain;
 
-public class Level1 extends Level {
+public class Level2 extends Level {
 	private int left = sm.insets.left;
 	private int top = sm.insets.top;
 	
@@ -37,15 +36,13 @@ public class Level1 extends Level {
 	
 	private Image taintedGround;
 	
-	private Terrain[] platforms = new Terrain[10];
+	private Terrain[] platforms = new Terrain[16];
 	
 	private Camera cam = new Camera(sm.getGraphics(),sm , 0 , 0 , 1000 , 500);
 	
 	private ArrayList<Coins> listOfCoins = new ArrayList<Coins>();
-	
-	private LaughingStock enemy1 = new LaughingStock(sm, this, 400, 10);
 
-	public Level1(StateManager sm, Graphics g) {
+	public Level2(StateManager sm, Graphics g) {
 		super(sm,g);
 		
 		initialize();
@@ -65,12 +62,14 @@ public class Level1 extends Level {
 		for (int i = 2; i < platforms.length; i++){
 			platforms[i] = new Terrain(i * 400, i * 80, 300, 300, taintedGround);
 		}
-		platforms[0] = new Terrain(0, 460, sm.UNIVERSE_WIDTH/4,sm.UNIVERSE_HEIGHT/4, taintedGround);
-		platforms[1] = new Terrain(500, 600, 300,300, taintedGround);
-		platforms[2] = new Terrain(800,460,sm.UNIVERSE_WIDTH/4,sm.UNIVERSE_HEIGHT/4, taintedGround);
+		platforms[0] = new Terrain(0, 420, 450, 450, taintedGround);
+		platforms[1] = new Terrain(500, 600, 300, 300, taintedGround);
+		platforms[2] = new Terrain(800, 500, 500, 500, taintedGround);
+		platforms[3] = new Terrain(1300, 200, 450, 450, taintedGround);
+		platforms[4] = new Terrain(2200, 800, 400, 400, taintedGround);
 		
-		platforms[8] = new Terrain(-8, -8, 4, 4, null);
-		platforms[9] = new Terrain(-8, -8, 4, 4, null);
+		platforms[14] = new Terrain(-8, -8, 4, 4, null);
+		platforms[15] = new Terrain(-8, -8, 4, 4, null);
 
 		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm, this);
 		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm, this);
@@ -79,18 +78,16 @@ public class Level1 extends Level {
 		try {
 			portal = new LevelEnder(1800,200,14,80,
 				ImageIO.read(new File("res/Dimensional Tear.gif")),
-				new Level2(sm, g),sm
+				new Helplevel(sm, g), sm
 				);
 		} catch (IOException e) {e.printStackTrace();}
-		platforms [7] = portal;
+		platforms [13] = portal;
 	}
 
 	@Override
 	public void update() {
 		playerOne.updatePlayer(platforms,playerTwo);
 		playerTwo.updatePlayer(platforms,playerOne);
-		
-		enemy1.compute(platforms);
 		
 		//System.out.println(x1 + " " + y1 + "  " + x2 + " " + y2 + "  " + xUniverse + " " + yUniverse);
 		
@@ -110,8 +107,6 @@ public class Level1 extends Level {
 		universe.drawImage(playerTwo.getSprite(),playerTwo.getCurrentX(),playerTwo.getCurrentY(),sm);
 
 		universe.drawImage(coin.getSprite(),coin.getCurrentX(),coin.getCurrentY(),sm);
-    
-		universe.drawImage(enemy1.getSprite(),(enemy1.getX()), enemy1.getY(), sm);
 	}
 	
 	public void drawScreen(Graphics screen){
