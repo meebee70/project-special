@@ -17,7 +17,6 @@ import levels.Helplevel;
 
 import levels.Level;
 import levels.Level1;
-import levels.Level2;
 import mainGameEngine.InputHandler;
 /**
  * Builds Game window

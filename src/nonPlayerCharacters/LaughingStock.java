@@ -6,8 +6,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import characters.PlayerOne;
-import characters.PlayerTwo;
 import levels.Level;
 import mainGameEngine.StateManager;
 import physics.Physics;
@@ -15,7 +13,6 @@ import terrain.Terrain;
 
 public class LaughingStock {
 	
-	private StateManager sm;
 	
 	private Image sprite;
 		
@@ -27,20 +24,18 @@ public class LaughingStock {
 	private final int FPS;
 	private boolean isInAir = false;
 	
-	private Physics phys;
-	
 	private Tags[] tags;
 	
+	@SuppressWarnings("unused")
 	private Level level;
+
 	
-	public LaughingStock(StateManager sm,Level level, double startX, double startY){
-		this.sm = sm;
+	public LaughingStock(StateManager sm, Level level, double startX, double startY){
 		
 		this.tags = new Tags[]{Tags.UNSPECIAL};
 		
 		this.level = level;
 		
-		phys = sm.getPhysics();
 		this.FPS = level.getFPS();
 		try {
 			this.sprite = ImageIO.read(new File("res/Laughing Stock.gif"));

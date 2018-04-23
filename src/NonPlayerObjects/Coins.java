@@ -5,9 +5,7 @@ package NonPlayerObjects;
 	import java.io.IOException;
 	import javax.imageio.ImageIO;
 
-import levels.Level;
-import mainGameEngine.InputHandler;
-	import mainGameEngine.StateManager;
+	import levels.Level;
 	import physics.Physics;
 
 public class Coins {
@@ -15,8 +13,6 @@ public class Coins {
 		private double x, y;
 
 		public Image sprite;
-
-		private StateManager sm;
 		
 		private boolean hasGivenPoints;
 
@@ -25,13 +21,12 @@ public class Coins {
 		final private int HEIGHT;
 		final private int WIDTH;
 
-		public Coins(int x, int y, StateManager sm, Level level){
+		public Coins(int x, int y, Level level){
 			this.x = x;
 			this.y = y;
 
 			this.HEIGHT = 32;	//Of sprite or Hitbox
 			this.WIDTH = 32; //Update later
-			this.sm = sm;
 			this.sprite = null;
 			this.hasGivenPoints = true;
 			

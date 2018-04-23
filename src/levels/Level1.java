@@ -74,7 +74,7 @@ public class Level1 extends Level {
 
 		playerOne = new PlayerOne(INITIAL_X_P1,INITIAL_Y_P1,sm, this);
 		playerTwo = new PlayerTwo(INITIAL_X_P2,INITIAL_Y_P2,sm, this);
-		coin = new Coins(128,200,sm, this);
+		coin = new Coins(128, 200, this);
 		
 		try {
 			portal = new LevelEnder(1800,200,14,80,
