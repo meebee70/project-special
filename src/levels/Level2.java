@@ -110,8 +110,8 @@ public class Level2 extends Level {
 	}
 	
 	public void drawScreen(Graphics screen){
-		screen.setColor(Color.BLACK);
-		screen.fillRect(left, top, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT);
+//		screen.setColor(Color.BLACK);
+//		screen.fillRect(left, top, sm.WINDOW_WIDTH, sm.WINDOW_HEIGHT);
 		cam.drawImage(sm.backBuffer);
 	}
 	public ArrayList<Coins> getCoinsList(){
